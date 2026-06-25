@@ -1,0 +1,30 @@
+# Kiro/Cursor hooks
+.cursor/hooks.json
+.cursor/hooks/after-agent-response.js
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Large dataset files (too big for GitHub)
+archive/train.csv
+archive/test.csv
+archive/valid.csv
+
+# Keep vector_db folder but ignore large binary files
+vector_db/
+
+# IDE
+.vscode/
+.idea/
+
+# Dynamically extracted images
+extracted_images/
