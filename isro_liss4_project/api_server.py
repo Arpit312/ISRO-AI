@@ -1,4 +1,5 @@
 from fastapi import FastAPI, UploadFile, File
+from fastapi.middleware.cors import CORSMiddleware
 import torch
 from datetime import datetime
 
@@ -12,6 +13,14 @@ from core.shadow_remover import ShadowCorrector
 from core.physics_validator import SpectralIndicesValidator
 
 app = FastAPI(title="ISRO LISS-IV Cloud Removal Engine", version="1.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # Production mein isko specific URL karna
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Initialize all models globally so they load once
 print("Loading AI Brain Modules...")
