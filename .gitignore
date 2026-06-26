@@ -28,3 +28,6 @@ vector_db/
 
 # Dynamically extracted images
 extracted_images/
+
+# Ignored project files
+PROJECT_STATUS.md
