@@ -12,7 +12,8 @@ import {
   Zap,
 } from "lucide-react";
 import { fadeInUp, scaleIn } from "@/animations/variants";
-import { processImage, type ProcessingResult } from "@/lib/api";
+import { uploadAndProcess, type ProcessingResult } from "@/lib/api";
+import BeforeAfterSlider from "./BeforeAfterSlider";
 
 type UploadState = "idle" | "preview" | "processing" | "success" | "error";
 
@@ -26,6 +27,7 @@ export default function Upload() {
   const [progress, setProgress] = useState(0);
   const [result, setResult] = useState<ProcessingResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [activeView, setActiveView] = useState<"reconstruction" | "heatmap">("reconstruction");
   const [isDragOver, setIsDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -110,7 +112,7 @@ export default function Upload() {
     }, 200);
 
     try {
-      const response = await processImage(7);
+      const response = await uploadAndProcess(file, 7);
       clearInterval(progressInterval);
       setProgress(100);
       setResult(response);
@@ -355,7 +357,7 @@ export default function Upload() {
                     <p className="text-base font-semibold text-white">
                       Processing Complete
                     </p>
-                    <p className="text-xs text-white/40 break-words leading-relaxed">{result.message}</p>
+                    <p className="text-xs text-white/40 break-words leading-relaxed">Image successfully processed through the 7-stage NOVA-SYNC AI pipeline.</p>
                   </div>
                 </div>
 
@@ -377,10 +379,66 @@ export default function Upload() {
                   />
                   <ResultCard
                     label="NDVI Mean"
-                    value={result.spectral_report.NDVI.mean_value.toFixed(4)}
+                    value={result.spectral_report?.NDVI?.mean_value?.toFixed(4) || "0.0000"}
                     color="text-satellite-cyan"
                   />
                 </div>
+
+                {preview && result.output_image && (
+                  <div className="mb-8">
+                    {/* Cinematic Toggle */}
+                    <div className="flex justify-center mb-6">
+                      <div className="bg-space-800/80 backdrop-blur-md p-1 rounded-xl border border-white/10 flex gap-1">
+                        <button
+                          onClick={() => setActiveView("reconstruction")}
+                          className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                            activeView === "reconstruction"
+                              ? "bg-electric-blue text-space-900 shadow-[0_0_15px_rgba(0,194,255,0.4)]"
+                              : "text-white/60 hover:text-white hover:bg-white/5"
+                          }`}
+                        >
+                          Reconstruction View
+                        </button>
+                        <button
+                          onClick={() => setActiveView("heatmap")}
+                          className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                            activeView === "heatmap"
+                              ? "bg-error text-white shadow-[0_0_15px_rgba(255,68,68,0.4)]"
+                              : "text-white/60 hover:text-white hover:bg-white/5"
+                          }`}
+                        >
+                          Confidence Matrix Heatmap
+                        </button>
+                      </div>
+                    </div>
+                    
+                    <motion.div
+                      key={activeView}
+                      initial={{ opacity: 0, scale: 0.98 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.4 }}
+                    >
+                      {activeView === "reconstruction" ? (
+                        <BeforeAfterSlider 
+                          beforeImage={preview} 
+                          afterImage={result.output_image} 
+                        />
+                      ) : (
+                        <div className="rounded-xl overflow-hidden border border-glass-border shadow-glow-sm relative">
+                          <img 
+                            src={result.uncertainty_heatmap || result.output_image} 
+                            alt="Confidence Heatmap" 
+                            className="w-full h-auto object-cover"
+                          />
+                          <div className="absolute top-4 left-4 bg-space-900/80 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10 flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+                            <span className="text-xs font-medium text-white/90">Real-time Matrix</span>
+                          </div>
+                        </div>
+                      )}
+                    </motion.div>
+                  </div>
+                )}
 
                 <button
                   onClick={handleReset}

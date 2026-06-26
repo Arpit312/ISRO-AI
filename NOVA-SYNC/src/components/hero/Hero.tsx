@@ -139,7 +139,7 @@ export default function Hero() {
             <div className="w-[1px] h-10 bg-white opacity-20" />
             <StatItem value={98} suffix="%" label="Quality Score" icon={Target} />
             <div className="w-[1px] h-10 bg-white opacity-20" />
-            <StatItem value={5} suffix="ms" label="Avg. Inference" icon={Zap} />
+            <StatItem value={15} suffix="s" label="Avg. Inference" icon={Zap} />
           </motion.div>
         </motion.div>
       </div>

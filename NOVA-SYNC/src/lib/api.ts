@@ -9,7 +9,8 @@ export interface ProcessingResult {
     NDVI: { violation_pct: number; mean_value: number };
     NDWI: { violation_pct: number; mean_value: number };
   };
-  message: string;
+  output_image: string;
+  uncertainty_heatmap?: string;
 }
 
 export interface ApiError {
@@ -51,7 +52,7 @@ export async function uploadAndProcess(
   formData.append("file", file);
   formData.append("month", month.toString());
 
-  const response = await fetch(`${API_BASE_URL}/api/v1/upload`, {
+  const response = await fetch(`${API_BASE_URL}/api/v1/process`, {
     method: "POST",
     body: formData,
   });
@@ -63,7 +64,11 @@ export async function uploadAndProcess(
     throw new Error(error.detail);
   }
 
-  return response.json();
+  const data = await response.json();
+  if (data.status === "error") {
+    throw new Error(data.message || "Unknown backend error");
+  }
+  return data;
 }
 
 /**
