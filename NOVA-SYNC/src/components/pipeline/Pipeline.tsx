@@ -108,18 +108,18 @@ function PipelineNode({ stage, index }: { stage: PipelineStage; index: number })
   return (
     <motion.div
       variants={pipelineNodeVariant}
-      className="relative flex items-start gap-[24px] mb-[40px] last:mb-0 group"
+      className="relative flex items-start gap-6 mb-10 last:mb-0 group"
     >
       {/* Timeline dot and connector */}
       <div className="flex flex-col items-center flex-shrink-0">
         <motion.div
           whileHover={{ scale: 1.2 }}
-          className="relative z-10 flex items-center justify-center w-[64px] h-[64px] flex-shrink-0 rounded-2xl border border-glass-border bg-space-800/80 backdrop-blur-sm group-hover:border-electric-blue/40 transition-all duration-300"
+          className="relative z-10 w-16 h-16 flex-shrink-0 rounded-2xl flex items-center justify-center border border-glass-border bg-space-800/80 backdrop-blur-sm group-hover:border-electric-blue/40 transition-all duration-300"
           style={{ boxShadow: `0 0 20px ${stage.glowColor}` }}
         >
           <Icon className={`w-5 h-5 md:w-6 md:h-6 ${stage.color}`} />
           {/* Step number badge */}
-          <span className="absolute top-[-8px] right-[-8px] w-5 h-5 flex items-center justify-center text-[10px] font-bold bg-space-700 border border-glass-border rounded-full text-white/60">
+          <span className="absolute -top-2 -right-2 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold bg-space-700 border border-glass-border text-white/60">
             {stage.id}
           </span>
         </motion.div>
@@ -137,17 +137,17 @@ function PipelineNode({ stage, index }: { stage: PipelineStage; index: number })
       <motion.div
         whileHover={{ x: 8 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        className="glass-card py-[20px] px-[24px] flex-1 group-hover:shadow-glow-sm transition-all duration-300"
+        className="glass-card flex-1 p-6 rounded-xl group-hover:shadow-glow-sm transition-all duration-300"
       >
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h3 className="font-heading text-[18px] font-[600] text-white mb-[6px]">
+            <h3 className="font-heading text-lg font-semibold text-white mb-1.5">
               {stage.title}
             </h3>
-            <p className={`text-[11px] font-semibold tracking-[0.1em] uppercase mb-[8px] ${stage.color} opacity-70`}>
+            <p className={`text-xs tracking-widest uppercase mb-2 opacity-60 ${stage.color}`}>
               {stage.description}
             </p>
-            <p className="text-[14px] text-white/[0.7] leading-[1.6] break-words">
+            <p className="text-sm leading-relaxed opacity-60 text-white break-words">
               {stage.detail}
             </p>
           </div>
@@ -170,16 +170,16 @@ export default function Pipeline() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="text-center mb-[64px]"
+          className="mb-16 text-center"
         >
-          <h3 className="text-sm md:text-base font-bold tracking-[0.15em] text-accent-purple uppercase mb-[12px]">
+          <h3 className="text-sm md:text-base font-bold tracking-widest text-accent-purple uppercase mb-3">
             Architecture
           </h3>
-          <h2 className="section-heading mb-[16px]">
+          <h2 className="section-heading mb-4">
             <span className="text-white">AI Processing </span>
             <span className="gradient-text-purple">Pipeline</span>
           </h2>
-          <p className="section-subheading max-w-[600px] mx-auto text-center">
+          <p className="section-subheading max-w-2xl mx-auto leading-relaxed text-center">
             Seven specialized neural modules work in sequence to transform
             cloudy satellite imagery into pristine, physics-validated output.
           </p>
@@ -191,7 +191,7 @@ export default function Pipeline() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="max-w-[800px] mx-auto pl-[80px]"
+          className="max-w-3xl mx-auto"
         >
           {PIPELINE_STAGES.map((stage, index) => (
             <PipelineNode key={stage.id} stage={stage} index={index} />

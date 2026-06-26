@@ -138,7 +138,7 @@ export default function Upload() {
   };
 
   return (
-    <section id="upload" className="relative overflow-hidden pt-[80px] pb-[80px]">
+    <section id="upload" className="relative overflow-hidden py-20">
       {/* Background glow */}
       <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-glow-purple opacity-20 pointer-events-none" />
 
@@ -149,16 +149,16 @@ export default function Upload() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="text-center"
+          className="text-center mb-10"
         >
-          <h3 className="text-sm md:text-base font-bold tracking-[0.25em] text-electric-blue uppercase mb-4 text-center">
+          <h3 className="text-sm md:text-base font-bold tracking-widest text-electric-blue uppercase mb-3 text-center">
             Process
           </h3>
-          <h2 className="section-heading mb-[16px] text-center">
+          <h2 className="section-heading mb-4 text-center">
             <span className="text-white">Upload & </span>
             <span className="gradient-text">Analyze</span>
           </h2>
-          <p className="section-subheading max-w-[560px] mx-auto mb-[40px] leading-[1.6] text-center text-[17px]">
+          <p className="section-subheading text-lg leading-relaxed max-w-xl mx-auto mb-10 text-center">
             Drop your satellite image and let the AI pipeline process it
             through all 7 modules in real-time.
           </p>
@@ -186,7 +186,7 @@ export default function Upload() {
                   onDragLeave={handleDragLeave}
                   onDrop={handleDrop}
                   onClick={() => fileInputRef.current?.click()}
-                  className={`relative cursor-pointer rounded-[12px] border-2 border-dashed transition-all duration-300 py-[48px] px-[40px] text-center ${
+                  className={`max-w-2xl mx-auto p-12 rounded-2xl border-2 border-dashed text-center transition-all duration-300 relative cursor-pointer ${
                     isDragOver
                       ? "border-electric-blue bg-electric-blue/5 shadow-glow-md"
                       : "border-white/20 hover:border-electric-blue/40 hover:bg-glass-card"
@@ -211,25 +211,25 @@ export default function Upload() {
                   />
                   <div className="flex flex-col items-center">
                     <div
-                      className={`p-4 rounded-2xl transition-colors mx-auto block mb-[16px] ${
+                      className={`p-4 rounded-2xl transition-colors mx-auto block mb-4 ${
                         isDragOver
                           ? "bg-electric-blue/20"
                           : "bg-electric-blue/10"
                       }`}
                     >
                       <UploadIcon
-                        className={`w-8 h-8 transition-colors ${
+                        className={`mx-auto w-10 h-10 transition-colors ${
                           isDragOver ? "text-electric-blue" : "text-electric-blue/60"
                         }`}
                       />
                     </div>
                     <div className="w-full">
-                      <p className="text-[16px] font-medium text-white/80 mb-[8px]">
+                      <p className="text-base font-medium mb-2 text-white/80">
                         {isDragOver
                           ? "Drop your image here"
                           : "Drag & drop satellite image"}
                       </p>
-                      <p className="text-[13px] text-white/[0.5] leading-[1.5]">
+                      <p className="text-sm opacity-50 leading-relaxed text-white">
                         or click to browse • TIFF, JPEG, PNG, WebP • Max 50MB
                       </p>
                     </div>

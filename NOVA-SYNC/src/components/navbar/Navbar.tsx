@@ -1,20 +1,23 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { navbarVariant, mobileMenuVariant } from "@/animations/variants";
 
 const NAV_LINKS = [
-  { label: "Pipeline", href: "#pipeline" },
-  { label: "Dashboard", href: "#dashboard" },
-  { label: "Upload", href: "#upload" },
-  { label: "About", href: "#about" },
+  { label: "Home", href: "/" },
+  { label: "Pipeline", href: "/pipeline" },
+  { label: "Dashboard", href: "/dashboard" },
+  { label: "Upload", href: "/upload" },
 ];
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -34,12 +37,6 @@ export default function Navbar() {
     };
   }, [isMobileMenuOpen]);
 
-  const scrollToSection = (href: string) => {
-    setIsMobileMenuOpen(false);
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <>
       <motion.nav
@@ -52,11 +49,12 @@ export default function Navbar() {
             : "bg-transparent border-b border-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-[48px]">
-          <div className="flex items-center justify-between min-h-[64px]">
+        <div className="max-w-7xl mx-auto px-12">
+          <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <a
-              href="#"
+            <Link
+              href="/"
+              onClick={() => setIsMobileMenuOpen(false)}
               className="flex items-center gap-2.5 group"
               aria-label="NOVA-SYNC Home"
             >
@@ -72,25 +70,27 @@ export default function Navbar() {
                 <span className="gradient-text">NOVA</span>
                 <span className="text-white/90 ml-1">SYNC</span>
               </span>
-            </a>
+            </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-[32px]">
+            <div className="hidden md:flex items-center gap-8">
               {NAV_LINKS.map((link) => (
-                <button
+                <Link
                   key={link.href}
-                  onClick={() => scrollToSection(link.href)}
-                  className="py-[8px] px-[4px] text-[15px] tracking-[0.01em] font-medium text-white/60 hover:text-white transition-colors rounded-lg hover:bg-white/5"
+                  href={link.href}
+                  className={`px-1 py-2 text-sm tracking-[0.01em] font-medium transition-colors rounded-lg hover:bg-white/5 ${
+                    pathname === link.href ? "text-white" : "text-white/60 hover:text-white"
+                  }`}
                 >
                   {link.label}
-                </button>
+                </Link>
               ))}
-              <button
-                onClick={() => scrollToSection("#upload")}
-                className="ml-[24px] btn-primary text-sm !py-2 !px-5"
+              <Link
+                href="/upload"
+                className="ml-6 btn-primary text-sm !py-2 !px-5"
               >
                 Launch Engine
-              </button>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -130,20 +130,24 @@ export default function Navbar() {
             >
               <div className="flex flex-col pt-20 px-6 gap-2">
                 {NAV_LINKS.map((link) => (
-                  <button
+                  <Link
                     key={link.href}
-                    onClick={() => scrollToSection(link.href)}
-                    className="w-full text-left px-4 py-3 text-base font-medium text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-colors"
+                    href={link.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`w-full text-left px-4 py-3 text-base font-medium rounded-lg transition-colors hover:bg-white/5 ${
+                      pathname === link.href ? "text-white bg-white/5" : "text-white/70 hover:text-white"
+                    }`}
                   >
                     {link.label}
-                  </button>
+                  </Link>
                 ))}
-                <button
-                  onClick={() => scrollToSection("#upload")}
-                  className="mt-4 btn-primary w-full justify-center"
+                <Link
+                  href="/upload"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="mt-4 btn-primary w-full justify-center text-center flex items-center"
                 >
                   Launch Engine
-                </button>
+                </Link>
               </div>
             </motion.div>
           </>

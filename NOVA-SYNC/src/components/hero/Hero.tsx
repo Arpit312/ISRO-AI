@@ -2,6 +2,7 @@
 
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowRight, Play, Zap, Target, Cpu, type LucideIcon } from "lucide-react";
 import Particles from "./Particles";
@@ -33,28 +34,30 @@ function StatItem({
 }) {
   const { count, ref } = useAnimatedCounter({ end: value, duration: 2500 });
   return (
-    <div ref={ref} className="flex items-center gap-[10px] group">
+    <div ref={ref} className="flex items-center gap-3 group">
       <div className="p-2.5 rounded-xl bg-electric-blue/10 border border-electric-blue/20 group-hover:bg-electric-blue/15 transition-colors">
         <Icon className="w-5 h-5 text-electric-blue" />
       </div>
       <div>
-        <p className="text-[28px] font-heading font-bold text-white leading-none">
+        <p className="text-3xl font-bold leading-none text-white font-heading">
           {count}
           <span className="text-electric-blue">{suffix}</span>
         </p>
-        <p className="text-[13px] mt-[2px] text-white/[0.6] font-medium">{label}</p>
+        <p className="text-sm text-gray-400 mt-1 font-medium">{label}</p>
       </div>
     </div>
   );
 }
 
 export default function Hero() {
+  const router = useRouter();
+
   const scrollToUpload = () => {
-    document.querySelector("#upload")?.scrollIntoView({ behavior: "smooth" });
+    router.push("/upload");
   };
 
   const scrollToPipeline = () => {
-    document.querySelector("#pipeline")?.scrollIntoView({ behavior: "smooth" });
+    router.push("/pipeline");
   };
 
   return (
@@ -79,7 +82,7 @@ export default function Hero() {
           className="max-w-2xl"
         >
           {/* Badge */}
-          <motion.div variants={fadeIn} className="mb-[20px]">
+          <motion.div variants={fadeIn} className="mb-5">
             <span className="inline-flex items-center gap-2 py-[6px] px-[14px] rounded-[20px] bg-electric-blue/10 border border-electric-blue/20 text-electric-blue text-xs font-semibold tracking-wider uppercase">
               <span className="w-1.5 h-1.5 rounded-full bg-electric-blue animate-pulse" />
               ISRO LISS-IV Engine v1.0
@@ -89,7 +92,7 @@ export default function Hero() {
           {/* Headline */}
           <motion.h1
             variants={fadeInUp}
-            className="section-heading !text-[clamp(2.5rem,6vw,4.5rem)] mb-[24px] leading-[1.1]"
+            className="section-heading !text-[clamp(2.5rem,6vw,4.5rem)] mb-6 leading-tight"
           >
             <span className="text-white">AI-Powered</span>
             <br />
@@ -101,7 +104,7 @@ export default function Hero() {
           {/* Subtitle */}
           <motion.p
             variants={fadeInUp}
-            className="section-subheading mt-0 mb-[36px] leading-[1.65] max-w-[520px] text-[17px] text-white/50"
+            className="section-subheading text-base leading-relaxed max-w-xl mb-9 mt-0 text-white/50"
           >
             Enterprise-grade satellite imagery reconstruction using diffusion
             models, SAR fusion, and physics-based validation — built for
@@ -111,16 +114,16 @@ export default function Hero() {
           {/* CTAs */}
           <motion.div
             variants={fadeInUp}
-            className="flex flex-wrap items-center gap-[16px] mb-[40px]"
+            className="flex items-center gap-4 mb-16"
           >
             <MagneticButton>
-              <button onClick={scrollToUpload} className="btn-primary text-base h-[48px] !py-[14px] !px-[28px]">
+              <button onClick={scrollToUpload} className="btn-primary text-base px-7 py-3 h-12">
                 Launch Engine
                 <ArrowRight className="w-5 h-5" />
               </button>
             </MagneticButton>
             <MagneticButton>
-              <button onClick={scrollToPipeline} className="btn-secondary text-base h-[48px] !py-[14px] !px-[24px]">
+              <button onClick={scrollToPipeline} className="btn-secondary text-base px-6 py-3 h-12">
                 <Play className="w-4 h-4" />
                 View Pipeline
               </button>
@@ -130,7 +133,7 @@ export default function Hero() {
           {/* Stats Bar */}
           <motion.div
             variants={fadeInUp}
-            className="flex flex-wrap items-center gap-[40px] pt-10 border-t border-white/[0.06]"
+            className="flex items-center gap-10 mt-8 border-t border-white/[0.06] pt-10"
           >
             <StatItem value={7} suffix="" label="AI Modules" icon={Cpu} />
             <div className="w-[1px] h-10 bg-white opacity-20" />

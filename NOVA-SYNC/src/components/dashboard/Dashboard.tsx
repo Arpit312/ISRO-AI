@@ -105,18 +105,18 @@ function StatsCard({ icon: Icon, label, value, suffix, trend, trendUp, color }: 
     <motion.div
       variants={scaleIn}
       ref={ref}
-      className="glass-card border border-glass-border pt-[20px] px-[20px] pb-[16px] group cursor-default"
+      className="glass-card border border-glass-border p-5 rounded-xl relative group cursor-default"
     >
-      <div className="flex items-start justify-between mb-[12px]">
+      <div className="flex items-start justify-between">
         <div
           className="p-2.5 rounded-xl transition-colors duration-300"
           style={{ background: `${color}15`, border: `1px solid ${color}25` }}
         >
-          <Icon className="w-[20px] h-[20px]" style={{ color }} />
+          <Icon className="w-5 h-5 mb-3" style={{ color }} />
         </div>
         {trend && (
           <span
-            className={`text-[12px] font-semibold px-2 py-0.5 rounded-full ${
+            className={`absolute top-4 right-4 text-xs font-semibold px-2 py-0.5 rounded-full ${
               trendUp
                 ? "bg-success/10 text-success"
                 : "bg-error/10 text-error"
@@ -126,13 +126,13 @@ function StatsCard({ icon: Icon, label, value, suffix, trend, trendUp, color }: 
           </span>
         )}
       </div>
-      <p className="text-[36px] font-[700] leading-none text-white font-heading">
+      <p className="text-4xl font-bold leading-none text-white font-heading">
         {count}
         <span className="text-lg" style={{ color }}>
           {suffix}
         </span>
       </p>
-      <p className="text-[13px] mt-[6px] text-white/[0.6]">{label}</p>
+      <p className="text-sm mt-1.5 opacity-60 text-white">{label}</p>
     </motion.div>
   );
 }
@@ -144,7 +144,7 @@ function ComparisonSlider() {
   return (
     <motion.div
       variants={fadeInRight}
-      className="glass-card overflow-hidden"
+      className="glass-card overflow-hidden mt-4 p-5 rounded-xl"
     >
       <div className="p-4 md:p-5 border-b border-glass-border">
         <h3 className="font-heading text-sm font-semibold text-white/80">
@@ -230,7 +230,7 @@ export default function Dashboard() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="text-center mb-[56px]"
+          className="text-center mb-14"
         >
           <h3 className="text-sm md:text-base font-bold tracking-[0.15em] text-electric-blue uppercase mb-[12px]">
             Analytics
@@ -251,7 +251,7 @@ export default function Dashboard() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-[16px]"
+          className="grid grid-cols-4 gap-4"
         >
           <StatsCard
             icon={Shield}
@@ -292,21 +292,21 @@ export default function Dashboard() {
         </motion.div>
 
         {/* Charts Row */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-[20px] mt-[20px]">
+        <div className="grid grid-cols-[1fr_380px] gap-5 mt-5">
           {/* Main Area Chart */}
           <motion.div
             variants={fadeInLeft}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
-            className="glass-card pt-[20px] px-[20px] pb-[16px]"
+            className="glass-card p-5 rounded-xl"
           >
             <div className="flex items-center justify-between mb-[16px]">
               <div>
-                <h3 className="font-heading text-[15px] font-semibold text-white mb-[4px]">
+                <h3 className="font-heading text-base font-medium text-white mb-1">
                   Spectral Quality Trends
                 </h3>
-                <p className="text-[12px] text-white/[0.5] mt-0">
+                <p className="text-xs opacity-50 mb-4 text-white">
                   NDVI & NDWI indices over 12 months
                 </p>
               </div>
@@ -383,19 +383,19 @@ export default function Dashboard() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
-              className="glass-card p-[20px]"
+              className="glass-card p-5 rounded-xl"
             >
-              <h3 className="font-heading text-[15px] font-semibold text-white mb-[4px]">
+              <h3 className="font-heading text-base font-medium text-white mb-1">
                 Cloud Type Distribution
               </h3>
-              <p className="text-[12px] text-white/[0.5] mt-0 mb-[16px]">
+              <p className="text-xs opacity-50 mb-4 text-white">
                 Classified by NER Classifier
               </p>
               <div className="flex flex-col">
                 {CLOUD_TYPE_DATA.map((entry, index) => (
-                  <div key={index} className="flex items-center gap-[10px] mb-[10px] last:mb-0">
-                    <span className="text-[11px] text-white/50 min-w-[70px]">{entry.name}</span>
-                    <div className="flex-1 h-[8px] rounded-[4px] bg-white/5 overflow-hidden">
+                  <div key={index} className="flex items-center gap-3 mb-2.5">
+                    <span className="text-sm w-20 flex-shrink-0 text-right text-white/50">{entry.name}</span>
+                    <div className="flex-1 h-2 rounded-full overflow-hidden bg-white/5">
                       <div
                         className="h-full rounded-[4px]"
                         style={{ width: `${entry.value}%`, backgroundColor: entry.color }}

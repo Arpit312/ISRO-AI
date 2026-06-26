@@ -1,14 +1,15 @@
 "use client";
 
+import Link from "next/link";
 import { Globe, ExternalLink, Mail } from "lucide-react";
 
 const FOOTER_LINKS = [
   {
     title: "Platform",
     links: [
-      { label: "Pipeline", href: "#pipeline" },
-      { label: "Dashboard", href: "#dashboard" },
-      { label: "Upload", href: "#upload" },
+      { label: "Pipeline", href: "/pipeline" },
+      { label: "Dashboard", href: "/dashboard" },
+      { label: "Upload", href: "/upload" },
     ],
   },
   {
@@ -35,18 +36,18 @@ export default function Footer() {
   };
 
   return (
-    <footer id="about" className="relative border-t border-white/10">
+    <footer id="about" className="relative pt-16 pb-10 border-t border-white/10">
       {/* Gradient border effect */}
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-electric-blue/30 to-transparent" />
 
-      <div className="section-container py-[64px] px-[48px]">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] gap-[48px]">
+      <div className="section-container">
+        <div className="grid grid-cols-[2fr_1fr_1fr_1fr] gap-12 mb-12 px-12">
           {/* Brand */}
           <div>
-            <button
-              onClick={scrollToTop}
+            <Link
+              href="/"
               className="flex items-center gap-2.5 mb-[16px] group"
-              aria-label="Scroll to top"
+              aria-label="Go to home"
             >
               <img
                 src="/logo.png"
@@ -57,13 +58,13 @@ export default function Footer() {
                 <span className="gradient-text">NOVA</span>
                 <span className="text-white/90 ml-1">SYNC</span>
               </span>
-            </button>
-            <p className="text-[14px] text-white/[0.6] leading-[1.65] max-w-xs mb-[20px]">
+            </Link>
+            <p className="text-sm leading-relaxed opacity-60 mt-3 mb-5 max-w-xs text-white">
               Next-generation AI cloud removal engine for ISRO LISS-IV
               satellite imagery. Powered by diffusion models, cross-attention
               SAR fusion, and physics-based spectral validation.
             </p>
-            <div className="flex items-center gap-[12px]">
+            <div className="flex items-center gap-3">
               {[Globe, ExternalLink, Mail].map((Icon, i) => (
                 <a
                   key={i}
@@ -80,18 +81,18 @@ export default function Footer() {
           {/* Links */}
           {FOOTER_LINKS.map((section) => (
             <div key={section.title}>
-              <h4 className="text-[11px] font-semibold tracking-[0.1em] uppercase text-white/60 mb-[16px]">
+              <h4 className="text-xs tracking-widest uppercase opacity-40 mb-4 text-white font-semibold">
                 {section.title}
               </h4>
               <ul className="flex flex-col">
                 {section.links.map((link) => (
                   <li key={link.label}>
-                    <a
+                    <Link
                       href={link.href}
-                      className="block mb-[10px] last:mb-0 text-[14px] text-white/[0.6] hover:text-white/70 transition-colors"
+                      className="block text-sm opacity-60 mb-2.5 hover:opacity-100 transition-opacity text-white"
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -100,12 +101,12 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="mt-[48px] pt-[24px] border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-[13px] text-white/[0.4]">
+        <div className="flex items-center justify-between pt-6 border-t border-white/10 px-12">
+          <p className="text-xs opacity-40 text-white">
             © {new Date().getFullYear()} NOVA-SYNC. Powered by{" "}
             <span className="text-electric-blue/60">ISRO LISS-IV AI Engine</span>
           </p>
-          <p className="text-[13px] text-white/[0.4]">
+          <p className="text-xs opacity-40 text-white">
             Built with Next.js • React Three Fiber • FastAPI
           </p>
         </div>
