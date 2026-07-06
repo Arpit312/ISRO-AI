@@ -1,0 +1,344 @@
+"use client";
+
+import { useState, useMemo } from "react";
+import { useAppStore } from "@/store/appStore";
+import { cn, formatDate, getQualityLabel } from "@/lib/utils";
+import Badge from "@/components/ui/Badge";
+import Button from "@/components/ui/Button";
+import QualityScore from "@/components/features/QualityScore";
+import ResultsPanel from "@/components/features/ResultsPanel";
+import HeatmapViewer from "@/components/features/HeatmapViewer";
+import {
+  History as HistoryIcon,
+  Trash2,
+  Eye,
+  X,
+  Search,
+  SlidersHorizontal,
+  ChevronDown,
+  FileImage,
+  Calendar,
+  CloudOff,
+  Shield,
+} from "lucide-react";
+import type { ProcessingResult } from "@/types";
+
+// ============================================================================
+// History Page — View past processing results
+// ============================================================================
+
+export default function HistoryPage() {
+  const history = useAppStore((state) => state.history);
+  const removeFromHistory = useAppStore((state) => state.removeFromHistory);
+  const clearHistory = useAppStore((state) => state.clearHistory);
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedResult, setSelectedResult] = useState<ProcessingResult | null>(null);
+  const [sortBy, setSortBy] = useState<"newest" | "oldest" | "quality">("newest");
+
+  // Filter & Sort
+  const filteredHistory = useMemo(() => {
+    let results = [...history];
+
+    // Filter by search
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      results = results.filter(
+        (r) =>
+          r.fileName.toLowerCase().includes(q) ||
+          r.cloudType.toLowerCase().includes(q) ||
+          r.season.toLowerCase().includes(q)
+      );
+    }
+
+    // Sort
+    switch (sortBy) {
+      case "newest":
+        results.sort((a, b) => b.timestamp - a.timestamp);
+        break;
+      case "oldest":
+        results.sort((a, b) => a.timestamp - b.timestamp);
+        break;
+      case "quality":
+        results.sort((a, b) => b.qualityScore - a.qualityScore);
+        break;
+    }
+
+    return results;
+  }, [history, searchQuery, sortBy]);
+
+  // Cloud type → badge variant mapping
+  const cloudTypeBadge = (type: string): "success" | "warning" | "error" | "info" | "primary" => {
+    if (type === "Clear Sky") return "success";
+    if (type === "Thin Cirrus") return "info";
+    if (type === "Deep Convective") return "error";
+    if (type === "Cloud Shadow") return "warning";
+    return "primary";
+  };
+
+  return (
+    <div className="max-w-[1400px] mx-auto">
+      {/* Page Header */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+        <div>
+          <h1 className="text-2xl font-bold text-[var(--color-text-primary)] tracking-tight">
+            Processing History
+          </h1>
+          <p className="text-[14px] text-[var(--color-text-secondary)] mt-1">
+            {history.length} result{history.length !== 1 ? "s" : ""} stored
+          </p>
+        </div>
+        {history.length > 0 && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={clearHistory}
+            icon={<Trash2 size={14} />}
+            className="text-[var(--color-error)] hover:text-[var(--color-error)] hover:bg-[var(--color-error-subtle)]"
+          >
+            Clear All
+          </Button>
+        )}
+      </div>
+
+      {/* Empty State */}
+      {history.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-20 rounded-[var(--radius-xl)] border-2 border-dashed border-[var(--color-border)] bg-[var(--color-surface)] animate-fade-in">
+          <div className="flex items-center justify-center w-16 h-16 rounded-full bg-[var(--color-info-subtle)] mb-4 animate-float">
+            <HistoryIcon size={28} className="text-[var(--color-info)]" />
+          </div>
+          <h2 className="text-lg font-semibold text-[var(--color-text-primary)]">
+            No processing history yet
+          </h2>
+          <p className="text-[13px] text-[var(--color-text-tertiary)] mt-2 max-w-md text-center">
+            Process your first satellite image to see results here. All results are stored locally in your browser.
+          </p>
+          <Button
+            variant="primary"
+            size="md"
+            className="mt-6"
+            onClick={() => (window.location.href = "/process")}
+          >
+            Process First Image
+          </Button>
+        </div>
+      ) : (
+        <>
+          {/* Search & Filter Bar */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-6">
+            {/* Search */}
+            <div className="relative flex-1">
+              <Search
+                size={15}
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]"
+              />
+              <input
+                type="text"
+                placeholder="Search by filename, cloud type, or season..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className={cn(
+                  "w-full pl-9 pr-4 py-2.5 rounded-[var(--radius-md)]",
+                  "bg-[var(--color-surface)] border border-[var(--color-border)]",
+                  "text-[13px] text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)]",
+                  "hover:border-[var(--color-border-hover)] focus:border-[var(--color-primary)] focus:ring-1 focus:ring-[var(--color-primary)]",
+                  "transition-all duration-200 outline-none"
+                )}
+              />
+            </div>
+
+            {/* Sort Dropdown */}
+            <div className="relative">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+                className={cn(
+                  "appearance-none pl-3 pr-8 py-2.5 rounded-[var(--radius-md)]",
+                  "bg-[var(--color-surface)] border border-[var(--color-border)]",
+                  "text-[13px] font-medium text-[var(--color-text-primary)]",
+                  "hover:border-[var(--color-border-hover)] focus:border-[var(--color-primary)]",
+                  "transition-all duration-200 outline-none cursor-pointer"
+                )}
+              >
+                <option value="newest">Newest first</option>
+                <option value="oldest">Oldest first</option>
+                <option value="quality">Highest quality</option>
+              </select>
+              <SlidersHorizontal
+                size={14}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] pointer-events-none"
+              />
+            </div>
+          </div>
+
+          {/* Results List */}
+          <div className="space-y-3">
+            {filteredHistory.map((result, idx) => {
+              const quality = getQualityLabel(result.qualityScore);
+
+              return (
+                <div
+                  key={result.id}
+                  className={cn(
+                    "group rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)]",
+                    "hover:border-[var(--color-border-hover)] hover:shadow-[var(--shadow-md)]",
+                    "transition-all duration-200",
+                    "animate-fade-in",
+                    `stagger-${Math.min(idx + 1, 8)}`
+                  )}
+                >
+                  <div className="flex items-center gap-4 p-4">
+                    {/* Thumbnail */}
+                    <div className="w-16 h-16 rounded-[var(--radius-md)] overflow-hidden border border-[var(--color-border)] shrink-0 bg-[var(--color-surface-elevated)]">
+                      {result.inputPreview ? (
+                        <img
+                          src={result.inputPreview}
+                          alt={result.fileName}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <FileImage size={20} className="text-[var(--color-text-muted)]" />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Info */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <p className="text-[13px] font-semibold text-[var(--color-text-primary)] truncate">
+                          {result.fileName}
+                        </p>
+                        <Badge variant={cloudTypeBadge(result.cloudType)} size="sm">
+                          {result.cloudType}
+                        </Badge>
+                      </div>
+                      <div className="flex items-center gap-4 text-[11px] text-[var(--color-text-tertiary)]">
+                        <span className="flex items-center gap-1">
+                          <Calendar size={11} />
+                          {formatDate(result.timestamp)}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <CloudOff size={11} />
+                          {result.season}
+                        </span>
+                        <span
+                          className="flex items-center gap-1 font-semibold"
+                          style={{ color: quality.color }}
+                        >
+                          <Shield size={11} />
+                          {result.qualityScore.toFixed(1)}%
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex items-center gap-1 shrink-0">
+                      <button
+                        onClick={() => setSelectedResult(result)}
+                        className="p-2 rounded-[var(--radius-md)] text-[var(--color-text-tertiary)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary-subtle)] transition-colors"
+                        title="View details"
+                      >
+                        <Eye size={16} />
+                      </button>
+                      <button
+                        onClick={() => removeFromHistory(result.id)}
+                        className="p-2 rounded-[var(--radius-md)] text-[var(--color-text-tertiary)] hover:text-[var(--color-error)] hover:bg-[var(--color-error-subtle)] transition-colors"
+                        title="Remove"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* No Results for Search */}
+          {filteredHistory.length === 0 && searchQuery.trim() && (
+            <div className="text-center py-12 text-[var(--color-text-tertiary)]">
+              <Search size={32} className="mx-auto mb-3 opacity-40" />
+              <p className="text-[14px] font-medium">
+                No results match &quot;{searchQuery}&quot;
+              </p>
+            </div>
+          )}
+        </>
+      )}
+
+      {/* ================================================================
+          Detail Modal
+          ================================================================ */}
+      {selectedResult && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedResult(null)}
+        >
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-fade-in" />
+
+          {/* Modal */}
+          <div
+            className="relative z-10 w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-elevated)] shadow-[var(--shadow-lg)] animate-scale-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="sticky top-0 z-10 flex items-center justify-between p-5 border-b border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
+              <div>
+                <h2 className="text-[16px] font-bold text-[var(--color-text-primary)]">
+                  {selectedResult.fileName}
+                </h2>
+                <p className="text-[12px] text-[var(--color-text-tertiary)] mt-0.5">
+                  Processed {formatDate(selectedResult.timestamp)}
+                </p>
+              </div>
+              <button
+                onClick={() => setSelectedResult(null)}
+                className="p-2 rounded-[var(--radius-md)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)] transition-colors"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-5 space-y-6">
+              {/* Badges */}
+              <div className="flex flex-wrap gap-2">
+                <Badge variant={cloudTypeBadge(selectedResult.cloudType)} dot size="md">
+                  {selectedResult.cloudType}
+                </Badge>
+                <Badge variant="primary" dot size="md">
+                  {selectedResult.season} Season
+                </Badge>
+              </div>
+
+              {/* Before/After */}
+              <ResultsPanel
+                inputImage={selectedResult.inputPreview}
+                outputImage={selectedResult.outputImage}
+              />
+
+              {/* Quality + Heatmap Row */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
+                  <QualityScore
+                    score={selectedResult.qualityScore}
+                    spectralReport={selectedResult.spectralReport}
+                    size="sm"
+                  />
+                </div>
+                <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
+                  <HeatmapViewer
+                    baseImage={selectedResult.outputImage}
+                    heatmap={selectedResult.uncertaintyHeatmap}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
