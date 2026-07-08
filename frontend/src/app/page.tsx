@@ -1,356 +1,336 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import {
-  Satellite,
-  CloudOff,
-  Activity,
-  Shield,
-  Zap,
-  ArrowRight,
-  Layers,
-  Brain,
-  Eye,
-  Radar,
-  Leaf,
-  Sun,
-  BarChart3,
+import { 
+  ArrowRight, 
+  ChevronDown, 
+  Layers, 
+  Eye, 
+  Leaf, 
+  Radar, 
+  Brain, 
+  Sun, 
+  BarChart3 
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-/* ============================================================================
-   Dashboard Landing Page
-   Premium hero + stats + pipeline overview + quick actions
-   ============================================================================ */
+// --- Realistic Satellite Component ---
+const RealisticSatellite = () => (
+  <svg width="240" height="140" viewBox="0 0 240 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)]">
+    {/* Solar Panels (Left) */}
+    <rect x="0" y="50" width="90" height="40" fill="#0A192F" stroke="#64FFDA" strokeWidth="1.5" />
+    <path d="M 22.5 50 V 90 M 45 50 V 90 M 67.5 50 V 90 M 0 70 H 90" stroke="#64FFDA" strokeWidth="0.75" opacity="0.6" />
+    
+    {/* Solar Panels (Right) */}
+    <rect x="150" y="50" width="90" height="40" fill="#0A192F" stroke="#64FFDA" strokeWidth="1.5" />
+    <path d="M 172.5 50 V 90 M 195 50 V 90 M 217.5 50 V 90 M 150 70 H 240" stroke="#64FFDA" strokeWidth="0.75" opacity="0.6" />
+    
+    {/* Connectors */}
+    <rect x="90" y="65" width="10" height="10" fill="#475569" />
+    <rect x="140" y="65" width="10" height="10" fill="#475569" />
 
-// --- Stats Data ---
-const stats: Array<{
-  label: string;
-  value: string;
-  change: string;
-  trend: "up" | "down" | "neutral";
-  icon: React.ReactNode;
-  color: string;
-  bgColor: string;
-}> = [
-  {
-    label: "Images Processed",
-    value: "1,284",
-    change: "+12.5%",
-    trend: "up" as const,
-    icon: <Satellite size={20} />,
-    color: "var(--color-primary)",
-    bgColor: "var(--color-primary-subtle)",
-  },
-  {
-    label: "Avg Quality Score",
-    value: "94.2",
-    change: "+3.1%",
-    trend: "up" as const,
-    icon: <Shield size={20} />,
-    color: "var(--color-success)",
-    bgColor: "var(--color-success-subtle)",
-  },
-  {
-    label: "Clouds Removed",
-    value: "847",
-    change: "+8.7%",
-    trend: "up" as const,
-    icon: <CloudOff size={20} />,
-    color: "var(--color-info)",
-    bgColor: "var(--color-info-subtle)",
-  },
-  {
-    label: "Engine Uptime",
-    value: "99.9%",
-    change: "Stable",
-    trend: "neutral" as const,
-    icon: <Activity size={20} />,
-    color: "var(--color-warning)",
-    bgColor: "var(--color-warning-subtle)",
-  },
-];
+    {/* Main Bus (Gold Foil) */}
+    <rect x="100" y="20" width="40" height="100" fill="#D4AF37" rx="4" />
+    <rect x="100" y="20" width="40" height="100" fill="url(#foil)" opacity="0.4" rx="4" />
+    
+    {/* Tech Details on Bus */}
+    <rect x="105" y="30" width="30" height="20" fill="#1E293B" rx="2" />
+    <rect x="105" y="90" width="30" height="20" fill="#1E293B" rx="2" />
+    
+    {/* Main Camera/Radar Lens */}
+    <circle cx="120" cy="70" r="16" fill="#0F172A" stroke="#334155" strokeWidth="4" />
+    {/* Lens Reflection / Laser Emitter */}
+    <circle cx="120" cy="70" r="6" fill="#00D4FF" className="animate-pulse" style={{ filter: "drop-shadow(0 0 8px #00D4FF)" }} />
+    
+    {/* Antennas */}
+    <path d="M 120 20 L 120 0 M 115 5 L 125 5 M 110 10 L 130 10" stroke="#94A3B8" strokeWidth="2" />
 
-// --- Pipeline Stages ---
+    <defs>
+      <pattern id="foil" width="8" height="8" patternUnits="userSpaceOnUse">
+        <path d="M0,0 L8,8 M8,0 L0,8" stroke="#B8860B" strokeWidth="0.5" />
+      </pattern>
+    </defs>
+  </svg>
+);
+
 const pipelineStages = [
-  {
-    icon: <Layers size={18} />,
-    name: "Spectral Adapter",
-    desc: "3-band → 13-band mapping",
-    color: "#8B5CF6",
-  },
-  {
-    icon: <Eye size={18} />,
-    name: "Cloud Classifier",
-    desc: "ResNet-18 cloud routing",
-    color: "#EC4899",
-  },
-  {
-    icon: <Leaf size={18} />,
-    name: "Phenology Prior",
-    desc: "Kharif/Rabi/Zaid encoding",
-    color: "#10B981",
-  },
-  {
-    icon: <Radar size={18} />,
-    name: "SAR Fusion",
-    desc: "Cross-attention diffusion",
-    color: "#0066FF",
-  },
-  {
-    icon: <Brain size={18} />,
-    name: "Uncertainty Map",
-    desc: "MC Dropout confidence",
-    color: "#F59E0B",
-  },
-  {
-    icon: <Sun size={18} />,
-    name: "Shadow Removal",
-    desc: "Gamma spectral correction",
-    color: "#EF4444",
-  },
-  {
-    icon: <BarChart3 size={18} />,
-    name: "Physics Validator",
-    desc: "NDVI/NDWI bounds check",
-    color: "#06B6D4",
-  },
+  { icon: <Layers size={24} />, name: "Spectral Adapter", desc: "3-band → 13-band mapping" },
+  { icon: <Eye size={24} />, name: "Cloud Classifier", desc: "ResNet-18 cloud routing" },
+  { icon: <Leaf size={24} />, name: "Phenology Prior", desc: "Kharif/Rabi/Zaid temporal encoding" },
+  { icon: <Radar size={24} />, name: "SAR Fusion", desc: "Cross-attention diffusion with Sentinel-1" },
+  { icon: <Brain size={24} />, name: "Uncertainty Map", desc: "MC Dropout confidence gating" },
+  { icon: <Sun size={24} />, name: "Shadow Removal", desc: "Gamma spectral correction" },
+  { icon: <BarChart3 size={24} />, name: "Physics Validator", desc: "NDVI/NDWI hard physics bounds check" },
 ];
 
-export default function DashboardPage() {
+export default function LandingPage() {
+  const [introStage, setIntroStage] = useState<0 | 1 | 2 | 3>(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  // Intro Sequence Effect
+  useEffect(() => {
+    // 0: Clouds cover land, satellite descends
+    // 1: Satellite fires laser
+    // 2: Clouds disperse
+    // 3: Intro complete
+
+    const t1 = setTimeout(() => setIntroStage(1), 1200);
+    const t2 = setTimeout(() => setIntroStage(2), 2400);
+    const t3 = setTimeout(() => setIntroStage(3), 4000); // Intro lasts exactly 4s
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
+  }, []);
+
   return (
-    <div className="max-w-[1400px] mx-auto space-y-8">
-      {/* ================================================================
-          Hero Section
-          ================================================================ */}
-      <section className="relative overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] p-8 md:p-10 animate-fade-in">
-        {/* Background Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)]/8 via-transparent to-[var(--color-primary)]/4 pointer-events-none" />
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[var(--color-primary)]/5 rounded-full blur-[120px] pointer-events-none" />
-
-        {/* Dot Grid Pattern */}
-        <div className="absolute inset-0 dot-grid opacity-30 pointer-events-none" />
-
-        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div className="space-y-3 max-w-xl">
-            <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[var(--radius-full)] bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 text-[11px] font-semibold text-[var(--color-primary-light)] tracking-wide uppercase">
-                <Zap size={12} />
-                AI Engine Active
-              </span>
-            </div>
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
-              Welcome to{" "}
-              <span className="gradient-text">NOVA-SYNC</span>
-            </h1>
-            <p className="text-[15px] text-[var(--color-text-secondary)] leading-relaxed">
-              7-stage multi-modal AI pipeline for reconstructing cloud-occluded
-              ISRO LISS-IV satellite imagery. Upload, process, and validate —
-              all in one place.
-            </p>
-          </div>
-
-          <Link
-            href="/process"
-            className={cn(
-              "group flex items-center gap-3 px-6 py-3.5 rounded-[var(--radius-lg)]",
-              "bg-[var(--color-primary)] text-white font-semibold text-[14px]",
-              "hover:bg-[var(--color-primary-light)] hover:shadow-[var(--shadow-glow-lg)]",
-              "transition-all duration-300",
-              "shrink-0"
-            )}
+    <div className="bg-[#000000] text-white min-h-[350vh]" ref={containerRef}>
+      
+      {/* ==================================================================== 
+          HYPER-REALISTIC CINEMATIC INTRO 
+          ==================================================================== */}
+      <AnimatePresence>
+        {introStage < 3 && (
+          <motion.div
+            key="cinematic-intro"
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black overflow-hidden pointer-events-none"
           >
-            <Satellite size={18} />
-            Process New Image
-            <ArrowRight
-              size={16}
-              className="group-hover:translate-x-1 transition-transform duration-200"
+            {/* Real Satellite Background (Land) */}
+            <div 
+              className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+              style={{
+                backgroundImage: "url('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/5/13/23')",
+                filter: "brightness(0.6) contrast(1.2)"
+              }}
             />
-          </Link>
-        </div>
-      </section>
 
-      {/* ================================================================
-          Stats Cards
-          ================================================================ */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map((stat, idx) => (
-          <div
-            key={stat.label}
-            className={cn(
-              "group relative rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5",
-              "hover:border-[var(--color-border-hover)] hover:shadow-[var(--shadow-md)]",
-              "transition-all duration-300 cursor-default",
-              "animate-fade-in-up",
-              `stagger-${idx + 1}`
-            )}
-          >
-            <div className="flex items-start justify-between mb-4">
-              <div
-                className="flex items-center justify-center w-10 h-10 rounded-[var(--radius-md)]"
-                style={{ backgroundColor: stat.bgColor, color: stat.color }}
-              >
-                {stat.icon}
-              </div>
-              <span
-                className={cn(
-                  "text-[12px] font-semibold px-2 py-0.5 rounded-[var(--radius-full)]",
-                  stat.trend === "up" &&
-                    "text-[var(--color-success)] bg-[var(--color-success-subtle)]",
-                  stat.trend === "down" &&
-                    "text-[var(--color-error)] bg-[var(--color-error-subtle)]",
-                  stat.trend === "neutral" &&
-                    "text-[var(--color-text-secondary)] bg-[var(--color-surface-elevated)]"
-                )}
-              >
-                {stat.change}
-              </span>
-            </div>
-            <p className="text-2xl font-bold text-[var(--color-text-primary)] tracking-tight">
-              {stat.value}
-            </p>
-            <p className="text-[12px] text-[var(--color-text-tertiary)] font-medium mt-1">
-              {stat.label}
-            </p>
-          </div>
-        ))}
-      </section>
-
-      {/* ================================================================
-          Pipeline Overview
-          ================================================================ */}
-      <section className="animate-fade-in-up stagger-5">
-        <div className="flex items-center justify-between mb-5">
-          <div>
-            <h2 className="text-lg font-bold text-[var(--color-text-primary)]">
-              7-Stage AI Pipeline
-            </h2>
-            <p className="text-[13px] text-[var(--color-text-tertiary)] mt-0.5">
-              Multi-modal reconstruction architecture
-            </p>
-          </div>
-          <Link
-            href="/process"
-            className="text-[13px] font-medium text-[var(--color-primary)] hover:text-[var(--color-primary-light)] flex items-center gap-1 transition-colors"
-          >
-            Start Processing
-            <ArrowRight size={14} />
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
-          {pipelineStages.map((stage, idx) => (
-            <div
-              key={stage.name}
-              className={cn(
-                "group relative flex items-start gap-3 p-4 rounded-[var(--radius-lg)]",
-                "border border-[var(--color-border)] bg-[var(--color-surface)]",
-                "hover:border-[var(--color-border-hover)] hover:bg-[var(--color-surface-hover)]",
-                "transition-all duration-200 cursor-default",
-                "animate-fade-in",
-                `stagger-${idx + 1}`
-              )}
+            {/* Realistic Clouds Layer */}
+            <motion.div
+              initial={{ filter: "blur(0px)", opacity: 1, scale: 1 }}
+              animate={
+                introStage >= 2
+                  ? { filter: "blur(40px)", opacity: 0, scale: 2 }
+                  : { filter: "blur(0px)", opacity: 1, scale: 1 }
+              }
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+              className="absolute inset-0 z-10 pointer-events-none"
             >
-              {/* Stage Number */}
-              <div className="absolute top-2 right-3 text-[10px] font-bold text-[var(--color-text-muted)]">
-                {String(idx + 1).padStart(2, "0")}
-              </div>
-
-              {/* Icon */}
-              <div
-                className="flex items-center justify-center w-9 h-9 rounded-[var(--radius-md)] shrink-0 transition-transform duration-200 group-hover:scale-110"
+              {/* CSS Cloud Generator Overlay */}
+              <div 
+                className="absolute inset-0 opacity-90"
                 style={{
-                  backgroundColor: `${stage.color}15`,
-                  color: stage.color,
+                  backgroundImage: "url('https://www.transparenttextures.com/patterns/clouds.png'), radial-gradient(circle at center, #ffffff 0%, #a0aec0 40%, transparent 80%)",
+                  backgroundSize: "cover, 150% 150%",
+                  backgroundPosition: "center",
+                  mixBlendMode: "screen",
+                  filter: "contrast(1.5) blur(2px)"
                 }}
+              />
+              <div 
+                className="absolute inset-0 opacity-70"
+                style={{
+                  backgroundImage: "url('https://www.transparenttextures.com/patterns/clouds.png')",
+                  backgroundSize: "200%",
+                  animation: "float 20s linear infinite",
+                  mixBlendMode: "screen",
+                }}
+              />
+            </motion.div>
+
+            {/* Satellite & Action */}
+            <div className="relative w-full h-full flex flex-col items-center z-20">
+              
+              {/* Satellite */}
+              <motion.div
+                initial={{ y: -200, opacity: 0, scale: 0.8 }}
+                animate={{ y: 150, opacity: 1, scale: 1 }}
+                transition={{ duration: 1.2, type: "spring", bounce: 0.2 }}
+                className="relative flex flex-col items-center"
               >
-                {stage.icon}
-              </div>
-
-              {/* Text */}
-              <div className="min-w-0">
-                <p className="text-[13px] font-semibold text-[var(--color-text-primary)] truncate">
-                  {stage.name}
-                </p>
-                <p className="text-[11px] text-[var(--color-text-tertiary)] mt-0.5 truncate">
-                  {stage.desc}
-                </p>
-              </div>
+                <RealisticSatellite />
+                
+                {/* Intense Scan Beam */}
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={
+                    introStage === 1
+                      ? { height: "100vh", opacity: 1 }
+                      : introStage >= 2
+                      ? { height: "100vh", opacity: 0 }
+                      : { height: 0, opacity: 0 }
+                  }
+                  transition={{ duration: 0.3 }}
+                  className="absolute top-[100px] w-6 bg-[#00D4FF] rounded-b-full mix-blend-screen"
+                  style={{
+                    boxShadow: "0 0 80px 30px rgba(0, 212, 255, 0.9), 0 0 20px 5px #ffffff",
+                  }}
+                />
+              </motion.div>
             </div>
-          ))}
-        </div>
-      </section>
 
-      {/* ================================================================
-          Quick Actions
-          ================================================================ */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-fade-in-up stagger-6">
-        {/* Process Card */}
-        <Link
-          href="/process"
-          className={cn(
-            "group relative overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6",
-            "hover:border-[var(--color-primary)]/30 hover:shadow-[var(--shadow-glow)]",
-            "transition-all duration-300"
-          )}
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-          <div className="relative z-10">
-            <div
-              className="flex items-center justify-center w-12 h-12 rounded-[var(--radius-lg)] mb-4"
-              style={{
-                backgroundColor: "var(--color-primary-subtle)",
-                color: "var(--color-primary)",
-              }}
+            {/* Cinematic Overlay Text */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={introStage >= 2 ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.8 }}
+              className="absolute z-30 text-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             >
-              <CloudOff size={22} />
-            </div>
-            <h3 className="text-[15px] font-bold text-[var(--color-text-primary)]">
-              Cloud Removal
-            </h3>
-            <p className="text-[13px] text-[var(--color-text-secondary)] mt-1.5 leading-relaxed">
-              Upload LISS-IV imagery and let the 7-stage pipeline reconstruct
-              cloud-free ground truth with physics validation.
-            </p>
-            <span className="inline-flex items-center gap-1 mt-4 text-[13px] font-semibold text-[var(--color-primary)] group-hover:gap-2 transition-all duration-200">
-              Start Processing <ArrowRight size={14} />
-            </span>
-          </div>
-        </Link>
+              <h1 className="text-7xl md:text-9xl font-black tracking-tighter text-white drop-shadow-[0_0_40px_rgba(0,0,0,0.8)]">
+                NOVA-SYNC
+              </h1>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-        {/* History Card */}
-        <Link
-          href="/history"
-          className={cn(
-            "group relative overflow-hidden rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6",
-            "hover:border-[var(--color-success)]/30 hover:shadow-[0_0_20px_rgba(16,185,129,0.1)]",
-            "transition-all duration-300"
-          )}
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-success)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-          <div className="relative z-10">
-            <div
-              className="flex items-center justify-center w-12 h-12 rounded-[var(--radius-lg)] mb-4"
-              style={{
-                backgroundColor: "var(--color-success-subtle)",
-                color: "var(--color-success)",
-              }}
-            >
-              <BarChart3 size={22} />
-            </div>
-            <h3 className="text-[15px] font-bold text-[var(--color-text-primary)]">
-              Processing History
-            </h3>
-            <p className="text-[13px] text-[var(--color-text-secondary)] mt-1.5 leading-relaxed">
-              Review past processing results, compare quality scores, and export
-              spectral analysis reports.
+      {/* ==================================================================== 
+          SCROLLABLE LANDING PAGE CONTENT
+          ==================================================================== */}
+      <div className={cn("relative z-10 transition-opacity duration-1000 w-full", introStage === 3 ? "opacity-100" : "opacity-0")}>
+        
+        {/* HERO SECTION */}
+        <section className="relative h-screen flex flex-col items-center justify-center px-6 overflow-hidden">
+          {/* Faint Earth Background for Hero */}
+          <div 
+            className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-20 [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)]"
+            style={{
+              backgroundImage: "url('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/5/13/23')",
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#000000] z-0" />
+
+          <div className="relative z-10 text-center max-w-5xl mx-auto space-y-8 mt-20">
+            <h2 className="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.1]">
+              Atmospheric Intelligence <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#00D4FF] to-[#0066FF]">
+                Redefined.
+              </span>
+            </h2>
+            <p className="text-xl md:text-2xl text-[var(--color-text-secondary)] max-w-3xl mx-auto leading-relaxed">
+              Optical satellites are blinded by clouds during critical disasters. NOVA-SYNC uses physics-constrained AI and SAR fusion to reconstruct the ground truth with zero hallucinations.
             </p>
-            <span className="inline-flex items-center gap-1 mt-4 text-[13px] font-semibold text-[var(--color-success)] group-hover:gap-2 transition-all duration-200">
-              View History <ArrowRight size={14} />
-            </span>
+
+            <div className="pt-10 flex flex-col sm:flex-row items-center justify-center gap-6">
+              <Link 
+                href="/dashboard"
+                className="group relative inline-flex items-center justify-center gap-3 px-10 py-5 bg-[#00D4FF] text-black font-bold text-lg rounded-full overflow-hidden transition-all hover:scale-105 shadow-[0_0_30px_rgba(0,212,255,0.4)]"
+              >
+                <span className="relative z-10">Initialize Engine</span>
+                <ArrowRight size={20} className="relative z-10 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
           </div>
-        </Link>
-      </section>
+
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce flex flex-col items-center text-[var(--color-text-tertiary)] z-10">
+            <span className="text-[10px] tracking-widest uppercase mb-2">Discover Pipeline</span>
+            <ChevronDown size={24} />
+          </div>
+        </section>
+
+        {/* ABOUT & PIPELINE SECTION */}
+        <section className="relative px-6 py-24 max-w-6xl mx-auto border-t border-[#112240]">
+          
+          {/* About */}
+          <div className="text-center max-w-3xl mx-auto mb-32">
+            <h3 className="text-[12px] text-[#00D4FF] tracking-[0.3em] font-bold uppercase mb-4">About The Mission</h3>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">Why NOVA-SYNC?</h2>
+            <p className="text-lg text-[#A1A1AA] leading-relaxed">
+              During the devastating Assam floods, rescue operations were severely delayed because optical satellites (like ISRO's LISS-IV) couldn't see through the dense monsoon cloud cover. Lives were lost waiting for clear skies. NOVA-SYNC solves this "blindspot" by fusing multi-spectral optical data with cloud-penetrating SAR (radar) data, creating a real-time, cloud-free view of the Earth when it matters most.
+            </p>
+          </div>
+
+          {/* Vertical Pipeline Representation */}
+          <div className="relative">
+            <div className="text-center mb-16">
+              <h3 className="text-[12px] text-[#00D4FF] tracking-[0.3em] font-bold uppercase mb-4">The Architecture</h3>
+              <h2 className="text-3xl md:text-5xl font-bold">7-Stage AI Pipeline</h2>
+            </div>
+
+            {/* The vertical tracking line */}
+            <div className="absolute left-[24px] md:left-1/2 top-[150px] bottom-0 w-[2px] bg-[#112240] -translate-x-1/2 z-0" />
+            
+            {/* The animated glowing line */}
+            <motion.div 
+              className="absolute left-[24px] md:left-1/2 top-[150px] w-[2px] bg-gradient-to-b from-[#00D4FF] to-transparent -translate-x-1/2 z-10 shadow-[0_0_15px_#00D4FF]" 
+              style={{ height: useTransform(scrollYProgress, [0.3, 0.9], ["0%", "100%"]) }}
+            />
+
+            <div className="space-y-24 relative z-20">
+              {pipelineStages.map((stage, idx) => {
+                // Calculate when this node should light up based on scroll
+                const start = 0.3 + (idx * 0.08);
+                const end = start + 0.1;
+                // eslint-disable-next-line react-hooks/rules-of-hooks
+                const nodeOpacity = useTransform(scrollYProgress, [start, end], [0.3, 1]);
+                // eslint-disable-next-line react-hooks/rules-of-hooks
+                const nodeScale = useTransform(scrollYProgress, [start, end], [0.8, 1]);
+                // eslint-disable-next-line react-hooks/rules-of-hooks
+                const glowOpacity = useTransform(scrollYProgress, [start, end], [0, 1]);
+
+                const isEven = idx % 2 === 0;
+
+                return (
+                  <motion.div 
+                    key={stage.name}
+                    style={{ opacity: nodeOpacity, scale: nodeScale }}
+                    className={cn(
+                      "flex items-center gap-8 md:gap-16 relative",
+                      "flex-row", // Always row on mobile
+                      isEven ? "md:flex-row" : "md:flex-row-reverse" // Alternating on desktop
+                    )}
+                  >
+                    {/* Node Circle */}
+                    <div className="absolute left-[24px] md:left-1/2 -translate-x-1/2 w-12 h-12 bg-[#040914] border-2 border-[#1E3A8A] rounded-full flex items-center justify-center shrink-0 z-20 transition-colors">
+                      <motion.div style={{ opacity: glowOpacity }} className="absolute inset-0 rounded-full shadow-[0_0_20px_#00D4FF] bg-[#00D4FF]/20" />
+                      <div className="text-[#00D4FF] z-10">
+                        {stage.icon}
+                      </div>
+                    </div>
+
+                    {/* Content Box */}
+                    <div className={cn(
+                      "w-full md:w-1/2 pt-2 pb-2 pl-20 md:pl-0",
+                      isEven ? "md:pr-16 md:text-right" : "md:pl-16 md:text-left"
+                    )}>
+                      <div className="bg-[#040914] border border-[#112240] p-6 rounded-2xl shadow-xl hover:border-[#1E3A8A] transition-colors relative overflow-hidden group">
+                        <motion.div style={{ opacity: glowOpacity }} className="absolute inset-0 bg-gradient-to-r from-[#00D4FF]/5 to-transparent pointer-events-none" />
+                        <span className="text-[10px] font-bold text-[#00D4FF] tracking-widest uppercase mb-2 block">
+                          Stage 0{idx + 1}
+                        </span>
+                        <h4 className="text-2xl font-bold text-white mb-2">{stage.name}</h4>
+                        <p className="text-[#A1A1AA]">{stage.desc}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+        
+        {/* Final CTA */}
+        <section className="py-32 text-center border-t border-[#112240]">
+           <h2 className="text-4xl md:text-5xl font-bold mb-8">Experience the Future of Earth Observation</h2>
+           <Link 
+              href="/dashboard"
+              className="inline-flex items-center justify-center gap-3 px-12 py-6 border-2 border-[#00D4FF] text-[#00D4FF] hover:bg-[#00D4FF] hover:text-black font-bold text-xl rounded-full transition-all duration-300 shadow-[0_0_30px_rgba(0,212,255,0.2)] hover:shadow-[0_0_60px_rgba(0,212,255,0.5)]"
+            >
+              Access Dashboard
+            </Link>
+        </section>
+
+      </div>
     </div>
   );
 }

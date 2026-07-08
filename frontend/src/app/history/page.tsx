@@ -103,7 +103,7 @@ export default function HistoryPage() {
 
       {/* Empty State */}
       {history.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 rounded-[var(--radius-xl)] border-2 border-dashed border-[var(--color-border)] bg-[var(--color-surface)] animate-fade-in">
+        <div className="flex flex-col items-center justify-center py-20 rounded-[var(--radius-xl)] border-2 border-dashed border-[var(--color-border-hover)] glass bg-[var(--color-surface)]/10 animate-fade-in">
           <div className="flex items-center justify-center w-16 h-16 rounded-full bg-[var(--color-info-subtle)] mb-4 animate-float">
             <HistoryIcon size={28} className="text-[var(--color-info)]" />
           </div>
@@ -139,7 +139,7 @@ export default function HistoryPage() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className={cn(
                   "w-full pl-9 pr-4 py-2.5 rounded-[var(--radius-md)]",
-                  "bg-[var(--color-surface)] border border-[var(--color-border)]",
+                  "glass bg-[var(--color-surface)]/30",
                   "text-[13px] text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)]",
                   "hover:border-[var(--color-border-hover)] focus:border-[var(--color-primary)] focus:ring-1 focus:ring-[var(--color-primary)]",
                   "transition-all duration-200 outline-none"
@@ -154,7 +154,7 @@ export default function HistoryPage() {
                 onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
                 className={cn(
                   "appearance-none pl-3 pr-8 py-2.5 rounded-[var(--radius-md)]",
-                  "bg-[var(--color-surface)] border border-[var(--color-border)]",
+                  "glass bg-[var(--color-surface)]/30",
                   "text-[13px] font-medium text-[var(--color-text-primary)]",
                   "hover:border-[var(--color-border-hover)] focus:border-[var(--color-primary)]",
                   "transition-all duration-200 outline-none cursor-pointer"
@@ -180,8 +180,8 @@ export default function HistoryPage() {
                 <div
                   key={result.id}
                   className={cn(
-                    "group rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)]",
-                    "hover:border-[var(--color-border-hover)] hover:shadow-[var(--shadow-md)]",
+                    "group rounded-[var(--radius-lg)] glass bg-[var(--color-surface)]/20",
+                    "hover:border-[var(--color-border-focus)] glass-hover",
                     "transition-all duration-200",
                     "animate-fade-in",
                     `stagger-${Math.min(idx + 1, 8)}`
@@ -280,11 +280,11 @@ export default function HistoryPage() {
 
           {/* Modal */}
           <div
-            className="relative z-10 w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-bg-elevated)] shadow-[var(--shadow-lg)] animate-scale-in"
+            className="relative z-10 w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-[var(--radius-xl)] glass-elevated shadow-[var(--shadow-lg)] animate-scale-in"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="sticky top-0 z-10 flex items-center justify-between p-5 border-b border-[var(--color-border)] bg-[var(--color-bg-elevated)]">
+            <div className="sticky top-0 z-10 flex items-center justify-between p-5 border-b border-[var(--color-border)] glass">
               <div>
                 <h2 className="text-[16px] font-bold text-[var(--color-text-primary)]">
                   {selectedResult.fileName}
@@ -321,14 +321,14 @@ export default function HistoryPage() {
 
               {/* Quality + Heatmap Row */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
+                <div className="rounded-[var(--radius-lg)] glass bg-[var(--color-surface)]/20 p-5">
                   <QualityScore
                     score={selectedResult.qualityScore}
                     spectralReport={selectedResult.spectralReport}
                     size="sm"
                   />
                 </div>
-                <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
+                <div className="rounded-[var(--radius-lg)] glass bg-[var(--color-surface)]/20 p-5">
                   <HeatmapViewer
                     baseImage={selectedResult.outputImage}
                     heatmap={selectedResult.uncertaintyHeatmap}

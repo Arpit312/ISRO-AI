@@ -16,29 +16,36 @@ interface AppShellProps {
  */
 export default function AppShell({ children }: AppShellProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Sidebar */}
+        {/* Sidebar */}
       <Sidebar
         collapsed={sidebarCollapsed}
         onToggle={() => setSidebarCollapsed((prev) => !prev)}
+        mobileOpen={mobileMenuOpen}
+        onMobileClose={() => setMobileMenuOpen(false)}
       />
 
       {/* Main Content Area */}
       <div
         className={cn(
           "flex flex-col flex-1 transition-all duration-300 ease-[var(--ease-smooth)]",
+          "ml-0", // 0 margin on mobile
           sidebarCollapsed
-            ? "ml-[var(--sidebar-collapsed-width)]"
-            : "ml-[var(--sidebar-width)]"
+            ? "md:ml-[var(--sidebar-collapsed-width)]"
+            : "md:ml-[var(--sidebar-width)]"
         )}
       >
         {/* Navbar */}
-        <Navbar sidebarCollapsed={sidebarCollapsed} />
+        <Navbar 
+          sidebarCollapsed={sidebarCollapsed} 
+          onMobileMenuToggle={() => setMobileMenuOpen((prev) => !prev)}
+        />
 
         {/* Page Content */}
-        <main className="flex-1 mt-[var(--navbar-height)] p-6">
+        <main className="flex-1 mt-[var(--navbar-height)] p-4 md:p-6 overflow-x-hidden">
           {children}
         </main>
 

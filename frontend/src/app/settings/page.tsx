@@ -69,7 +69,7 @@ export default function SettingsPage() {
 
       <div className="space-y-6">
         {/* User Profile Card */}
-        <div className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 animate-fade-in">
+        <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6 animate-fade-in">
           <h2 className="text-[14px] font-semibold text-[var(--color-text-primary)] mb-4 flex items-center gap-2">
             <User size={16} />
             Account
@@ -114,7 +114,7 @@ export default function SettingsPage() {
         </div>
 
         {/* System Configuration */}
-        <div className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 animate-fade-in-up stagger-2">
+        <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6 animate-fade-in-up stagger-2">
           <h2 className="text-[14px] font-semibold text-[var(--color-text-primary)] mb-4 flex items-center gap-2">
             <SettingsIcon size={16} />
             System Configuration
@@ -146,7 +146,7 @@ export default function SettingsPage() {
         </div>
 
         {/* About */}
-        <div className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 animate-fade-in-up stagger-3">
+        <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6 animate-fade-in-up stagger-3">
           <h2 className="text-[14px] font-semibold text-[var(--color-text-primary)] mb-3">
             About NOVA-SYNC
           </h2>

@@ -1,6 +1,7 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import AppShell from "@/components/layout/AppShell";
 import ToastContainer from "@/components/ui/Toast";
@@ -11,9 +12,10 @@ interface ProvidersProps {
 
 /**
  * Client-side providers wrapper.
- * Wraps the app with React Query and the AppShell layout.
+ * Wraps the app with React Query and the AppShell layout (except on root landing page).
  */
 export default function Providers({ children }: ProvidersProps) {
+  const pathname = usePathname();
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -32,7 +34,11 @@ export default function Providers({ children }: ProvidersProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AppShell>{children}</AppShell>
+      {pathname === "/" ? (
+        children
+      ) : (
+        <AppShell>{children}</AppShell>
+      )}
       <ToastContainer />
     </QueryClientProvider>
   );

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SAFE-ROUTE — Satellite Risk & Rescue Locator</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark"></span>
+    <div>
+      <h1>SAFE-ROUTE</h1>
+      <p class="tagline">Satellite risk scan · Safe zone finder · Rescue SOS</p>
+    </div>
+  </div>
+  <div class="status-pill" id="statusPill">
+    <span class="dot"></span> Idle — awaiting location
+  </div>
+</header>
+
+<main class="layout">
+
+  <!-- LEFT CONTROL PANEL -->
+  <aside class="panel controls">
+    <section class="block">
+      <h2>1. Set your location</h2>
+      <button id="btnLocate" class="btn btn-primary">
+        <i class="ic">◎</i> Use my current location
+      </button>
+      <div class="or-row"><span></span>or<span></span></div>
+      <form id="searchForm" class="search-row">
+        <input id="searchInput" type="text" placeholder="Search a place (e.g. Kedarnath, Guwahati)" />
+        <button type="submit" class="btn btn-ghost">Go</button>
+      </form>
+      <p class="hint">You can also click anywhere on the map to drop a pin.</p>
+      <div class="coords" id="coordsBox">— , —</div>
+    </section>
+
+    <section class="block">
+      <h2>2. Scan for safe zones</h2>
+      <button id="btnScan" class="btn btn-safe" disabled>
+        <i class="ic">▣</i> Run risk scan
+      </button>
+      <div class="scan-radius-row">
+        <label for="radiusInput">Scan radius</label>
+        <input type="range" id="radiusInput" min="1" max="8" step="1" value="3" />
+        <span id="radiusVal">3 km</span>
+      </div>
+      <div id="scanProgress" class="scan-progress hidden">
+        <div class="radar"><span></span></div>
+        <p id="scanProgressText">Scanning grid…</p>
+      </div>
+    </section>
+
+    <section class="block" id="resultsBlock" style="display:none">
+      <h2>3. Safest zone found</h2>
+      <div id="safeZoneCard" class="result-card safe"></div>
+      <h2 style="margin-top:16px">Nearest rescue team</h2>
+      <div id="rescueCard" class="result-card rescue"></div>
+    </section>
+
+    <section class="block" id="sosBlock" style="display:none">
+      <h2>4. Emergency SOS</h2>
+      <p class="hint">Sends your live location + risk summary to a rescue contact.</p>
+      <button id="btnSOS" class="btn btn-sos">
+        <i class="ic">⚠</i> Send SOS
+      </button>
+      <div id="sosOptions" class="sos-options hidden">
+        <a id="sosWhatsapp" target="_blank" class="btn btn-ghost small">Send via WhatsApp</a>
+        <a id="sosSMS" class="btn btn-ghost small">Send via SMS</a>
+        <button id="sosCopy" class="btn btn-ghost small">Copy message</button>
+      </div>
+    </section>
+  </aside>
+
+  <!-- MAP -->
+  <section class="map-wrap">
+    <div id="map"></div>
+    <div class="legend">
+      <div><span class="dot user"></span> Your location</div>
+      <div><span class="dot safezone"></span> Safe zone</div>
+      <div><span class="dot rescue"></span> Rescue team</div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footnote">
+  Risk scoring uses live open data (elevation, water bodies, roads). Rescue-team locations are <strong>demo data</strong> —
+  see README before real-world use. This is a decision-support prototype, not an autonomous rescue system.
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/rescueTeams.js"></script>
+<script src="js/riskEngine.js"></script>
+<script src="js/map.js"></script>
+<script src="js/sos.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

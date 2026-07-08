@@ -31,3 +31,4 @@ extracted_images/
 
 # Ignored project files
 PROJECT_STATUS.md
+backend/novasync_improved_weights.pth

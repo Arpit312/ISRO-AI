@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 import Button from "@/components/ui/Button";
 import Badge from "@/components/ui/Badge";
 import { useToast } from "@/components/ui/Toast";
-import { API_BASE_URL } from "@/lib/api";
+import { API_BASE_URL, IS_MOCK_MODE } from "@/lib/api";
 
 // Fix for default Leaflet icon issues in Next.js
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -125,17 +125,29 @@ export default function MapExplorer() {
       const response = await fetch(overlay.url);
       const blob = await response.blob();
 
-      const formData = new FormData();
-      formData.append("file", blob, "composite.png");
-      formData.append("month", (new Date().getMonth() + 1).toString());
+      let data;
+      if (IS_MOCK_MODE) {
+        await new Promise(r => setTimeout(r, 2000));
+        const mockImageBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
+        data = {
+          status: "success",
+          cloud_type_detected: "Thin Cirrus",
+          physics_quality_score: 98.5,
+          output_image: mockImageBase64
+        };
+      } else {
+        const formData = new FormData();
+        formData.append("file", blob, "composite.png");
+        formData.append("month", (new Date().getMonth() + 1).toString());
 
-      const aiRes = await fetch(`${API_BASE_URL}/api/v1/process`, {
-        method: "POST",
-        body: formData,
-      });
+        const aiRes = await fetch(`${API_BASE_URL}/api/v1/process`, {
+          method: "POST",
+          body: formData,
+        });
 
-      if (!aiRes.ok) throw new Error("AI Processing Failed");
-      const data = await aiRes.json();
+        if (!aiRes.ok) throw new Error("AI Processing Failed");
+        data = await aiRes.json();
+      }
 
       if (data.status === "success") {
         setOverlay(prev => prev ? {
@@ -182,11 +194,23 @@ export default function MapExplorer() {
     setIsSearching(true);
 
     try {
-      const geoRes = await fetch(`${API_BASE_URL}/api/geocode?q=${encodeURIComponent(query)}`);
-      if (!geoRes.ok) {
-        throw new Error("Location not found");
+      let lat, lon, display_name;
+
+      if (IS_MOCK_MODE) {
+        await new Promise(r => setTimeout(r, 800)); // Simulate delay
+        lat = 26.14;
+        lon = 91.73;
+        display_name = query + " (Mocked Location)";
+      } else {
+        const geoRes = await fetch(`${API_BASE_URL}/api/geocode?q=${encodeURIComponent(query)}`);
+        if (!geoRes.ok) {
+          throw new Error("Location not found");
+        }
+        const data = await geoRes.json();
+        lat = data.lat;
+        lon = data.lon;
+        display_name = data.display_name;
       }
-      const { lat, lon, display_name } = await geoRes.json();
 
       setMapCenter([lat, lon]);
       toast.success("Location Found", display_name);
@@ -207,6 +231,29 @@ export default function MapExplorer() {
     toast.info("Processing Request", "Initializing AI temporal compositor...");
 
     try {
+      if (IS_MOCK_MODE) {
+        await new Promise(r => setTimeout(r, 2000)); // Simulate AI processing
+        const mockImageBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
+        const offset = 0.03;
+        const bounds: L.LatLngBoundsExpression = [
+          [lat - offset, lon - offset],
+          [lat + offset, lon + offset],
+        ];
+
+        setOverlay({ 
+          url: mockImageBase64, 
+          bounds, 
+          qualityScore: "95.5", 
+          cloudPct: "10.2", 
+          lat, 
+          lng: lon,
+          groundTruthUrl: null
+        });
+        toast.success("Imagery Loaded", "Cloud-free composite successfully generated.");
+        setIsFetchingImage(false);
+        return;
+      }
+
       const imgRes = await fetch(`${API_BASE_URL}/api/clear-image?lat=${lat}&lon=${lon}`);
 
       if (!imgRes.ok) {

@@ -1,57 +1,58 @@
-# ISRO AI Project Ecosystem
+# NOVA-SYNC: AI-Driven Satellite Intelligence Ecosystem
+*Turning cloud-blinded satellite data into actionable ground intelligence.*
+īīīl̥
+---
 
-## Vision & Purpose
-The **ISRO AI Project** is a comprehensive suite of artificial intelligence tools designed to process, enhance, and analyze remote sensing and satellite imagery, specifically targeting ISRO's sensors like LISS-IV. 
+## 🛑 The Problem: The "Blindspot" in Earth Observation
+Optical satellites (like ISRO's LISS-IV) capture critical high-resolution data, but they have a fatal flaw: **they cannot see through clouds.**
+* **Data Loss:** During monsoons or overcast days, up to 90% of satellite imagery becomes useless white noise.
+* **Delayed Response:** In real-life disasters like the Assam Floods, rescue agencies rely on this data to find submerged villages. Cloud cover forces them to wait days for clear weather, costing precious lives.
+* **Economic Cost:** Launching new radar satellites is billions of dollars. We need a software solution to fix optical data.
 
-The primary challenge addressed by this project is **cloud occlusion in satellite imagery**. Optical sensors cannot penetrate clouds, rendering data completely obscured during the monsoon season or overcast days. This missing data creates a massive bottleneck for critical downstream applications like agriculture monitoring, disaster management, and defense surveillance. 
+## 🚀 The Solution: NOVA-SYNC Ecosystem
+We built a comprehensive, end-to-end ecosystem that mathematically reconstructs cloud-obscured areas in satellite imagery and immediately turns that clear data into actionable disaster-response intelligence.
 
-The vision of this ecosystem is to transform raw, weather-dependent satellite imagery into a highly searchable, always-clear, and scientifically valid asset. This ensures operational continuity, maximizes the utility of existing satellite data without launching new costly sensors, and provides continuous, accessible ground intelligence.
+Our solution comprises three primary modules:
+1. **NOVA-SYNC:** A 7-stage Generative AI Engine that removes clouds by fusing optical data with radar data.
+2. **SAFE-ROUTE:** A live open-data risk scanner that finds the safest zones and nearest rescue teams for disaster victims.
+3. **Semantic Search:** An NLP-driven search engine to instantly find geographical features across unlabelled satellite archives.
 
-## Current Status
-The project is currently a **Fully Working Prototype**, featuring an integrated ecosystem consisting of two major subsystems that solve critical challenges in Earth observation: searching through massive datasets and mathematically reconstructing cloud-obscured imagery.
+---
 
-## Subsystems & Pipelines Explained
+## 🧠 Core AI Architecture (How NOVA-SYNC Works)
+We don't use basic image inpainting to "guess" what's under the cloud. We built a scientifically rigorous **7-Stage AI Pipeline**:
 
-### 1. NOVA-SYNC (LISS-IV Cloud Removal Engine)
-NOVA-SYNC is an advanced, multi-modal Generative AI pipeline designed to reconstruct satellite imagery obscured by clouds. Instead of blindly "guessing" missing pixels, it mathematically reconstructs the ground reality using a **7-stage AI pipeline**:
+1. **Spectral Domain Adapter:** Maps 3-band satellite imagery into a 13-band space, allowing us to leverage massive pre-trained global foundation models without expensive retraining.
+2. **Intelligent Cloud Router (ResNet-18):** Classifies clouds (Cirrus, Convective, Shadows) and only triggers heavy AI processing on obscured pixels, saving massive compute power.
+3. **Phenological Prior Injection:** Injects Indian crop calendars (Kharif, Rabi) into the AI vector. If it's July, the AI mathematically knows the vegetation should be green, ensuring seasonal accuracy.
+4. **SAR-Guided Latent Diffusion (The Core Engine):** We fuse cloud-penetrating Synthetic Aperture Radar (SAR) data with optical data using Cross-Attention mechanisms. The AI reconstructs roads, rivers, and cities based on **actual radar reflections**, not random hallucinations.
+5. **Confidence-Gated Blending (MC-Dropout):** The AI generates an *Uncertainty Heatmap*. If the AI is unsure (e.g., over dense, unseen urban areas), it gracefully falls back to a gamma-corrected original or a historical clear image. **Zero hallucination risk.**
+6. **Physics-Based Shadow Removal:** Recovers usable ground area hidden under dark cloud shadows using gamma correction and stretching.
+7. **Spectral Physics Validator:** The final output is checked against hard Earth science constraints (e.g., NDVI indices). It calculates a strict **Physics Quality Score** and a **Cloud Coverage Reduction %**.
 
-1. **Spectral Domain Adapter (SDA):** Maps 3-band LISS-IV imagery to a 13-band space to utilize powerful global foundation models without the need to retrain them from scratch.
-2. **NER Cloud Type Classifier:** A ResNet-18 backbone classifies the image into 5 categories (e.g., Thin Cirrus, Deep Convective, Cloud Shadow) to intelligently route processing and avoid heavy AI processing on clear areas.
-3. **Phenological Prior Module:** Incorporates Indian Crop Calendars (Kharif, Rabi, Zaid) into a mathematical vector to guide the AI, ensuring reconstructed vegetation is seasonally and agriculturally accurate.
-4. **SAR-Guided Latent Diffusion:** Fuses optical features with SAR (Synthetic Aperture Radar) data using Cross-Attention mechanisms. Radar penetrates clouds, allowing the Diffusion U-Net to reconstruct the image based on actual physical ground structures rather than random AI hallucinations.
-5. **Uncertainty Quantification (Confidence Matrix):** Generates a Confidence Matrix Heatmap using an Uncertainty Head (MC Dropout) to highlight unreliable AI guesses, preventing errors in critical decision-making.
-6. **Cloud + Shadow Dual Removal:** Targets cloud shadows via a physics-based Gamma Correction module, stretching spectral reflectance to natural brightness and recovering maximum usable surface area.
-7. **Spectral Physics Validator:** Enforces hard physical bounds by calculating indices like NDVI, outputting a Quality Score (0-100) to guarantee the scientific validity of the output.
+---
 
-### 2. Remote Sensing Image Search Engine
-An intelligent, natural-language-driven search engine for satellite imagery.
-- **How it works:** It utilizes OpenAI's CLIP embeddings to understand the context of natural text queries (e.g., "airport runway", "dense forest") and maps them to image pixels. It uses ChromaDB for fast similarity matching, allowing users to quickly retrieve specific geographical features from massive unlabelled datasets.
+## 🌍 SAFE-ROUTE: From Pixels to Saving Lives
+Fixing the image is only step one. We built **SAFE-ROUTE** to show how this data is actively used in the real world.
+* **Live Risk Scanning:** Scans a radius around a user's location, pulling live OpenData (Elevation, Rivers, Roads).
+* **Mathematical Risk Scoring:** Evaluates every coordinate. High elevation + far from water + near a road = **Safest Zone**.
+* **Rescue Routing:** Uses OSRM to draw a direct route from the victim to the Safe Zone, and locates the nearest NDRF/SDRF camp.
+* **1-Click SOS:** Generates an offline WhatsApp/SMS deep-link with exact live coordinates and a risk summary for immediate dispatch.
 
-## Technology Stack
-- **AI & Deep Learning:** PyTorch, TorchVision, OpenAI CLIP, Latent Diffusion Models, ResNet-18
-- **Databases:** ChromaDB (Vector Similarity Search)
-- **Backend & APIs:** Python, FastAPI, Flask, Uvicorn
-- **Frontend & UI:** Next.js (React), TailwindCSS, JavaScript/TypeScript
-- **Data Processing:** Pandas, NumPy, PIL, Matplotlib
+---
 
-## Setup & Usage
+## 🏆 Hackathon Winning USP (What sets us apart?)
+Most AI projects just focus on making images look visually pretty. We focused on making them **Scientifically Usable**.
+* **"Honest AI" (Zero Hallucinations):** Our Confidence-Gated Blending and Multi-Temporal Priority ensures that if the AI isn't 100% sure, it steps aside. We prioritize real archive data over AI guesses.
+* **Physics-Constrained Output:** We don't just output a PNG; we output a spectral report (NDVI/NDWI limits) to prove the pixels can be used for agricultural and structural analysis.
+* **Production-Ready Modularity:** The AI Engine (FastAPI/PyTorch) is completely decoupled from the UI (Next.js) and the Rescue Module (Standalone JS), ensuring scalable, crash-resistant architecture.
 
-### A. Run Remote Sensing Image Search Engine
-```bash
-pip install flask chromadb torch torchvision transformers pillow pandas
-python build_database.py
-python app.py
-```
-Open `http://localhost:5000` in your browser.
+---
 
-### B. Run NOVA-SYNC (Cloud Removal Engine)
+## 🛠️ Technology Stack
+* **AI & Deep Learning:** PyTorch, Latent Diffusion, ResNet-18, OpenAI CLIP.
+* **Geospatial & APIs:** Leaflet, OpenTopoData, Overpass API (OSM), EOX Sentinel-2, OSRM.
+* **Backend:** Python, FastAPI, ChromaDB (Vector Search).
+* **Frontend:** Next.js (React), TailwindCSS, Vanilla JS for edge modules.
 
-**Run Backend (FastAPI / PyTorch AI Engine):**
-1. Navigate to the project directory: `cd isro_liss4_project`
-2. Activate the virtual environment: `venv\Scripts\activate` (or `source venv/bin/activate` on Mac/Linux)
-3. Start the server: `python -m uvicorn api_server:app --port 8000 --reload`
-
-**Run Frontend (Next.js Dashboard):**
-1. Open a new terminal and navigate to the frontend folder: `cd NOVA-SYNC`
-2. Start the development server: `npm run dev`
-3. Open a browser and visit: `http://localhost:3000`
+*(Note: Internal weights and proprietary datasets have been abstracted for privacy.)*

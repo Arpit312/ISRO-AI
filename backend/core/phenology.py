@@ -31,10 +31,10 @@ class PhenologyEmbedder(nn.Module):
         
         season_name, season_vec = self.get_season(month)
         
-        # Combine [sin, cos, kharif, rabi, zaid] -> 5D Vector
-        embedding_list = [month_sin, month_cos] + season_vec
+        # Combine [sin, cos, kharif, rabi, 0, 0, 0, 0] -> 8D Vector to match Colab training
+        embedding_list = [month_sin, month_cos, season_vec[0], season_vec[1], 0.0, 0.0, 0.0, 0.0]
         
-        # Convert to PyTorch Tensor (Shape: [1, 5] -> Batch size 1, Vector size 5)
+        # Convert to PyTorch Tensor (Shape: [1, 8] -> Batch size 1, Vector size 8)
         embedding_tensor = torch.tensor([embedding_list], dtype=torch.float32)
         
         return embedding_tensor, season_name

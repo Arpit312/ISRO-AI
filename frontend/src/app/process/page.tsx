@@ -52,19 +52,21 @@ export default function ProcessPage() {
         { file, month, inputPreview: preview },
         {
           onSuccess: (data) => {
-            setCurrentResult({
-              id: `${Date.now()}`,
-              timestamp: Date.now(),
-              fileName: file.name,
-              month,
-              cloudType: data.cloud_type_detected,
-              season: data.season_prior_injected,
-              qualityScore: data.physics_quality_score,
-              spectralReport: data.spectral_report,
-              outputImage: data.output_image,
-              uncertaintyHeatmap: data.uncertainty_heatmap,
-              inputPreview: preview,
-            });
+              setCurrentResult({
+                id: `${Date.now()}`,
+                timestamp: Date.now(),
+                fileName: file.name,
+                month,
+                cloudType: data.cloud_type_detected,
+                season: data.season_prior_injected,
+                qualityScore: data.physics_quality_score,
+                spectralReport: data.spectral_report,
+                outputImage: data.output_image,
+                uncertaintyHeatmap: data.uncertainty_heatmap,
+                inputPreview: preview,
+                initialCloudPct: data.initial_cloud_pct,
+                finalCloudPct: data.final_cloud_pct,
+              });
           },
         }
       );
@@ -111,7 +113,7 @@ export default function ProcessPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in-up">
           {/* Upload Area */}
           <div className="lg:col-span-2">
-            <div className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+            <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6">
               <ImageUploader
                 onSubmit={handleSubmit}
                 isProcessing={isProcessing}
@@ -121,7 +123,7 @@ export default function ProcessPage() {
 
           {/* Info Panel */}
           <div className="space-y-4">
-            <div className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5 space-y-4">
+            <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-5 space-y-4">
               <h3 className="text-[14px] font-semibold text-[var(--color-text-primary)]">
                 How it works
               </h3>
@@ -150,7 +152,7 @@ export default function ProcessPage() {
             </div>
 
             {/* Supported Sensors Card */}
-            <div className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5">
+            <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-5">
               <h3 className="text-[13px] font-semibold text-[var(--color-text-primary)] mb-3">
                 Supported Sensors
               </h3>
@@ -174,7 +176,7 @@ export default function ProcessPage() {
           {/* Preview + Pipeline */}
           <div className="space-y-5">
             {/* Input preview */}
-            <div className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] overflow-hidden">
+            <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 overflow-hidden">
               {inputPreview && (
                 <div className="relative">
                   <img
@@ -201,7 +203,7 @@ export default function ProcessPage() {
           </div>
 
           {/* Pipeline Status */}
-          <div className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+          <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6">
             <PipelineStatus
               isProcessing={isProcessing}
               isComplete={false}
@@ -234,7 +236,7 @@ export default function ProcessPage() {
           {/* Main Results Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Before/After — Spans 2 columns */}
-            <div className="lg:col-span-2 rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+            <div className="lg:col-span-2 rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6">
               <ResultsPanel
                 inputImage={currentResult.inputPreview}
                 outputImage={currentResult.outputImage}
@@ -242,10 +244,12 @@ export default function ProcessPage() {
             </div>
 
             {/* Quality Score */}
-            <div className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+            <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6">
               <QualityScore
                 score={currentResult.qualityScore}
                 spectralReport={currentResult.spectralReport}
+                initialCloudPct={currentResult.initialCloudPct}
+                finalCloudPct={currentResult.finalCloudPct}
                 size="md"
               />
             </div>
@@ -254,7 +258,7 @@ export default function ProcessPage() {
           {/* Second Row */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Heatmap */}
-            <div className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+            <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6">
               <HeatmapViewer
                 baseImage={currentResult.outputImage}
                 heatmap={currentResult.uncertaintyHeatmap}
@@ -262,7 +266,7 @@ export default function ProcessPage() {
             </div>
 
             {/* Pipeline Complete + Actions */}
-            <div className="rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] p-6 space-y-5">
+            <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6 space-y-5">
               <PipelineStatus
                 isProcessing={false}
                 isComplete={true}

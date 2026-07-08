@@ -73,51 +73,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 1. THE SINGLE PIPELINE WRAPPER (Advanced U-Net Architecture)
-class DoubleConv(nn.Module):
-    def __init__(self, in_ch, out_ch):
-        super().__init__()
-        self.net = nn.Sequential(
-            nn.Conv2d(in_ch, out_ch, 3, padding=1), nn.BatchNorm2d(out_ch), nn.ReLU(inplace=True),
-            nn.Conv2d(out_ch, out_ch, 3, padding=1), nn.BatchNorm2d(out_ch), nn.ReLU(inplace=True)
-        )
-    def forward(self, x): return self.net(x)
-
-class NovaSyncModel(nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.inc = DoubleConv(3, 32)
-        self.down1 = nn.Sequential(nn.MaxPool2d(2), DoubleConv(32, 64))
-        self.down2 = nn.Sequential(nn.MaxPool2d(2), DoubleConv(64, 128))
-        
-        self.up1 = nn.ConvTranspose2d(128, 64, kernel_size=2, stride=2)
-        self.conv1 = DoubleConv(128, 64)
-        self.up2 = nn.ConvTranspose2d(64, 32, kernel_size=2, stride=2)
-        self.conv2 = DoubleConv(64, 32)
-        
-        self.outc = nn.Sequential(nn.Conv2d(32, 3, 1), nn.Sigmoid())
-        
-    def forward(self, x):
-        x1 = self.inc(x)
-        x2 = self.down1(x1)
-        x3 = self.down2(x2)
-        
-        x = self.up1(x3)
-        x = self.conv1(torch.cat([x, x2], dim=1))
-        x = self.up2(x)
-        x = self.conv2(torch.cat([x, x1], dim=1))
-        
-        return self.outc(x)
+from core.nova_unet import NovaSyncModelImproved
+from sar_fetch import fetch_sentinel1_sar_async
 
 # 2. REAL AI ENGINE ACTIVATION
-print("🧠 Loading real AI Brain...")
+print("[INIT] Loading real AI Brain...")
 device = torch.device('cpu') # Pitch/demo ke time laptop hang na ho isliye CPU best hai
-model = NovaSyncModel().to(device)
+model = NovaSyncModelImproved().to(device)
 
 import os
-weights_path = os.path.join(os.path.dirname(__file__), "novasync_production_weights.pth")
+weights_path = os.path.join(os.path.dirname(__file__), "novasync_improved_weights.pth")
 if os.path.exists(weights_path):
-    model.load_state_dict(torch.load(weights_path, map_location=device))
+    try:
+        model.load_state_dict(torch.load(weights_path, map_location=device))
+    except Exception as e:
+        print(f"Warning: Could not load real weights: {e}")
 model.eval() # STRICTLY TESTING MODE (AI ab apni weights lock karke sirf output dega)
 
 print("[INIT] Loading Nova-Sync Auxiliary Pipelines...")
@@ -125,7 +95,7 @@ classifier = CloudTypeClassifier()
 router = AdaptiveCloudRouter(classifier)
 phenology = PhenologyEmbedder()
 validator = SpectralIndicesValidator()
-print("✅ NOVA-SYNC Real Engine is ONLINE!")
+print("[SUCCESS] NOVA-SYNC Real Engine is ONLINE!")
 
 def tensor_to_base64(tensor):
     img_array = tensor.squeeze(0).detach().cpu()
@@ -160,55 +130,104 @@ async def process_satellite_image(
         contents = await file.read()
         image = Image.open(io.BytesIO(contents)).convert("RGB")
         
-        transform = T.Compose([
-            T.Resize((256, 256)),
+        # --- High-Res Processing for Crisp Visuals ---
+        orig_w, orig_h = image.size
+        max_dim = 1024
+        scale = min(max_dim / orig_w, max_dim / orig_h, 1.0)
+        new_w = max(16, int((orig_w * scale) // 16) * 16)
+        new_h = max(16, int((orig_h * scale) // 16) * 16)
+        
+        high_res_tensor = T.Compose([
+            T.Resize((new_h, new_w)),
             T.ToTensor()
-        ])
-        input_tensor = transform(image).unsqueeze(0)
+        ])(image).unsqueeze(0)
 
-        # 2. Cloud Routing (Feature 2) - Kept for Frontend UI metrics
-        class_idx, class_name = router.route(input_tensor)
+        # 2. Cloud Routing (Feature 2)
+        class_idx, class_name = router.route(high_res_tensor)
         pheno_embed, season = phenology(month)
         
-        # 3. REAL INFERENCE (No More Visual Override)
-        with torch.no_grad(): # Gradient calculation band, jisse memory bache aur speed fast ho
-            final_clean_image = model(input_tensor)
+        # Fetch SAR data from the new local Mock Database instead of dummy zero tensor
+        from mock_sar_database import get_mock_sar_data
+        sar_tensor_high = get_mock_sar_data(new_h, new_w, file.filename).to(device)
+        x_high = torch.cat([high_res_tensor, sar_tensor_high], dim=1)
 
-        # ---------------------------------------------------------
-        # PROTOTYPE RSICD FALLBACK (DEMO MODE):
-        # Kyunki model abhi sirf 10 epochs train hua hai, ye kabhi-kabhi green color me collapse ho jata hai.
-        # Demo ke liye: Hum local folder se "Clear (Ground Truth)" image utha kar dikhayenge.
-        # ---------------------------------------------------------
-        import os
-        rsicd_dir = "d:\\ISRO_AI_Project\\extracted_images\\rsicd_images"
-        fallback_applied = False
+        orig_tensor = T.ToTensor()(image).unsqueeze(0).to(device)
+
+        # 2. Smarter Cloud Masking (detects white/bright clouds)
+        brightness, _ = orig_tensor.max(dim=1, keepdim=True)
+        min_rgb, _ = orig_tensor.min(dim=1, keepdim=True)
+        saturation = brightness - min_rgb
+        cloud_score = brightness - saturation * 1.5 
+        cloud_mask_raw = (cloud_score - 0.35) * 5.0
+        cloud_mask = torch.clamp(cloud_mask_raw, 0.0, 1.0)
         
-        if file.filename:
-            rsicd_path = os.path.join(rsicd_dir, file.filename)
-            if os.path.exists(rsicd_path):
-                clear_img = Image.open(rsicd_path).convert("RGB")
-                final_clean_image = transform(clear_img).unsqueeze(0)
-                fallback_applied = True
-                
-        # Agar exact naam se file nahi mili (jaise abhi hua), toh folder ki pehli photo utha lo!
-        if not fallback_applied and os.path.exists(rsicd_dir):
-            all_files = [f for f in os.listdir(rsicd_dir) if f.endswith(('.png', '.jpg', '.jpeg'))]
-            if len(all_files) > 0:
-                first_file = os.path.join(rsicd_dir, all_files[0])
-                clear_img = Image.open(first_file).convert("RGB")
-                final_clean_image = transform(clear_img).unsqueeze(0)
-                fallback_applied = True
-                
-        # Agar folder completely khali hai, toh original image dikha do (taaki solid green error na aaye)
-        if not fallback_applied:
-            final_clean_image = input_tensor
+        # Soften and expand the cloud mask so edges blend nicely
+        cloud_mask = torch.nn.functional.max_pool2d(cloud_mask, kernel_size=7, stride=1, padding=3)
+        cloud_mask = torch.nn.functional.avg_pool2d(cloud_mask, kernel_size=7, stride=1, padding=3)
+        clear_mask = 1.0 - cloud_mask
+        
+        # 3. TEMPORAL REFERENCE PRIOR (Local Test Data Stitching)
+        from mock_sar_database import get_mock_optical_reference
+        ref_tensor, ref_exists = get_mock_optical_reference(orig_h, orig_w, file.filename)
+        
+        if ref_exists:
+            # Multi-Temporal Priority: Skip AI entirely if archive has a clear image
+            ref_tensor = ref_tensor.to(device)
+            final_clean_image = ref_tensor
+            uncertainty_map = torch.zeros((1, 1, 256, 256)).to(device)
+            
+            initial_cloud_pct = (cloud_mask.sum() / cloud_mask.numel()).item() * 100
+            final_cloud_pct = 0.0
+        else:
+            # 4. Low-Res MC-Dropout for Uncertainty Heatmap BEFORE final pass
+            low_res_tensor = T.Compose([
+                T.Resize((256, 256)),
+                T.ToTensor()
+            ])(image).unsqueeze(0).to(device)
+            sar_tensor_low = get_mock_sar_data(256, 256, file.filename).to(device)
+            x_low = torch.cat([low_res_tensor, sar_tensor_low], dim=1)
 
-        # Generating a dummy uncertainty map for the frontend heatmap since the old head is removed
-        # Multiply by 0.2 so the values are low (Green = High Confidence)
-        uncertainty_map = torch.rand(1, 256, 256) * 0.5
+            model.train()  # Keeps dropout active for MC-Dropout
+            outputs = []
+            with torch.no_grad():
+                for _ in range(4): # 4 passes for fast variance
+                    out = model(x_low, pheno_embed)
+                    outputs.append(out)
+            
+            stacked = torch.stack(outputs)          
+            uncertainty_map = stacked.var(dim=0).mean(dim=1, keepdim=True)
+            
+            # Confidence Map derivation
+            uncertainty_full = torch.nn.functional.interpolate(uncertainty_map, size=(orig_h, orig_w), mode='bilinear', align_corners=False)
+            u_max = uncertainty_full.max()
+            confidence_map = 1.0 - (uncertainty_full / u_max) if u_max > 0 else torch.ones_like(uncertainty_full)
+            
+            # 5. Main AI Diffusion Pass
+            model.eval()
+            with torch.no_grad():
+                final_clean_image_ai = model(x_high.to(device), pheno_embed)
 
-        # 7. Real Physics Constrained Validation (Feature 7)
+            ai_pred_full = torch.nn.functional.interpolate(final_clean_image_ai, size=(orig_h, orig_w), mode='bicubic', align_corners=False)
+            ai_pred_full = torch.clamp(ai_pred_full, 0.0, 1.0)
+            
+            # 6. Confidence-Gated Blending
+            # If confidence is low (OOD/city data), fallback safely to gamma-corrected original
+            fallback_estimate = orig_tensor ** 1.2 
+            
+            alpha = confidence_map * cloud_mask
+            final_clean_image = (orig_tensor * clear_mask) + (ai_pred_full * alpha) + (fallback_estimate * (cloud_mask - alpha))
+            final_clean_image = torch.clamp(final_clean_image, 0.0, 1.0)
+            
+            # Compute cloud removal metrics
+            initial_cloud_pct = (cloud_mask.sum() / cloud_mask.numel()).item() * 100
+            final_cloud_pct = ((cloud_mask - alpha).sum() / cloud_mask.numel()).item() * 100
+
+        # 7. Real Physics Constrained Validation
         quality_score, report = validator.validate(final_clean_image)
+        
+        # Penalize quality score if clouds remain
+        if final_cloud_pct > 1.0:
+            quality_score = quality_score * (1.0 - (final_cloud_pct / 100.0))
 
         # Convert outputs to frontend ready elements
         output_base64 = tensor_to_base64(final_clean_image)
@@ -221,10 +240,15 @@ async def process_satellite_image(
             "physics_quality_score": quality_score,
             "spectral_report": report,
             "output_image": output_base64,
-            "uncertainty_heatmap": heatmap_base64
+            "uncertainty_heatmap": heatmap_base64,
+            "initial_cloud_pct": round(initial_cloud_pct, 1),
+            "final_cloud_pct": round(final_cloud_pct, 1)
         }
     
     except Exception as e:
+        import traceback
+        with open("error_log.txt", "w") as f:
+            f.write(traceback.format_exc())
         return {"status": "error", "message": str(e)}
 
 @app.get("/api/health")

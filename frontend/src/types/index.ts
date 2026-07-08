@@ -11,6 +11,8 @@ export interface ProcessingResponse {
   spectral_report: Record<string, number>;
   output_image: string;
   uncertainty_heatmap: string;
+  initial_cloud_pct?: number;
+  final_cloud_pct?: number;
   message?: string;
 }
 
@@ -27,6 +29,8 @@ export interface ProcessingResult {
   outputImage: string;
   uncertaintyHeatmap: string;
   inputPreview: string;
+  initialCloudPct?: number;
+  finalCloudPct?: number;
 }
 
 /** Processing request payload */

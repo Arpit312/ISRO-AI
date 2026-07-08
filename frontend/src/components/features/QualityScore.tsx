@@ -15,6 +15,8 @@ interface QualityScoreProps {
   size?: "sm" | "md" | "lg";
   showDetails?: boolean;
   spectralReport?: Record<string, number | { violation_pct: number; mean_value: number }>;
+  initialCloudPct?: number;
+  finalCloudPct?: number;
 }
 
 const sizeConfig = {
@@ -29,6 +31,8 @@ export default function QualityScore({
   size = "md",
   showDetails = true,
   spectralReport,
+  initialCloudPct,
+  finalCloudPct,
 }: QualityScoreProps) {
   const [animatedScore, setAnimatedScore] = useState(0);
   const config = sizeConfig[size];
@@ -37,6 +41,7 @@ export default function QualityScore({
 
   // Animate the score from 0 to target
   useEffect(() => {
+    const validScore = isNaN(score) || score === null || score === undefined ? 0 : score;
     const duration = 1200;
     const startTime = Date.now();
 
@@ -45,7 +50,7 @@ export default function QualityScore({
       const progress = Math.min(elapsed / duration, 1);
       // Ease-out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
-      setAnimatedScore(Math.round(score * eased * 10) / 10);
+      setAnimatedScore(Math.round(validScore * eased * 10) / 10);
 
       if (progress < 1) {
         requestAnimationFrame(animate);
@@ -55,8 +60,9 @@ export default function QualityScore({
     requestAnimationFrame(animate);
   }, [score]);
 
+  const safeAnimatedScore = isNaN(animatedScore) ? 0 : animatedScore;
   const strokeDashoffset =
-    circumference - (animatedScore / 100) * circumference;
+    circumference - (safeAnimatedScore / 100) * circumference;
 
   return (
     <div className={cn("space-y-4", className)}>
@@ -152,6 +158,29 @@ export default function QualityScore({
           </div>
         )}
       </div>
+
+      {/* Cloud Coverage Reduction */}
+      {initialCloudPct !== undefined && finalCloudPct !== undefined && (
+        <div className="pt-4 border-t border-[var(--color-border)] flex items-center justify-between">
+          <div>
+            <p className="text-[12px] font-semibold text-[var(--color-text-secondary)]">
+              Cloud Coverage
+            </p>
+            <div className="flex items-center gap-2 mt-1">
+              <span className="text-[15px] font-mono font-bold text-[var(--color-error)]">
+                {initialCloudPct.toFixed(1)}%
+              </span>
+              <span className="text-[var(--color-text-tertiary)] text-[12px]">→</span>
+              <span className="text-[15px] font-mono font-bold text-[var(--color-success)]">
+                {finalCloudPct.toFixed(1)}%
+              </span>
+            </div>
+          </div>
+          <div className="h-10 w-10 rounded-full flex items-center justify-center bg-[var(--color-success-subtle)] text-[var(--color-success)] font-bold text-[11px]">
+            -{Math.max(0, initialCloudPct - finalCloudPct).toFixed(0)}%
+          </div>
+        </div>
+      )}
     </div>
   );
 }

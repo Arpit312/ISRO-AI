@@ -5,11 +5,13 @@ import {
   Bell,
   Search,
   ChevronRight,
+  Menu,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface NavbarProps {
   sidebarCollapsed: boolean;
+  onMobileMenuToggle?: () => void;
 }
 
 const routeLabels: Record<string, string> = {
@@ -19,27 +21,36 @@ const routeLabels: Record<string, string> = {
   "/settings": "Settings",
 };
 
-export default function Navbar({ sidebarCollapsed }: NavbarProps) {
+export default function Navbar({ sidebarCollapsed, onMobileMenuToggle }: NavbarProps) {
   const pathname = usePathname();
   const currentLabel = routeLabels[pathname] || "Page";
 
   return (
     <header
       className={cn(
-        "fixed top-0 right-0 z-30 h-[var(--navbar-height)] flex items-center justify-between px-6",
-        "bg-[var(--color-bg)]/80 backdrop-blur-xl border-b border-[var(--color-border)]",
+        "fixed top-0 right-0 z-30 h-[var(--navbar-height)] flex items-center justify-between px-4 md:px-6",
+        "bg-[var(--color-bg)]/60 backdrop-blur-2xl border-b border-[var(--color-border)] shadow-sm",
         "transition-all duration-300 ease-[var(--ease-smooth)]",
+        "left-0", // full width on mobile
         sidebarCollapsed
-          ? "left-[var(--sidebar-collapsed-width)]"
-          : "left-[var(--sidebar-width)]"
+          ? "md:left-[var(--sidebar-collapsed-width)]"
+          : "md:left-[var(--sidebar-width)]"
       )}
     >
-      {/* Left: Breadcrumbs */}
-      <div className="flex items-center gap-2 text-[13px]">
-        <span className="text-[var(--color-text-tertiary)] font-medium">
+      {/* Left: Breadcrumbs & Mobile Menu */}
+      <div className="flex items-center gap-2 md:gap-3 text-[13px]">
+        {/* Mobile Menu Button */}
+        <button
+          onClick={onMobileMenuToggle}
+          className="md:hidden p-1.5 -ml-1.5 mr-1 rounded-md text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)]"
+        >
+          <Menu size={18} />
+        </button>
+
+        <span className="hidden sm:inline text-[var(--color-text-tertiary)] font-medium">
           NOVA-SYNC
         </span>
-        <ChevronRight size={14} className="text-[var(--color-text-muted)]" />
+        <ChevronRight size={14} className="hidden sm:block text-[var(--color-text-muted)]" />
         <span className="text-[var(--color-text-primary)] font-semibold">
           {currentLabel}
         </span>

@@ -1,0 +1,13 @@
+{
+  "_note": "SAMPLE / DEMO DATA — approximate city-level positions used to demonstrate the nearest-rescue-team flow. Replace with a real live feed from NDRF/SDRF or your State Disaster Management Authority before any real-world use. See README.md.",
+  "teams": [
+    { "name": "Demo Rescue Unit — North Zone", "type": "Flood response team", "lat": 28.7041, "lon": 77.1025 },
+    { "name": "Demo Rescue Unit — West Zone", "type": "Multi-hazard response team", "lat": 19.0760, "lon": 72.8777 },
+    { "name": "Demo Rescue Unit — East Zone", "type": "Flood response team", "lat": 22.5726, "lon": 88.3639 },
+    { "name": "Demo Rescue Unit — South Zone", "type": "Landslide response team", "lat": 13.0827, "lon": 80.2707 },
+    { "name": "Demo Rescue Unit — Central Zone", "type": "Multi-hazard response team", "lat": 23.2599, "lon": 77.4126 },
+    { "name": "Demo Rescue Unit — Northeast Zone", "type": "Flood response team", "lat": 26.1445, "lon": 91.7362 },
+    { "name": "Demo Rescue Unit — Gujarat Zone", "type": "Earthquake response team", "lat": 23.2156, "lon": 72.6369 },
+    { "name": "Demo Rescue Unit — Uttarakhand Zone", "type": "Landslide response team", "lat": 30.0668, "lon": 79.0193 }
+  ]
+}

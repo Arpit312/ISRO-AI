@@ -13,6 +13,7 @@ import {
   ChevronRight,
   Zap,
   Map,
+  Shield,
 } from "lucide-react";
 
 interface SidebarLink {
@@ -25,7 +26,7 @@ interface SidebarLink {
 const navLinks: SidebarLink[] = [
   {
     label: "Dashboard",
-    href: "/",
+    href: "/dashboard",
     icon: <LayoutDashboard size={20} />,
   },
   {
@@ -45,6 +46,12 @@ const navLinks: SidebarLink[] = [
     icon: <History size={20} />,
   },
   {
+    label: "Safe-Route",
+    href: "/safe-route",
+    icon: <Shield size={20} />,
+    badge: "Rescue",
+  },
+  {
     label: "Settings",
     href: "/settings",
     icon: <Settings size={20} />,
@@ -54,21 +61,36 @@ const navLinks: SidebarLink[] = [
 interface SidebarProps {
   collapsed: boolean;
   onToggle: () => void;
+  mobileOpen?: boolean;
+  onMobileClose?: () => void;
 }
 
-export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
+export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose }: SidebarProps) {
   const pathname = usePathname();
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
   return (
-    <aside
-      className={cn(
-        "fixed top-0 left-0 z-40 h-screen flex flex-col",
-        "bg-[var(--color-bg-elevated)] border-r border-[var(--color-border)]",
-        "transition-all duration-300 ease-[var(--ease-smooth)]",
-        collapsed ? "w-[var(--sidebar-collapsed-width)]" : "w-[var(--sidebar-width)]"
+    <>
+      {/* Mobile Backdrop */}
+      {mobileOpen && (
+        <div 
+          className="fixed inset-0 z-30 bg-black/50 backdrop-blur-sm md:hidden animate-fade-in"
+          onClick={onMobileClose}
+        />
       )}
-    >
+      
+      <aside
+        className={cn(
+          "fixed top-0 left-0 z-40 h-screen flex flex-col",
+          "glass border-r border-[var(--color-border)] shadow-[var(--shadow-lg)]",
+          "transition-transform duration-300 ease-[var(--ease-smooth)]",
+          // Mobile classes: hidden by default (translated off-screen), visible when mobileOpen is true
+          "w-[var(--sidebar-width)] md:transition-all",
+          mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
+          // Desktop collapsed logic
+          collapsed ? "md:w-[var(--sidebar-collapsed-width)]" : "md:w-[var(--sidebar-width)]"
+        )}
+      >
       {/* Logo Section */}
       <div className="flex items-center gap-3 px-5 h-[var(--navbar-height)] border-b border-[var(--color-border)] shrink-0">
         <div className="relative flex items-center justify-center w-9 h-9 rounded-[var(--radius-md)] bg-[var(--color-primary)] shrink-0">
@@ -90,7 +112,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
       {/* Navigation Links */}
       <nav className="flex-1 py-4 px-3 space-y-1 overflow-y-auto overflow-x-hidden">
         {!collapsed && (
-          <p className="px-3 mb-3 text-[10px] font-semibold tracking-widest uppercase text-[var(--color-text-muted)]">
+          <p className="px-3 mb-3 text-[10px] font-bold tracking-widest uppercase text-[var(--color-text-muted)] mt-2">
             Navigation
           </p>
         )}
@@ -105,17 +127,14 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
               onMouseEnter={() => setHoveredLink(link.href)}
               onMouseLeave={() => setHoveredLink(null)}
               className={cn(
-                "group relative flex items-center gap-3 rounded-[var(--radius-md)] transition-all duration-200",
+                "group relative flex items-center gap-3 rounded-[var(--radius-md)] transition-all duration-300",
                 collapsed ? "justify-center px-0 py-3" : "px-3 py-2.5",
                 isActive
-                  ? "bg-[var(--color-primary-subtle)] text-[var(--color-primary-light)]"
+                  ? "bg-gradient-to-r from-[var(--color-primary-subtle)] to-transparent text-[var(--color-primary-light)] shadow-[inset_2px_0_0_0_var(--color-primary)]"
                   : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)]"
               )}
             >
-              {/* Active Indicator Bar */}
-              {isActive && (
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 rounded-r-full bg-[var(--color-primary)] transition-all duration-200" />
-              )}
+              {/* Active Indicator Bar Removed as it's now handled by box-shadow inset */}
 
               {/* Icon */}
               <span
@@ -188,5 +207,6 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
         )}
       </div>
     </aside>
+    </>
   );
 }
