@@ -20,11 +20,6 @@ import {
 } from "lucide-react";
 import type { ProcessingResult } from "@/types";
 
-// ============================================================================
-// Process Page — Full processing workflow
-// Upload → Pipeline Animation → Results Display
-// ============================================================================
-
 type ProcessingPhase = "upload" | "processing" | "results";
 
 export default function ProcessPage() {
@@ -83,7 +78,7 @@ export default function ProcessPage() {
 
   return (
     <div className="max-w-[1400px] mx-auto">
-      {/* Page Header */}
+      {}
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-2xl font-bold text-[var(--color-text-primary)] tracking-tight">
@@ -106,12 +101,10 @@ export default function ProcessPage() {
         )}
       </div>
 
-      {/* ================================================================
-          Phase: Upload
-          ================================================================ */}
+      {}
       {phase === "upload" && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in-up">
-          {/* Upload Area */}
+          {}
           <div className="lg:col-span-2">
             <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6">
               <ImageUploader
@@ -121,7 +114,7 @@ export default function ProcessPage() {
             </div>
           </div>
 
-          {/* Info Panel */}
+          {}
           <div className="space-y-4">
             <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-5 space-y-4">
               <h3 className="text-[14px] font-semibold text-[var(--color-text-primary)]">
@@ -151,7 +144,7 @@ export default function ProcessPage() {
               </div>
             </div>
 
-            {/* Supported Sensors Card */}
+            {}
             <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-5">
               <h3 className="text-[13px] font-semibold text-[var(--color-text-primary)] mb-3">
                 Supported Sensors
@@ -168,14 +161,12 @@ export default function ProcessPage() {
         </div>
       )}
 
-      {/* ================================================================
-          Phase: Processing
-          ================================================================ */}
+      {}
       {phase === "processing" && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-in-up">
-          {/* Preview + Pipeline */}
+          {}
           <div className="space-y-5">
-            {/* Input preview */}
+            {}
             <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 overflow-hidden">
               {inputPreview && (
                 <div className="relative">
@@ -202,7 +193,7 @@ export default function ProcessPage() {
             </div>
           </div>
 
-          {/* Pipeline Status */}
+          {}
           <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6">
             <PipelineStatus
               isProcessing={isProcessing}
@@ -212,12 +203,10 @@ export default function ProcessPage() {
         </div>
       )}
 
-      {/* ================================================================
-          Phase: Results
-          ================================================================ */}
+      {}
       {phase === "results" && currentResult && (
         <div className="space-y-6 animate-fade-in-up">
-          {/* Result Metadata Badges */}
+          {}
           <div className="flex flex-wrap items-center gap-3">
             <Badge variant="success" dot size="md">
               <FileCheck size={12} className="mr-1" />
@@ -233,9 +222,9 @@ export default function ProcessPage() {
             </Badge>
           </div>
 
-          {/* Main Results Grid */}
+          {}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Before/After — Spans 2 columns */}
+            {}
             <div className="lg:col-span-2 rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6">
               <ResultsPanel
                 inputImage={currentResult.inputPreview}
@@ -243,7 +232,7 @@ export default function ProcessPage() {
               />
             </div>
 
-            {/* Quality Score */}
+            {}
             <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6">
               <QualityScore
                 score={currentResult.qualityScore}
@@ -255,9 +244,9 @@ export default function ProcessPage() {
             </div>
           </div>
 
-          {/* Second Row */}
+          {}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Heatmap */}
+            {}
             <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6">
               <HeatmapViewer
                 baseImage={currentResult.outputImage}
@@ -265,7 +254,7 @@ export default function ProcessPage() {
               />
             </div>
 
-            {/* Pipeline Complete + Actions */}
+            {}
             <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6 space-y-5">
               <PipelineStatus
                 isProcessing={false}

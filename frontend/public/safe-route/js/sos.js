@@ -1,6 +1,5 @@
 const SOS = (() => {
-  // Demo contact number in international format, no leading +/00.
-  // Replace with a real emergency contact / control-room number before use.
+
   const DEMO_CONTACT_NUMBER = "911234567890";
 
   function buildMessage(state) {

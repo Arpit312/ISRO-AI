@@ -18,12 +18,6 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-/* ============================================================================
-   Dashboard Landing Page
-   Premium hero + stats + pipeline overview + quick actions
-   ============================================================================ */
-
-// --- Stats Data ---
 const stats: Array<{
   label: string;
   value: string;
@@ -71,7 +65,6 @@ const stats: Array<{
   },
 ];
 
-// --- Pipeline Stages ---
 const pipelineStages = [
   {
     icon: <Layers size={18} />,
@@ -120,15 +113,13 @@ const pipelineStages = [
 export default function DashboardPage() {
   return (
     <div className="max-w-[1400px] mx-auto space-y-8">
-      {/* ================================================================
-          Hero Section
-          ================================================================ */}
+      {}
       <section className="relative overflow-hidden rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/30 p-8 md:p-10 animate-fade-in shadow-2xl shadow-black/50">
-        {/* Background Gradient */}
+        {}
         <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)]/10 via-transparent to-[var(--color-primary)]/5 pointer-events-none" />
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--color-primary)]/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
 
-        {/* Dot Grid Pattern */}
+        {}
         <div className="absolute inset-0 dot-grid opacity-20 pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -170,9 +161,7 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      {/* ================================================================
-          Stats Cards
-          ================================================================ */}
+      {}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, idx) => (
           <div
@@ -216,9 +205,7 @@ export default function DashboardPage() {
         ))}
       </section>
 
-      {/* ================================================================
-          Pipeline Overview
-          ================================================================ */}
+      {}
       <section className="animate-fade-in-up stagger-5">
         <div className="flex items-center justify-between mb-5">
           <div>
@@ -251,12 +238,12 @@ export default function DashboardPage() {
                 `stagger-${idx + 1}`
               )}
             >
-              {/* Stage Number */}
+              {}
               <div className="absolute top-2 right-3 text-[10px] font-bold text-[var(--color-text-muted)]">
                 {String(idx + 1).padStart(2, "0")}
               </div>
 
-              {/* Icon */}
+              {}
               <div
                 className="flex items-center justify-center w-9 h-9 rounded-[var(--radius-md)] shrink-0 transition-transform duration-200 group-hover:scale-110"
                 style={{
@@ -267,7 +254,7 @@ export default function DashboardPage() {
                 {stage.icon}
               </div>
 
-              {/* Text */}
+              {}
               <div className="min-w-0">
                 <p className="text-[13px] font-semibold text-[var(--color-text-primary)] truncate">
                   {stage.name}
@@ -281,11 +268,9 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      {/* ================================================================
-          Quick Actions
-          ================================================================ */}
+      {}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-fade-in-up stagger-6">
-        {/* Process Card */}
+        {}
         <Link
           href="/process"
           className={cn(
@@ -318,7 +303,7 @@ export default function DashboardPage() {
           </div>
         </Link>
 
-        {/* History Card */}
+        {}
         <Link
           href="/history"
           className={cn(

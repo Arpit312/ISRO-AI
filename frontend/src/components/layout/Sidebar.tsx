@@ -71,27 +71,27 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
 
   return (
     <>
-      {/* Mobile Backdrop */}
+      {}
       {mobileOpen && (
         <div 
           className="fixed inset-0 z-30 bg-black/50 backdrop-blur-sm md:hidden animate-fade-in"
           onClick={onMobileClose}
         />
       )}
-      
+
       <aside
         className={cn(
           "fixed top-0 left-0 z-40 h-screen flex flex-col",
           "glass border-r border-[var(--color-border)] shadow-[var(--shadow-lg)]",
           "transition-transform duration-300 ease-[var(--ease-smooth)]",
-          // Mobile classes: hidden by default (translated off-screen), visible when mobileOpen is true
+
           "w-[var(--sidebar-width)] md:transition-all",
           mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
-          // Desktop collapsed logic
+
           collapsed ? "md:w-[var(--sidebar-collapsed-width)]" : "md:w-[var(--sidebar-width)]"
         )}
       >
-      {/* Logo Section */}
+      {}
       <div className="flex items-center gap-3 px-5 h-[var(--navbar-height)] border-b border-[var(--color-border)] shrink-0">
         <div className="relative flex items-center justify-center w-9 h-9 rounded-[var(--radius-md)] bg-[var(--color-primary)] shrink-0">
           <Zap size={18} className="text-white" />
@@ -109,7 +109,7 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
         )}
       </div>
 
-      {/* Navigation Links */}
+      {}
       <nav className="flex-1 py-4 px-3 space-y-1 overflow-y-auto overflow-x-hidden">
         {!collapsed && (
           <p className="px-3 mb-3 text-[10px] font-bold tracking-widest uppercase text-[var(--color-text-muted)] mt-2">
@@ -134,9 +134,9 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
                   : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)]"
               )}
             >
-              {/* Active Indicator Bar Removed as it's now handled by box-shadow inset */}
+              {}
 
-              {/* Icon */}
+              {}
               <span
                 className={cn(
                   "shrink-0 transition-colors duration-200",
@@ -153,14 +153,14 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
                 </span>
               )}
 
-              {/* Badge */}
+              {}
               {!collapsed && link.badge && (
                 <span className="ml-auto px-1.5 py-0.5 text-[9px] font-bold tracking-wider rounded-[var(--radius-sm)] bg-[var(--color-primary)] text-white uppercase">
                   {link.badge}
                 </span>
               )}
 
-              {/* Tooltip for collapsed state */}
+              {}
               {collapsed && (isHovered) && (
                 <div className="absolute left-full ml-3 px-2.5 py-1.5 rounded-[var(--radius-md)] bg-[var(--color-surface-elevated)] border border-[var(--color-border-hover)] text-[12px] font-medium text-[var(--color-text-primary)] whitespace-nowrap shadow-[var(--shadow-lg)] z-50 animate-scale-in">
                   {link.label}
@@ -176,9 +176,9 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
         })}
       </nav>
 
-      {/* Bottom Section */}
+      {}
       <div className="px-3 pb-4 border-t border-[var(--color-border)] pt-3 shrink-0">
-        {/* Collapse Toggle */}
+        {}
         <button
           onClick={onToggle}
           className={cn(
@@ -194,7 +194,7 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
           )}
         </button>
 
-        {/* Status Indicator */}
+        {}
         {!collapsed && (
           <div className="mt-3 px-3 py-2.5 rounded-[var(--radius-md)] bg-[var(--color-surface)] border border-[var(--color-border)]">
             <div className="flex items-center gap-2">

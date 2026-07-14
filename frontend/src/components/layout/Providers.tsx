@@ -10,10 +10,6 @@ interface ProvidersProps {
   children: React.ReactNode;
 }
 
-/**
- * Client-side providers wrapper.
- * Wraps the app with React Query and the AppShell layout (except on root landing page).
- */
 export default function Providers({ children }: ProvidersProps) {
   const pathname = usePathname();
   const [queryClient] = useState(
@@ -21,7 +17,7 @@ export default function Providers({ children }: ProvidersProps) {
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: 60 * 1000, // 1 minute
+            staleTime: 60 * 1000, 
             retry: 2,
             refetchOnWindowFocus: false,
           },

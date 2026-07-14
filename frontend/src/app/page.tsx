@@ -16,35 +16,34 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// --- Realistic Satellite Component ---
 const RealisticSatellite = () => (
   <svg width="240" height="140" viewBox="0 0 240 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)]">
-    {/* Solar Panels (Left) */}
+    {}
     <rect x="0" y="50" width="90" height="40" fill="#0A192F" stroke="#64FFDA" strokeWidth="1.5" />
     <path d="M 22.5 50 V 90 M 45 50 V 90 M 67.5 50 V 90 M 0 70 H 90" stroke="#64FFDA" strokeWidth="0.75" opacity="0.6" />
-    
-    {/* Solar Panels (Right) */}
+
+    {}
     <rect x="150" y="50" width="90" height="40" fill="#0A192F" stroke="#64FFDA" strokeWidth="1.5" />
     <path d="M 172.5 50 V 90 M 195 50 V 90 M 217.5 50 V 90 M 150 70 H 240" stroke="#64FFDA" strokeWidth="0.75" opacity="0.6" />
-    
-    {/* Connectors */}
+
+    {}
     <rect x="90" y="65" width="10" height="10" fill="#475569" />
     <rect x="140" y="65" width="10" height="10" fill="#475569" />
 
-    {/* Main Bus (Gold Foil) */}
+    {}
     <rect x="100" y="20" width="40" height="100" fill="#D4AF37" rx="4" />
     <rect x="100" y="20" width="40" height="100" fill="url(#foil)" opacity="0.4" rx="4" />
-    
-    {/* Tech Details on Bus */}
+
+    {}
     <rect x="105" y="30" width="30" height="20" fill="#1E293B" rx="2" />
     <rect x="105" y="90" width="30" height="20" fill="#1E293B" rx="2" />
-    
-    {/* Main Camera/Radar Lens */}
+
+    {}
     <circle cx="120" cy="70" r="16" fill="#0F172A" stroke="#334155" strokeWidth="4" />
-    {/* Lens Reflection / Laser Emitter */}
+    {}
     <circle cx="120" cy="70" r="6" fill="#00D4FF" className="animate-pulse" style={{ filter: "drop-shadow(0 0 8px #00D4FF)" }} />
-    
-    {/* Antennas */}
+
+    {}
     <path d="M 120 20 L 120 0 M 115 5 L 125 5 M 110 10 L 130 10" stroke="#94A3B8" strokeWidth="2" />
 
     <defs>
@@ -74,16 +73,11 @@ export default function LandingPage() {
     offset: ["start start", "end end"],
   });
 
-  // Intro Sequence Effect
   useEffect(() => {
-    // 0: Clouds cover land, satellite descends
-    // 1: Satellite fires laser
-    // 2: Clouds disperse
-    // 3: Intro complete
 
     const t1 = setTimeout(() => setIntroStage(1), 1200);
     const t2 = setTimeout(() => setIntroStage(2), 2400);
-    const t3 = setTimeout(() => setIntroStage(3), 4000); // Intro lasts exactly 4s
+    const t3 = setTimeout(() => setIntroStage(3), 4000); 
 
     return () => {
       clearTimeout(t1);
@@ -94,10 +88,8 @@ export default function LandingPage() {
 
   return (
     <div className="bg-[#000000] text-white min-h-[350vh]" ref={containerRef}>
-      
-      {/* ==================================================================== 
-          HYPER-REALISTIC CINEMATIC INTRO 
-          ==================================================================== */}
+
+      {}
       <AnimatePresence>
         {introStage < 3 && (
           <motion.div
@@ -106,7 +98,7 @@ export default function LandingPage() {
             transition={{ duration: 0.8, ease: "easeInOut" }}
             className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black overflow-hidden pointer-events-none"
           >
-            {/* Real Satellite Background (Land) */}
+            {}
             <div 
               className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
               style={{
@@ -115,7 +107,7 @@ export default function LandingPage() {
               }}
             />
 
-            {/* Realistic Clouds Layer */}
+            {}
             <motion.div
               initial={{ filter: "blur(0px)", opacity: 1, scale: 1 }}
               animate={
@@ -126,7 +118,7 @@ export default function LandingPage() {
               transition={{ duration: 1.5, ease: "easeInOut" }}
               className="absolute inset-0 z-10 pointer-events-none"
             >
-              {/* CSS Cloud Generator Overlay */}
+              {}
               <div 
                 className="absolute inset-0 opacity-90"
                 style={{
@@ -148,10 +140,10 @@ export default function LandingPage() {
               />
             </motion.div>
 
-            {/* Satellite & Action */}
+            {}
             <div className="relative w-full h-full flex flex-col items-center z-20">
-              
-              {/* Satellite */}
+
+              {}
               <motion.div
                 initial={{ y: -200, opacity: 0, scale: 0.8 }}
                 animate={{ y: 150, opacity: 1, scale: 1 }}
@@ -159,8 +151,8 @@ export default function LandingPage() {
                 className="relative flex flex-col items-center"
               >
                 <RealisticSatellite />
-                
-                {/* Intense Scan Beam */}
+
+                {}
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={
@@ -179,7 +171,7 @@ export default function LandingPage() {
               </motion.div>
             </div>
 
-            {/* Cinematic Overlay Text */}
+            {}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={introStage >= 2 ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
@@ -194,14 +186,12 @@ export default function LandingPage() {
         )}
       </AnimatePresence>
 
-      {/* ==================================================================== 
-          SCROLLABLE LANDING PAGE CONTENT
-          ==================================================================== */}
+      {}
       <div className={cn("relative z-10 transition-opacity duration-1000 w-full", introStage === 3 ? "opacity-100" : "opacity-0")}>
-        
-        {/* HERO SECTION */}
+
+        {}
         <section className="relative h-screen flex flex-col items-center justify-center px-6 overflow-hidden">
-          {/* Faint Earth Background for Hero */}
+          {}
           <div 
             className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-20 [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)]"
             style={{
@@ -238,10 +228,10 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* ABOUT & PIPELINE SECTION */}
+        {}
         <section className="relative px-6 py-24 max-w-6xl mx-auto border-t border-[#112240]">
-          
-          {/* About */}
+
+          {}
           <div className="text-center max-w-3xl mx-auto mb-32">
             <h3 className="text-[12px] text-[#00D4FF] tracking-[0.3em] font-bold uppercase mb-4">About The Mission</h3>
             <h2 className="text-3xl md:text-5xl font-bold mb-6">Why NOVA-SYNC?</h2>
@@ -250,17 +240,17 @@ export default function LandingPage() {
             </p>
           </div>
 
-          {/* Vertical Pipeline Representation */}
+          {}
           <div className="relative">
             <div className="text-center mb-16">
               <h3 className="text-[12px] text-[#00D4FF] tracking-[0.3em] font-bold uppercase mb-4">The Architecture</h3>
               <h2 className="text-3xl md:text-5xl font-bold">7-Stage AI Pipeline</h2>
             </div>
 
-            {/* The vertical tracking line */}
+            {}
             <div className="absolute left-[24px] md:left-1/2 top-[150px] bottom-0 w-[2px] bg-[#112240] -translate-x-1/2 z-0" />
-            
-            {/* The animated glowing line */}
+
+            {}
             <motion.div 
               className="absolute left-[24px] md:left-1/2 top-[150px] w-[2px] bg-gradient-to-b from-[#00D4FF] to-transparent -translate-x-1/2 z-10 shadow-[0_0_15px_#00D4FF]" 
               style={{ height: useTransform(scrollYProgress, [0.3, 0.9], ["0%", "100%"]) }}
@@ -268,14 +258,14 @@ export default function LandingPage() {
 
             <div className="space-y-24 relative z-20">
               {pipelineStages.map((stage, idx) => {
-                // Calculate when this node should light up based on scroll
+
                 const start = 0.3 + (idx * 0.08);
                 const end = start + 0.1;
-                // eslint-disable-next-line react-hooks/rules-of-hooks
+
                 const nodeOpacity = useTransform(scrollYProgress, [start, end], [0.3, 1]);
-                // eslint-disable-next-line react-hooks/rules-of-hooks
+
                 const nodeScale = useTransform(scrollYProgress, [start, end], [0.8, 1]);
-                // eslint-disable-next-line react-hooks/rules-of-hooks
+
                 const glowOpacity = useTransform(scrollYProgress, [start, end], [0, 1]);
 
                 const isEven = idx % 2 === 0;
@@ -286,11 +276,11 @@ export default function LandingPage() {
                     style={{ opacity: nodeOpacity, scale: nodeScale }}
                     className={cn(
                       "flex items-center gap-8 md:gap-16 relative",
-                      "flex-row", // Always row on mobile
-                      isEven ? "md:flex-row" : "md:flex-row-reverse" // Alternating on desktop
+                      "flex-row", 
+                      isEven ? "md:flex-row" : "md:flex-row-reverse" 
                     )}
                   >
-                    {/* Node Circle */}
+                    {}
                     <div className="absolute left-[24px] md:left-1/2 -translate-x-1/2 w-12 h-12 bg-[#040914] border-2 border-[#1E3A8A] rounded-full flex items-center justify-center shrink-0 z-20 transition-colors">
                       <motion.div style={{ opacity: glowOpacity }} className="absolute inset-0 rounded-full shadow-[0_0_20px_#00D4FF] bg-[#00D4FF]/20" />
                       <div className="text-[#00D4FF] z-10">
@@ -298,7 +288,7 @@ export default function LandingPage() {
                       </div>
                     </div>
 
-                    {/* Content Box */}
+                    {}
                     <div className={cn(
                       "w-full md:w-1/2 pt-2 pb-2 pl-20 md:pl-0",
                       isEven ? "md:pr-16 md:text-right" : "md:pl-16 md:text-left"
@@ -318,8 +308,8 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
-        
-        {/* Final CTA */}
+
+        {}
         <section className="py-32 text-center border-t border-[#112240]">
            <h2 className="text-4xl md:text-5xl font-bold mb-8">Experience the Future of Earth Observation</h2>
            <Link 

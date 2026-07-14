@@ -31,15 +31,15 @@ export default function Navbar({ sidebarCollapsed, onMobileMenuToggle }: NavbarP
         "fixed top-0 right-0 z-30 h-[var(--navbar-height)] flex items-center justify-between px-4 md:px-6",
         "bg-[var(--color-bg)]/60 backdrop-blur-2xl border-b border-[var(--color-border)] shadow-sm",
         "transition-all duration-300 ease-[var(--ease-smooth)]",
-        "left-0", // full width on mobile
+        "left-0", 
         sidebarCollapsed
           ? "md:left-[var(--sidebar-collapsed-width)]"
           : "md:left-[var(--sidebar-width)]"
       )}
     >
-      {/* Left: Breadcrumbs & Mobile Menu */}
+      {}
       <div className="flex items-center gap-2 md:gap-3 text-[13px]">
-        {/* Mobile Menu Button */}
+        {}
         <button
           onClick={onMobileMenuToggle}
           className="md:hidden p-1.5 -ml-1.5 mr-1 rounded-md text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)]"
@@ -56,9 +56,9 @@ export default function Navbar({ sidebarCollapsed, onMobileMenuToggle }: NavbarP
         </span>
       </div>
 
-      {/* Right: Actions */}
+      {}
       <div className="flex items-center gap-2">
-        {/* Search Button */}
+        {}
         <button
           className={cn(
             "flex items-center gap-2 px-3 py-1.5 rounded-[var(--radius-md)]",
@@ -75,7 +75,7 @@ export default function Navbar({ sidebarCollapsed, onMobileMenuToggle }: NavbarP
           </kbd>
         </button>
 
-        {/* Notification Bell */}
+        {}
         <button
           className={cn(
             "relative flex items-center justify-center w-9 h-9 rounded-[var(--radius-md)]",
@@ -86,11 +86,11 @@ export default function Navbar({ sidebarCollapsed, onMobileMenuToggle }: NavbarP
           aria-label="Notifications"
         >
           <Bell size={18} />
-          {/* Notification dot */}
+          {}
           <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[var(--color-primary)] ring-2 ring-[var(--color-bg)]" />
         </button>
 
-        {/* User Avatar */}
+        {}
         <button
           className={cn(
             "flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-[var(--radius-md)]",

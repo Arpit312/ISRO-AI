@@ -6,10 +6,6 @@ import { Upload, X, Image as ImageIcon, Calendar } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { MONTHS } from "@/types";
 
-// ============================================================================
-// ImageUploader — Drag & drop zone with preview, month selector, validation
-// ============================================================================
-
 interface ImageUploaderProps {
   onSubmit: (file: File, month: number, preview: string) => void;
   isProcessing: boolean;
@@ -17,7 +13,7 @@ interface ImageUploaderProps {
 }
 
 const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/tiff", "image/webp"];
-const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
+const MAX_FILE_SIZE = 50 * 1024 * 1024; 
 
 export default function ImageUploader({
   onSubmit,
@@ -31,7 +27,6 @@ export default function ImageUploader({
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // ── File Validation ───────────────────────────────────────────────────
   const validateFile = useCallback((f: File): string | null => {
     if (!ACCEPTED_TYPES.includes(f.type)) {
       return `Invalid file type. Accepted: JPEG, PNG, TIFF, WebP`;
@@ -42,7 +37,6 @@ export default function ImageUploader({
     return null;
   }, []);
 
-  // ── File Selection Handler ────────────────────────────────────────────
   const handleFile = useCallback(
     (f: File) => {
       const validationError = validateFile(f);
@@ -54,7 +48,6 @@ export default function ImageUploader({
       setError(null);
       setFile(f);
 
-      // Generate preview
       const reader = new FileReader();
       reader.onload = (e) => {
         setPreview(e.target?.result as string);
@@ -64,7 +57,6 @@ export default function ImageUploader({
     [validateFile]
   );
 
-  // ── Drag & Drop Handlers ─────────────────────────────────────────────
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -97,7 +89,6 @@ export default function ImageUploader({
     [handleFile]
   );
 
-  // ── Clear Selection ───────────────────────────────────────────────────
   const clearFile = useCallback(() => {
     setFile(null);
     setPreview(null);
@@ -116,7 +107,7 @@ export default function ImageUploader({
 
   return (
     <div className={cn("space-y-5", className)}>
-      {/* Drop Zone */}
+      {}
       <div
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -141,14 +132,13 @@ export default function ImageUploader({
         />
 
         {preview && file ? (
-          /* ── Image Preview ──────────────────────────────────────── */
-          <div className="relative group">
+                    <div className="relative group">
             <img
               src={preview}
               alt={file.name}
               className="w-full h-64 object-cover"
             />
-            {/* Overlay */}
+            {}
             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
               <button
                 onClick={(e) => {
@@ -160,7 +150,7 @@ export default function ImageUploader({
                 <X size={18} />
               </button>
             </div>
-            {/* File info bar */}
+            {}
             <div className="absolute bottom-0 left-0 right-0 px-4 py-2.5 bg-gradient-to-t from-black/60 to-transparent">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -176,8 +166,7 @@ export default function ImageUploader({
             </div>
           </div>
         ) : (
-          /* ── Empty Drop Zone ────────────────────────────────────── */
-          <div className="flex flex-col items-center justify-center py-16 px-6">
+                    <div className="flex flex-col items-center justify-center py-16 px-6">
             <div
               className={cn(
                 "flex items-center justify-center w-14 h-14 rounded-full mb-4 transition-colors duration-200",
@@ -204,16 +193,16 @@ export default function ImageUploader({
         )}
       </div>
 
-      {/* Error Message */}
+      {}
       {error && (
         <p className="text-[12px] text-[var(--color-error)] font-medium px-1 animate-fade-in">
           {error}
         </p>
       )}
 
-      {/* Month Selector + Submit */}
+      {}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-end gap-4">
-        {/* Month Picker */}
+        {}
         <div className="flex-1 space-y-2">
           <label className="flex items-center gap-1.5 text-[12px] font-semibold text-[var(--color-text-secondary)] uppercase tracking-wider">
             <Calendar size={13} />
@@ -237,14 +226,14 @@ export default function ImageUploader({
                 </option>
               ))}
             </select>
-            {/* Season badge */}
+            {}
             <span className="absolute right-10 top-1/2 -translate-y-1/2 px-2 py-0.5 rounded-[var(--radius-full)] bg-[var(--color-success-subtle)] text-[var(--color-success)] text-[10px] font-bold uppercase pointer-events-none">
               {currentSeason}
             </span>
           </div>
         </div>
 
-        {/* Process Button */}
+        {}
         <Button
           variant="primary"
           size="lg"

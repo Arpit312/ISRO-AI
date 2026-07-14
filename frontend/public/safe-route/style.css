@@ -25,7 +25,6 @@ body{
   flex-direction:column;
 }
 
-/* ---------- topbar ---------- */
 .topbar{
   display:flex;
   align-items:center;
@@ -143,7 +142,6 @@ body{
 .scan-radius-row input[type=range]{flex:1}
 #radiusVal{font-family:var(--mono);color:var(--text)}
 
-/* ---------- scan progress / radar ---------- */
 .scan-progress{margin-top:14px;display:flex;align-items:center;gap:12px}
 .scan-progress.hidden{display:none}
 .radar{
@@ -160,7 +158,6 @@ body{
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 #scanProgressText{font-size:12px;color:var(--text-muted);margin:0}
 
-/* ---------- result cards ---------- */
 .result-card{
   border-radius:10px;padding:12px 14px;border:1px solid var(--border);
   background:var(--panel-2);font-size:13px;line-height:1.6;
@@ -174,7 +171,6 @@ body{
 .sos-options{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
 .sos-options.hidden{display:none}
 
-/* ---------- map ---------- */
 .map-wrap{position:relative}
 #map{position:absolute;inset:0}
 .legend{
@@ -188,7 +184,6 @@ body{
 .legend .safezone{background:var(--safe)}
 .legend .rescue{background:var(--warn)}
 
-/* leaflet marker label tweak */
 .leaflet-popup-content-wrapper{
   background:var(--panel);color:var(--text);border-radius:8px;font-family:var(--sans);
 }

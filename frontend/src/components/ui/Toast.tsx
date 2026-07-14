@@ -6,11 +6,6 @@ import { useAppStore } from "@/store/appStore";
 import { X, CheckCircle2, AlertTriangle, AlertCircle, Info } from "lucide-react";
 import type { ToastMessage } from "@/types";
 
-// ============================================================================
-// Toast Notification System
-// Renders toasts from Zustand store with auto-dismiss and slide animations.
-// ============================================================================
-
 const iconMap: Record<ToastMessage["type"], React.ReactNode> = {
   success: <CheckCircle2 size={18} className="text-[var(--color-success)]" />,
   error: <AlertCircle size={18} className="text-[var(--color-error)]" />,
@@ -32,7 +27,6 @@ function ToastItem({ toast }: { toast: ToastMessage }) {
     removeToast(toast.id);
   }, [toast.id, removeToast]);
 
-  // Auto-dismiss after duration (default 5s)
   useEffect(() => {
     const timeout = setTimeout(dismiss, toast.duration || 5000);
     return () => clearTimeout(timeout);
@@ -72,7 +66,6 @@ function ToastItem({ toast }: { toast: ToastMessage }) {
   );
 }
 
-/** Toast container — render this once in the layout */
 export default function ToastContainer() {
   const toasts = useAppStore((state) => state.toasts);
 
@@ -91,7 +84,6 @@ export default function ToastContainer() {
   );
 }
 
-/** Helper hook to easily push toasts from any component */
 export function useToast() {
   const addToast = useAppStore((state) => state.addToast);
 

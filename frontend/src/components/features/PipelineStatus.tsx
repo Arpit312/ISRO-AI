@@ -14,17 +14,13 @@ import {
   Loader2,
 } from "lucide-react";
 
-// ============================================================================
-// PipelineStatus — 7-stage AI pipeline progress visualization
-// ============================================================================
-
 interface PipelineStageConfig {
   id: number;
   name: string;
   shortName: string;
   icon: React.ReactNode;
   color: string;
-  duration: number; // ms each stage takes to animate
+  duration: number; 
 }
 
 const PIPELINE_STAGES: PipelineStageConfig[] = [
@@ -54,7 +50,6 @@ export default function PipelineStatus({
     PIPELINE_STAGES.map(() => "pending")
   );
 
-  // Animate through stages when processing
   useEffect(() => {
     if (!isProcessing) {
       if (isComplete) {
@@ -63,7 +58,6 @@ export default function PipelineStatus({
       return;
     }
 
-    // Reset
     setStageStatuses(PIPELINE_STAGES.map(() => "pending"));
 
     let currentStage = 0;
@@ -72,14 +66,13 @@ export default function PipelineStatus({
     const advanceStage = () => {
       if (currentStage >= PIPELINE_STAGES.length) return;
 
-      // Mark current as active
       setStageStatuses((prev) =>
         prev.map((s, i) => (i === currentStage ? "active" : s))
       );
 
       const stageIdx = currentStage;
       const timer = setTimeout(() => {
-        // Mark as completed, advance
+
         setStageStatuses((prev) =>
           prev.map((s, i) => (i === stageIdx ? "completed" : s))
         );
@@ -99,7 +92,7 @@ export default function PipelineStatus({
 
   return (
     <div className={cn("space-y-3", className)}>
-      {/* Header */}
+      {}
       <div className="flex items-center justify-between">
         <h3 className="text-[14px] font-semibold text-[var(--color-text-primary)]">
           Pipeline Progress
@@ -118,7 +111,7 @@ export default function PipelineStatus({
         )}
       </div>
 
-      {/* Pipeline Stages */}
+      {}
       <div className="space-y-1.5">
         {PIPELINE_STAGES.map((stage, idx) => {
           const status = stageStatuses[idx];
@@ -132,7 +125,7 @@ export default function PipelineStatus({
                 status === "completed" && "bg-[var(--color-surface)]"
               )}
             >
-              {/* Status Icon */}
+              {}
               <div
                 className={cn(
                   "flex items-center justify-center w-7 h-7 rounded-full shrink-0 transition-all duration-300",
@@ -159,7 +152,7 @@ export default function PipelineStatus({
                 )}
               </div>
 
-              {/* Stage Info */}
+              {}
               <div className="flex-1 min-w-0">
                 <p
                   className={cn(
@@ -173,7 +166,7 @@ export default function PipelineStatus({
                 </p>
               </div>
 
-              {/* Short code */}
+              {}
               <span
                 className={cn(
                   "text-[10px] font-mono font-bold shrink-0 transition-colors duration-200",
@@ -189,7 +182,7 @@ export default function PipelineStatus({
         })}
       </div>
 
-      {/* Progress Bar */}
+      {}
       <div className="h-1.5 rounded-full bg-[var(--color-surface-elevated)] overflow-hidden">
         <div
           className="h-full rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] transition-all duration-500"

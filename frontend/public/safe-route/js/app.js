@@ -61,7 +61,7 @@
     setStatus("Searching…", "busy");
     try {
       const res = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(q)}`
+        `https:
       );
       const data = await res.json();
       if (!data.length) {
@@ -84,7 +84,6 @@
     radiusVal.textContent = `${radiusInput.value} km`;
   });
 
-  // 4. Run the risk scan
   btnScan.addEventListener("click", async () => {
     if (state.userLat == null) return;
     btnScan.disabled = true;
@@ -164,7 +163,6 @@
     }
   }
 
-  // 5. SOS
   btnSOS.addEventListener("click", () => {
     SOS.wireLinks(state);
   });

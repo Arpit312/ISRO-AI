@@ -4,10 +4,6 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { ArrowLeftRight, ZoomIn, Download } from "lucide-react";
 
-// ============================================================================
-// ResultsPanel — Before/After image comparison with slider
-// ============================================================================
-
 interface ResultsPanelProps {
   inputImage: string;
   outputImage: string;
@@ -67,7 +63,7 @@ export default function ResultsPanel({
 
   return (
     <div className={cn("space-y-3", className)}>
-      {/* Header */}
+      {}
       <div className="flex items-center justify-between">
         <h3 className="text-[14px] font-semibold text-[var(--color-text-primary)]">
           Before / After Comparison
@@ -90,7 +86,7 @@ export default function ResultsPanel({
         </div>
       </div>
 
-      {/* Comparison Container */}
+      {}
       <div
         ref={containerRef}
         className={cn(
@@ -101,7 +97,7 @@ export default function ResultsPanel({
         onMouseDown={handleMouseDown}
         onTouchStart={handleMouseDown}
       >
-        {/* Output Image (full width behind) */}
+        {}
         <img
           src={outputImage}
           alt="Processed output"
@@ -109,7 +105,7 @@ export default function ResultsPanel({
           draggable={false}
         />
 
-        {/* Input Image (clipped by slider) */}
+        {}
         <div
           className="absolute inset-0 overflow-hidden"
           style={{ width: `${sliderPosition}%` }}
@@ -123,18 +119,18 @@ export default function ResultsPanel({
           />
         </div>
 
-        {/* Slider Line */}
+        {}
         <div
           className="absolute top-0 bottom-0 w-[2px] bg-white/80 shadow-[0_0_8px_rgba(255,255,255,0.3)] z-10"
           style={{ left: `${sliderPosition}%` }}
         >
-          {/* Slider Handle */}
+          {}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 backdrop-blur-sm shadow-[var(--shadow-lg)] flex items-center justify-center">
             <ArrowLeftRight size={16} className="text-[var(--color-bg)]" />
           </div>
         </div>
 
-        {/* Labels */}
+        {}
         <div className="absolute top-3 left-3 px-2 py-1 rounded-[var(--radius-md)] bg-black/50 backdrop-blur-sm text-[10px] font-bold text-white/90 uppercase tracking-wider z-20">
           Original
         </div>

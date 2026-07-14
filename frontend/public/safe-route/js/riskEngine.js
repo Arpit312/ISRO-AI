@@ -1,5 +1,5 @@
 const RiskEngine = (() => {
-  const EARTH_R = 6371000; // metres
+  const EARTH_R = 6371000; 
 
   function haversine(lat1, lon1, lat2, lon2) {
     const toRad = (d) => (d * Math.PI) / 180;
@@ -11,7 +11,6 @@ const RiskEngine = (() => {
     return 2 * EARTH_R * Math.asin(Math.sqrt(a));
   }
 
-  // Builds an NxN grid of candidate points inside radiusKm around the center.
   function buildGrid(lat, lon, radiusKm, n = 5) {
     const points = [];
     const step = (radiusKm * 2) / (n - 1);
@@ -27,7 +26,6 @@ const RiskEngine = (() => {
     return points;
   }
 
-  // Batched elevation lookup — OpenTopoData supports pipe-separated locations.
   async function fetchElevations(points) {
     const chunks = [];
     for (let i = 0; i < points.length; i += 90) chunks.push(points.slice(i, i + 90));
@@ -47,8 +45,6 @@ const RiskEngine = (() => {
     return results;
   }
 
-  // Single Overpass query covering the whole bounding box — returns nearby
-  // water features and roads so we can compute per-candidate distances locally.
   async function fetchHazardFeatures(lat, lon, radiusKm) {
     const d = radiusKm / 111.32;
     const bbox = [lat - d, lon - d, lat + d, lon + d].join(",");
@@ -100,19 +96,15 @@ const RiskEngine = (() => {
       const roadDist = nearestDistance(p, hazards.roads);
 
       const elevScore = eMax > eMin ? (p.elevation - eMin) / (eMax - eMin) : 0.5;
-      const waterScore = Math.min(waterDist / 300, 1); // full score past 300m from water
-      const roadScore = 1 - Math.min(roadDist / 500, 1); // full score within 500m of a road
+      const waterScore = Math.min(waterDist / 300, 1); 
+      const roadScore = 1 - Math.min(roadDist / 500, 1); 
 
-      // Weighted blend — tune these weights per disaster type in production
-      // (flood scenario weights water/elevation higher; earthquake would weight
-      // open-ground / building-density instead — hook for that lives here).
       const score = elevScore * 0.45 + waterScore * 0.35 + roadScore * 0.2;
 
       return { ...p, waterDist, roadDist, score };
     });
   }
 
-  // Main entry point: full scan pipeline for a given center + radius.
   async function scan(lat, lon, radiusKm, onProgress) {
     onProgress?.("Building scan grid…");
     const grid = buildGrid(lat, lon, radiusKm, 5);
@@ -129,8 +121,6 @@ const RiskEngine = (() => {
     const scored = scoreCandidates(grid, hazards, elevRange);
     scored.sort((a, b) => b.score - a.score);
 
-    // filter out candidates basically on top of the user (< 150m) so we
-    // actually recommend somewhere to go
     const usable = scored.filter((p) => haversine(p.lat, p.lon, lat, lon) > 150);
 
     return usable.slice(0, 3);

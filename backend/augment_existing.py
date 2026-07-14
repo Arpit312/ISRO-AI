@@ -1,12 +1,10 @@
 from PIL import Image
 from pathlib import Path
 import os
-
 def augment():
     src = Path("d:/ISRO_AI_Project/extracted_images/rsicd_images")
     out = Path("d:/ISRO_AI_Project/extracted_images/rsicd_images_augmented")
     out.mkdir(exist_ok=True, parents=True)
-
     count = 0
     for f in src.glob("*.png"):
         try:
@@ -20,8 +18,6 @@ def augment():
             count += 5
         except Exception as e:
             print(f"Error processing {f.name}: {e}")
-
     print(f"Done: {count} augmented images generated in {out}")
-
 if __name__ == "__main__":
     augment()

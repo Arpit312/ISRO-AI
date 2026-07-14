@@ -1,9 +1,7 @@
 import requests
 import torch
 import numpy as np
-
 CDSE_TOKEN_URL = "https://identity.dataspace.copernicus.eu/auth/realms/CDSE/protocol/openid-connect/token"
-
 def get_cdse_token(client_id, client_secret):
     resp = requests.post(CDSE_TOKEN_URL, data={
         "grant_type": "client_credentials",
@@ -12,7 +10,6 @@ def get_cdse_token(client_id, client_secret):
     })
     resp.raise_for_status()
     return resp.json()["access_token"]
-
 async def fetch_sentinel1_sar_async(lat, lon, date_str, token=None, buffer_deg=0.05):
     """
     Fetch Sentinel-1 GRD VV band as a simple grayscale SAR proxy.
@@ -20,10 +17,8 @@ async def fetch_sentinel1_sar_async(lat, lon, date_str, token=None, buffer_deg=0
     which is an honest fallback indicating SAR unavailability.
     """
     if token is None:
-        # Replaced dummy zero-tensor with our new local mock database for REAL testing
         from mock_sar_database import get_mock_sar_data
         return get_mock_sar_data(256, 256)
-
     bbox = [lon - buffer_deg, lat - buffer_deg, lon + buffer_deg, lat + buffer_deg]
     search_url = "https://catalogue.dataspace.copernicus.eu/odata/v1/Products"
     params = {
@@ -42,9 +37,6 @@ async def fetch_sentinel1_sar_async(lat, lon, date_str, token=None, buffer_deg=0
         results = r.json().get("value", [])
         if not results:
             return torch.zeros((1, 1, 256, 256))
-            
-        # Place to wire actual GRD product download and dB scaling
-        # For the demo, returning zero-tensor as honest partial integration
         return torch.zeros((1, 1, 256, 256))
     except Exception as e:
         print(f"SAR Fetch Error: {e}")

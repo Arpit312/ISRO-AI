@@ -2,10 +2,6 @@
 
 import { cn } from "@/lib/utils";
 
-// ============================================================================
-// Spinner Atom — Satellite-themed orbital loading animation
-// ============================================================================
-
 interface SpinnerProps {
   size?: "sm" | "md" | "lg";
   className?: string;
@@ -28,7 +24,7 @@ export default function Spinner({
   return (
     <div className={cn("flex flex-col items-center gap-3", className)}>
       <div className={cn("relative flex items-center justify-center", config.container)}>
-        {/* Center dot */}
+        {}
         <div
           className={cn(
             config.center,
@@ -36,7 +32,7 @@ export default function Spinner({
           )}
         />
 
-        {/* Orbit ring */}
+        {}
         <div
           className={cn(
             "absolute inset-0 flex items-center justify-center",
@@ -44,7 +40,7 @@ export default function Spinner({
             "m-auto rounded-full border border-[var(--color-primary)]/20"
           )}
         >
-          {/* Orbiting dot */}
+          {}
           <div
             className="absolute animate-orbit"
             style={{ top: "50%", left: "50%", marginTop: "-3px", marginLeft: "-3px" }}
@@ -58,7 +54,7 @@ export default function Spinner({
           </div>
         </div>
 
-        {/* Outer glow ring */}
+        {}
         <div
           className={cn(
             "absolute inset-0 rounded-full border border-[var(--color-primary)]/10",

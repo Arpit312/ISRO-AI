@@ -17,10 +17,6 @@ import {
   User,
 } from "lucide-react";
 
-// ============================================================================
-// Settings Page — Configuration overview & auth management
-// ============================================================================
-
 export default function SettingsPage() {
   const { user, loading, isConfigured, signIn, signOut } = useAuth();
 
@@ -57,7 +53,7 @@ export default function SettingsPage() {
 
   return (
     <div className="max-w-[900px] mx-auto">
-      {/* Page Header */}
+      {}
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-[var(--color-text-primary)] tracking-tight">
           Settings
@@ -68,7 +64,7 @@ export default function SettingsPage() {
       </div>
 
       <div className="space-y-6">
-        {/* User Profile Card */}
+        {}
         <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6 animate-fade-in">
           <h2 className="text-[14px] font-semibold text-[var(--color-text-primary)] mb-4 flex items-center gap-2">
             <User size={16} />
@@ -113,7 +109,7 @@ export default function SettingsPage() {
           )}
         </div>
 
-        {/* System Configuration */}
+        {}
         <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6 animate-fade-in-up stagger-2">
           <h2 className="text-[14px] font-semibold text-[var(--color-text-primary)] mb-4 flex items-center gap-2">
             <SettingsIcon size={16} />
@@ -145,7 +141,7 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        {/* About */}
+        {}
         <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6 animate-fade-in-up stagger-3">
           <h2 className="text-[14px] font-semibold text-[var(--color-text-primary)] mb-3">
             About NOVA-SYNC

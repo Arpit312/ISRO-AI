@@ -2,10 +2,6 @@
 
 import { cn } from "@/lib/utils";
 
-// ============================================================================
-// Badge Atom — Status badges for cloud types and states
-// ============================================================================
-
 type BadgeVariant = "default" | "success" | "warning" | "error" | "info" | "primary";
 
 interface BadgeProps {

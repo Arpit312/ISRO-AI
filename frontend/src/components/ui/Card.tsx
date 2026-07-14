@@ -2,10 +2,6 @@
 
 import { cn } from "@/lib/utils";
 
-// ============================================================================
-// Card Atom — Glassmorphism card with optional glow border
-// ============================================================================
-
 interface CardProps {
   children: React.ReactNode;
   className?: string;

@@ -5,10 +5,6 @@ import { cn } from "@/lib/utils";
 import { getQualityLabel } from "@/lib/utils";
 import { Shield } from "lucide-react";
 
-// ============================================================================
-// QualityScore — Animated radial gauge showing physics validation score
-// ============================================================================
-
 interface QualityScoreProps {
   score: number;
   className?: string;
@@ -39,7 +35,6 @@ export default function QualityScore({
   const circumference = 2 * Math.PI * config.radius;
   const quality = getQualityLabel(score);
 
-  // Animate the score from 0 to target
   useEffect(() => {
     const validScore = isNaN(score) || score === null || score === undefined ? 0 : score;
     const duration = 1200;
@@ -48,7 +43,7 @@ export default function QualityScore({
     const animate = () => {
       const elapsed = Date.now() - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      // Ease-out cubic
+
       const eased = 1 - Math.pow(1 - progress, 3);
       setAnimatedScore(Math.round(validScore * eased * 10) / 10);
 
@@ -66,7 +61,7 @@ export default function QualityScore({
 
   return (
     <div className={cn("space-y-4", className)}>
-      {/* Header */}
+      {}
       <div className="flex items-center gap-2">
         <Shield size={16} style={{ color: quality.color }} />
         <h3 className="text-[14px] font-semibold text-[var(--color-text-primary)]">
@@ -75,10 +70,10 @@ export default function QualityScore({
       </div>
 
       <div className="flex items-center gap-6">
-        {/* Radial Gauge */}
+        {}
         <div className={cn("relative flex items-center justify-center shrink-0", config.container)}>
           <svg className="w-full h-full -rotate-90" viewBox={`0 0 ${(config.radius + config.stroke) * 2} ${(config.radius + config.stroke) * 2}`}>
-            {/* Background ring */}
+            {}
             <circle
               cx={config.radius + config.stroke}
               cy={config.radius + config.stroke}
@@ -87,7 +82,7 @@ export default function QualityScore({
               strokeWidth={config.stroke}
               fill="none"
             />
-            {/* Score ring */}
+            {}
             <circle
               cx={config.radius + config.stroke}
               cy={config.radius + config.stroke}
@@ -105,7 +100,7 @@ export default function QualityScore({
             />
           </svg>
 
-          {/* Center text */}
+          {}
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <span
               className={cn("font-bold tracking-tight", config.fontSize)}
@@ -125,7 +120,7 @@ export default function QualityScore({
           </div>
         </div>
 
-        {/* Spectral Report */}
+        {}
         {showDetails && spectralReport && (
           <div className="flex-1 space-y-2.5">
             <p className="text-[11px] font-semibold text-[var(--color-text-tertiary)] uppercase tracking-wider">
@@ -159,7 +154,7 @@ export default function QualityScore({
         )}
       </div>
 
-      {/* Cloud Coverage Reduction */}
+      {}
       {initialCloudPct !== undefined && finalCloudPct !== undefined && (
         <div className="pt-4 border-t border-[var(--color-border)] flex items-center justify-between">
           <div>

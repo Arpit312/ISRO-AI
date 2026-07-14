@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-
 class UncertaintyHead(nn.Module):
     def __init__(self, in_channels=64, out_channels=3):
         super(UncertaintyHead, self).__init__()
@@ -14,7 +13,6 @@ class UncertaintyHead(nn.Module):
             nn.ReLU(inplace=True),
             nn.Conv2d(32, 1, kernel_size=1) 
         )
-        
     def forward(self, features):
         reconstructed_image = self.mean_head(features)
         log_variance = self.logvar_head(features)

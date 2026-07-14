@@ -14,7 +14,6 @@ import Badge from "@/components/ui/Badge";
 import { useToast } from "@/components/ui/Toast";
 import { API_BASE_URL, IS_MOCK_MODE } from "@/lib/api";
 
-// Fix for default Leaflet icon issues in Next.js
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
@@ -37,18 +36,16 @@ interface OverlayData {
   groundTruthUrl?: string | null;
 }
 
-// Component to handle map view updates dynamically
 function MapUpdater({ center }: { center: L.LatLngTuple | null }) {
   const map = useMap();
   useEffect(() => {
     if (center) {
-      map.flyTo(center, 14, { duration: 1.5 }); // Fast smooth pan with closer zoom (14 instead of 11)
+      map.flyTo(center, 14, { duration: 1.5 }); 
     }
   }, [center, map]);
   return null;
 }
 
-// Component to handle zooming to image bounds
 function BoundsUpdater({ bounds }: { bounds: L.LatLngBoundsExpression | null }) {
   const map = useMap();
   useEffect(() => {
@@ -59,7 +56,6 @@ function BoundsUpdater({ bounds }: { bounds: L.LatLngBoundsExpression | null }) 
   return null;
 }
 
-// Component to handle Right-Click events on the map
 function MapInteractionHandler({ onRightClick }: { onRightClick: (lat: number, lng: number) => void }) {
   useMapEvents({
     contextmenu(e) {
@@ -69,7 +65,6 @@ function MapInteractionHandler({ onRightClick }: { onRightClick: (lat: number, l
   return null;
 }
 
-// Component to track mouse coordinates
 function CoordinateTracker({ onUpdate }: { onUpdate: (lat: number, lng: number) => void }) {
   useMapEvents({
     mousemove(e) {
@@ -79,7 +74,6 @@ function CoordinateTracker({ onUpdate }: { onUpdate: (lat: number, lng: number) 
   return null;
 }
 
-// Custom Glassmorphic Controls
 function CustomMapControls({ onLocate }: { onLocate: () => void }) {
   const map = useMap();
 
@@ -121,7 +115,7 @@ export default function MapExplorer() {
     toast.info("AI Initialization", "Sending composite to Nova-Sync Engine...");
 
     try {
-      // Fetch the blob from the object URL
+
       const response = await fetch(overlay.url);
       const blob = await response.blob();
 
@@ -186,7 +180,6 @@ export default function MapExplorer() {
     }
   };
 
-  // Fast Geocode Search (Only pans the map)
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!query.trim()) return;
@@ -197,7 +190,7 @@ export default function MapExplorer() {
       let lat, lon, display_name;
 
       if (IS_MOCK_MODE) {
-        await new Promise(r => setTimeout(r, 800)); // Simulate delay
+        await new Promise(r => setTimeout(r, 800)); 
         lat = 26.14;
         lon = 91.73;
         display_name = query + " (Mocked Location)";
@@ -223,7 +216,6 @@ export default function MapExplorer() {
     }
   };
 
-  // Right-Click Image Fetching
   const fetchClearImage = async (lat: number, lon: number) => {
     setIsFetchingImage(true);
     setOverlay(null);
@@ -232,7 +224,7 @@ export default function MapExplorer() {
 
     try {
       if (IS_MOCK_MODE) {
-        await new Promise(r => setTimeout(r, 2000)); // Simulate AI processing
+        await new Promise(r => setTimeout(r, 2000)); 
         const mockImageBase64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
         const offset = 0.03;
         const bounds: L.LatLngBoundsExpression = [
@@ -297,7 +289,7 @@ export default function MapExplorer() {
 
   return (
     <div className="flex flex-col h-full space-y-4">
-      {/* Control Bar */}
+      {}
       <div className="flex flex-col sm:flex-row gap-4 items-center justify-between p-4 rounded-[var(--radius-xl)] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)]">
         <div className="flex items-center gap-3 w-full sm:w-auto">
           <div className="w-10 h-10 rounded-full bg-[var(--color-primary-subtle)] flex items-center justify-center text-[var(--color-primary)]">
@@ -338,9 +330,9 @@ export default function MapExplorer() {
         </form>
       </div>
 
-      {/* Map Container */}
+      {}
       <div className="relative flex-1 rounded-[var(--radius-xl)] border border-[var(--color-border)] overflow-hidden bg-[var(--color-bg)] min-h-[500px]">
-        {/* Loading Overlay */}
+        {}
         {(isSearching || isFetchingImage || isEnhancing) && (
           <div className="absolute inset-0 z-[1000] bg-black/40 backdrop-blur-sm flex flex-col items-center justify-center">
             <div className="bg-[var(--color-surface)] p-6 rounded-[var(--radius-lg)] shadow-[var(--shadow-lg)] flex flex-col items-center gap-4 animate-scale-in">
@@ -360,7 +352,7 @@ export default function MapExplorer() {
           </div>
         )}
 
-        {/* The Leaflet Map */}
+        {}
         <MapContainer
           center={defaultCenter}
           zoom={6}
@@ -404,7 +396,7 @@ export default function MapExplorer() {
               <ImageOverlay url={overlay.url} bounds={overlay.bounds} opacity={1} />
               <Rectangle bounds={overlay.bounds} pathOptions={{ color: "var(--color-primary)", weight: 2, fill: false, dashArray: "5 5" }} />
 
-              {/* Optional: Add a subtle marker exactly where they clicked to anchor it */}
+              {}
               <Marker position={[overlay.lat, overlay.lng]}>
                 <Popup>
                   <div className="text-center">
@@ -419,7 +411,7 @@ export default function MapExplorer() {
           )}
         </MapContainer>
 
-        {/* Quality Badge & AI Controls Overlay */}
+        {}
         {overlay && (
           <div className="absolute bottom-6 left-6 z-[1000] flex flex-col gap-4">
             <div className="bg-[var(--color-surface)]/90 backdrop-blur-md border border-[var(--color-border)] p-4 rounded-[var(--radius-lg)] shadow-[var(--shadow-lg)] animate-fade-in-up min-w-[220px]">
@@ -482,7 +474,7 @@ export default function MapExplorer() {
           </div>
         )}
 
-        {/* Live Coordinates Overlay */}
+        {}
         {mouseCoords && (
           <div className="absolute bottom-6 right-6 z-[1000] bg-[var(--color-surface)]/80 backdrop-blur-md border border-[var(--color-border)] px-3 py-2 rounded-full shadow-[var(--shadow-sm)] flex items-center gap-2 pointer-events-none animate-fade-in-up">
             <Crosshair size={14} className="text-[var(--color-primary)]" />
@@ -492,7 +484,7 @@ export default function MapExplorer() {
           </div>
         )}
 
-        {/* 🚀 THE DUAL-VALIDATION DASHBOARD */}
+        {}
         <div className="absolute bottom-6 right-1/2 translate-x-1/2 z-[1001] pointer-events-none">
           <AnimatePresence>
             {(overlay || isFetchingImage) && (
@@ -503,8 +495,8 @@ export default function MapExplorer() {
                 transition={{ type: "spring", stiffness: 120, damping: 15 }}
                 className="flex gap-6 p-4 bg-slate-900/80 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl pointer-events-auto"
               >
-                
-                {/* TIER 1: NOVA-SYNC SATELLITE (Aasmaan) */}
+
+                {}
                 <div className="flex flex-col items-center">
                   <span className="text-[11px] font-bold text-blue-300 mb-2 tracking-wider uppercase">NOVA-SYNC Output</span>
                   <div className="w-32 h-32 rounded-xl overflow-hidden border-2 border-blue-500/50 relative">
@@ -525,10 +517,10 @@ export default function MapExplorer() {
                   </div>
                 </div>
 
-                {/* DIVIDER */}
+                {}
                 <div className="w-px bg-gradient-to-b from-transparent via-white/30 to-transparent"></div>
 
-                {/* TIER 2: MAPILLARY GROUND TRUTH (Zameen) */}
+                {}
                 <div className="flex flex-col items-center">
                   <span className="text-[11px] font-bold text-emerald-300 mb-2 tracking-wider uppercase">Ground Truth</span>
                   <div className="w-32 h-32 rounded-xl overflow-hidden border-2 border-emerald-500/50 relative group">
@@ -543,7 +535,7 @@ export default function MapExplorer() {
                     ) : overlay?.groundTruthUrl ? (
                       <>
                         <img src={overlay.groundTruthUrl} alt="Street View" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                        {/* VERIFIED BADGE */}
+                        {}
                         <div className="absolute top-1 right-1 bg-emerald-500 flex items-center gap-1 text-white text-[9px] px-1.5 py-0.5 rounded font-bold shadow-md">
                           <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
                           Verified

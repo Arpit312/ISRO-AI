@@ -3,7 +3,6 @@
 import dynamic from "next/dynamic";
 import { Loader2 } from "lucide-react";
 
-// Leaflet requires window, so we must dynamically import the component with ssr: false
 const MapExplorer = dynamic(
   () => import("@/components/features/MapExplorer"),
   { 
@@ -17,10 +16,6 @@ const MapExplorer = dynamic(
   }
 );
 
-// ============================================================================
-// Explore Page — Interactive Global Map with Temporal Compositing
-// ============================================================================
-
 export default function ExplorePage() {
   return (
     <div className="max-w-[1600px] mx-auto h-[calc(100vh-140px)] flex flex-col">
@@ -32,8 +27,8 @@ export default function ExplorePage() {
           Search globally to fetch and reconstruct cloud-free imagery using the NOVA-SYNC fast-path temporal compositing algorithm via Copernicus Sentinel-2.
         </p>
       </div>
-      
-      {/* Map takes up the remaining height */}
+
+      {}
       <div className="flex-1 min-h-0">
         <MapExplorer />
       </div>

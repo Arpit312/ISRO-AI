@@ -4,10 +4,6 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Eye, EyeOff, Layers } from "lucide-react";
 
-// ============================================================================
-// HeatmapViewer — Uncertainty heatmap overlay with opacity toggle
-// ============================================================================
-
 interface HeatmapViewerProps {
   baseImage: string;
   heatmap: string;
@@ -24,7 +20,7 @@ export default function HeatmapViewer({
 
   return (
     <div className={cn("space-y-3", className)}>
-      {/* Header */}
+      {}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Layers size={16} className="text-[var(--color-warning)]" />
@@ -46,16 +42,16 @@ export default function HeatmapViewer({
         </button>
       </div>
 
-      {/* Heatmap Container */}
+      {}
       <div className="relative overflow-hidden rounded-[var(--radius-lg)] border border-[var(--color-border)] h-[280px]">
-        {/* Base processed image */}
+        {}
         <img
           src={baseImage}
           alt="Processed satellite image"
           className="absolute inset-0 w-full h-full object-cover"
         />
 
-        {/* Heatmap overlay */}
+        {}
         {showHeatmap && (
           <img
             src={heatmap}
@@ -65,7 +61,7 @@ export default function HeatmapViewer({
           />
         )}
 
-        {/* Legend */}
+        {}
         <div className="absolute bottom-3 right-3 px-3 py-2 rounded-[var(--radius-md)] bg-black/60 backdrop-blur-sm z-10">
           <div className="flex items-center gap-3 text-[10px] font-semibold text-white/90">
             <span className="flex items-center gap-1">
@@ -84,7 +80,7 @@ export default function HeatmapViewer({
         </div>
       </div>
 
-      {/* Opacity Slider */}
+      {}
       {showHeatmap && (
         <div className="flex items-center gap-3 px-1 animate-fade-in">
           <label className="text-[11px] font-medium text-[var(--color-text-tertiary)] whitespace-nowrap">

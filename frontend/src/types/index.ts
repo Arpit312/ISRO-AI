@@ -1,8 +1,5 @@
-// ============================================================================
-// NOVA-SYNC Type Definitions
-// ============================================================================
 
-/** Raw API response from POST /api/v1/process */
+
 export interface ProcessingResponse {
   status: "success" | "error";
   cloud_type_detected: string;
@@ -16,7 +13,6 @@ export interface ProcessingResponse {
   message?: string;
 }
 
-/** A single processing result stored in history */
 export interface ProcessingResult {
   id: string;
   timestamp: number;
@@ -33,13 +29,11 @@ export interface ProcessingResult {
   finalCloudPct?: number;
 }
 
-/** Processing request payload */
 export interface ProcessingRequest {
   file: File;
   month: number;
 }
 
-/** Sidebar navigation item */
 export interface NavItem {
   label: string;
   href: string;
@@ -47,7 +41,6 @@ export interface NavItem {
   badge?: string;
 }
 
-/** User auth state */
 export interface AuthUser {
   uid: string;
   email: string | null;
@@ -55,7 +48,6 @@ export interface AuthUser {
   photoURL: string | null;
 }
 
-/** App-wide toast notification */
 export interface ToastMessage {
   id: string;
   type: "success" | "error" | "warning" | "info";
@@ -64,7 +56,6 @@ export interface ToastMessage {
   duration?: number;
 }
 
-/** Pipeline stage descriptor */
 export interface PipelineStage {
   id: number;
   name: string;
@@ -72,7 +63,6 @@ export interface PipelineStage {
   status: "pending" | "active" | "completed" | "error";
 }
 
-/** Dashboard stats card */
 export interface StatCard {
   label: string;
   value: string | number;
@@ -81,7 +71,6 @@ export interface StatCard {
   icon: string;
 }
 
-/** Month option for the month selector */
 export interface MonthOption {
   value: number;
   label: string;

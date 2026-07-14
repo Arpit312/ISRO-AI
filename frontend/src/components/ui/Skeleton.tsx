@@ -2,10 +2,6 @@
 
 import { cn } from "@/lib/utils";
 
-// ============================================================================
-// Skeleton Atom — Shimmer loading placeholder
-// ============================================================================
-
 interface SkeletonProps {
   className?: string;
   variant?: "text" | "circular" | "rectangular";
@@ -57,7 +53,6 @@ export default function Skeleton({
   );
 }
 
-/** Pre-built skeleton for a stats card */
 export function StatCardSkeleton() {
   return (
     <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5 space-y-4">
@@ -71,7 +66,6 @@ export function StatCardSkeleton() {
   );
 }
 
-/** Pre-built skeleton for an image result */
 export function ImageResultSkeleton() {
   return (
     <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] overflow-hidden">

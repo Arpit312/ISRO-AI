@@ -5,12 +5,6 @@ import {
   type Auth,
 } from "firebase/auth";
 
-// ============================================================================
-// Firebase Configuration
-// Reads credentials from environment variables.
-// Falls back gracefully when Firebase is not configured (mock auth mode).
-// ============================================================================
-
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY || "",
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || "",

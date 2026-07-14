@@ -2,9 +2,8 @@ const AppMap = (() => {
   let map, userMarker, safeMarkers = [], rescueMarker, routeLines = [];
 
   function init() {
-    map = L.map("map", { zoomControl: true }).setView([22.9734, 78.6569], 5); // centered on India
+    map = L.map("map", { zoomControl: true }).setView([22.9734, 78.6569], 5); 
 
-    // Reliable, free satellite basemap: Esri World Imagery.
     const satellite = L.tileLayer(
       "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
       {
@@ -14,7 +13,6 @@ const AppMap = (() => {
       }
     );
 
-    // Street/label overlay so place names, roads, water are visible over imagery
     const labels = L.tileLayer(
       "https://{s}.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}{r}.png",
       { subdomains: "abcd", maxZoom: 19, opacity: 0.9 }
@@ -81,7 +79,6 @@ const AppMap = (() => {
       .bindPopup(`<b>${team.name}</b><br/>${team.type}`);
   }
 
-  // Draws a route using the free OSRM demo routing server (no API key).
   async function drawRoute(fromLatLon, toLatLon, color) {
     try {
       const url = `https://router.project-osrm.org/route/v1/driving/${fromLatLon[1]},${fromLatLon[0]};${toLatLon[1]},${toLatLon[0]}?overview=full&geometries=geojson`;
@@ -91,7 +88,7 @@ const AppMap = (() => {
       const coords = data.routes[0].geometry.coordinates.map((c) => [c[1], c[0]]);
       const line = L.polyline(coords, { color, weight: 4, opacity: 0.85 }).addTo(map);
       routeLines.push(line);
-      return data.routes[0]; // contains distance (m) and duration (s)
+      return data.routes[0]; 
     } catch (e) {
       console.warn("Routing failed, falling back to straight line:", e);
       const line = L.polyline([fromLatLon, toLatLon], {

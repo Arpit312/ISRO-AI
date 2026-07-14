@@ -3,10 +3,6 @@
 import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
 
-// ============================================================================
-// Button Atom — Premium multi-variant button with loading state
-// ============================================================================
-
 type ButtonVariant = "primary" | "secondary" | "ghost" | "danger" | "success";
 type ButtonSize = "sm" | "md" | "lg";
 

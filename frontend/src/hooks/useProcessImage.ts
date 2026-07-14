@@ -6,24 +6,15 @@ import { useAppStore } from "@/store/appStore";
 import { generateId } from "@/lib/utils";
 import type { ProcessingResponse, ProcessingResult } from "@/types";
 
-// ============================================================================
-// useProcessImage Hook
-// React Query mutation wrapping the NOVA-SYNC processing API.
-// Automatically saves results to the Zustand history store.
-// ============================================================================
-
 interface UseProcessImageOptions {
-  /** Called on successful processing */
-  onSuccess?: (data: ProcessingResponse) => void;
-  /** Called on processing error */
-  onError?: (error: Error) => void;
+    onSuccess?: (data: ProcessingResponse) => void;
+    onError?: (error: Error) => void;
 }
 
 interface ProcessImageInput {
   file: File;
   month: number;
-  /** Base64 preview of the input image for history */
-  inputPreview: string;
+    inputPreview: string;
 }
 
 export function useProcessImage(options?: UseProcessImageOptions) {
@@ -36,7 +27,7 @@ export function useProcessImage(options?: UseProcessImageOptions) {
     },
 
     onSuccess: (data, variables) => {
-      // Build a ProcessingResult and save to history
+
       const result: ProcessingResult = {
         id: generateId(),
         timestamp: Date.now(),
@@ -51,11 +42,9 @@ export function useProcessImage(options?: UseProcessImageOptions) {
         inputPreview: variables.inputPreview,
       };
 
-      // Persist to Zustand store
       addToHistory(result);
       setCurrentResult(result);
 
-      // Call user-provided callback
       options?.onSuccess?.(data);
     },
 
@@ -66,21 +55,13 @@ export function useProcessImage(options?: UseProcessImageOptions) {
   });
 
   return {
-    /** Trigger the processing mutation */
-    processImage: mutation.mutate,
-    /** Async version that returns a promise */
-    processImageAsync: mutation.mutateAsync,
-    /** Whether processing is in progress */
-    isProcessing: mutation.isPending,
-    /** Whether processing completed successfully */
-    isSuccess: mutation.isSuccess,
-    /** Whether processing encountered an error */
-    isError: mutation.isError,
-    /** The error object if processing failed */
-    error: mutation.error,
-    /** The raw API response data */
-    data: mutation.data,
-    /** Reset the mutation state */
-    reset: mutation.reset,
+        processImage: mutation.mutate,
+        processImageAsync: mutation.mutateAsync,
+        isProcessing: mutation.isPending,
+        isSuccess: mutation.isSuccess,
+        isError: mutation.isError,
+        error: mutation.error,
+        data: mutation.data,
+        reset: mutation.reset,
   };
 }

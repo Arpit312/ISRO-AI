@@ -23,10 +23,6 @@ import {
 } from "lucide-react";
 import type { ProcessingResult } from "@/types";
 
-// ============================================================================
-// History Page — View past processing results
-// ============================================================================
-
 export default function HistoryPage() {
   const history = useAppStore((state) => state.history);
   const removeFromHistory = useAppStore((state) => state.removeFromHistory);
@@ -36,11 +32,9 @@ export default function HistoryPage() {
   const [selectedResult, setSelectedResult] = useState<ProcessingResult | null>(null);
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "quality">("newest");
 
-  // Filter & Sort
   const filteredHistory = useMemo(() => {
     let results = [...history];
 
-    // Filter by search
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
       results = results.filter(
@@ -51,7 +45,6 @@ export default function HistoryPage() {
       );
     }
 
-    // Sort
     switch (sortBy) {
       case "newest":
         results.sort((a, b) => b.timestamp - a.timestamp);
@@ -67,7 +60,6 @@ export default function HistoryPage() {
     return results;
   }, [history, searchQuery, sortBy]);
 
-  // Cloud type → badge variant mapping
   const cloudTypeBadge = (type: string): "success" | "warning" | "error" | "info" | "primary" => {
     if (type === "Clear Sky") return "success";
     if (type === "Thin Cirrus") return "info";
@@ -78,7 +70,7 @@ export default function HistoryPage() {
 
   return (
     <div className="max-w-[1400px] mx-auto">
-      {/* Page Header */}
+      {}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl font-bold text-[var(--color-text-primary)] tracking-tight">
@@ -101,7 +93,7 @@ export default function HistoryPage() {
         )}
       </div>
 
-      {/* Empty State */}
+      {}
       {history.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 rounded-[var(--radius-xl)] border-2 border-dashed border-[var(--color-border-hover)] glass bg-[var(--color-surface)]/10 animate-fade-in">
           <div className="flex items-center justify-center w-16 h-16 rounded-full bg-[var(--color-info-subtle)] mb-4 animate-float">
@@ -124,9 +116,9 @@ export default function HistoryPage() {
         </div>
       ) : (
         <>
-          {/* Search & Filter Bar */}
+          {}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-6">
-            {/* Search */}
+            {}
             <div className="relative flex-1">
               <Search
                 size={15}
@@ -147,7 +139,7 @@ export default function HistoryPage() {
               />
             </div>
 
-            {/* Sort Dropdown */}
+            {}
             <div className="relative">
               <select
                 value={sortBy}
@@ -171,7 +163,7 @@ export default function HistoryPage() {
             </div>
           </div>
 
-          {/* Results List */}
+          {}
           <div className="space-y-3">
             {filteredHistory.map((result, idx) => {
               const quality = getQualityLabel(result.qualityScore);
@@ -188,7 +180,7 @@ export default function HistoryPage() {
                   )}
                 >
                   <div className="flex items-center gap-4 p-4">
-                    {/* Thumbnail */}
+                    {}
                     <div className="w-16 h-16 rounded-[var(--radius-md)] overflow-hidden border border-[var(--color-border)] shrink-0 bg-[var(--color-surface-elevated)]">
                       {result.inputPreview ? (
                         <img
@@ -203,7 +195,7 @@ export default function HistoryPage() {
                       )}
                     </div>
 
-                    {/* Info */}
+                    {}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
                         <p className="text-[13px] font-semibold text-[var(--color-text-primary)] truncate">
@@ -232,7 +224,7 @@ export default function HistoryPage() {
                       </div>
                     </div>
 
-                    {/* Actions */}
+                    {}
                     <div className="flex items-center gap-1 shrink-0">
                       <button
                         onClick={() => setSelectedResult(result)}
@@ -255,7 +247,7 @@ export default function HistoryPage() {
             })}
           </div>
 
-          {/* No Results for Search */}
+          {}
           {filteredHistory.length === 0 && searchQuery.trim() && (
             <div className="text-center py-12 text-[var(--color-text-tertiary)]">
               <Search size={32} className="mx-auto mb-3 opacity-40" />
@@ -267,23 +259,21 @@ export default function HistoryPage() {
         </>
       )}
 
-      {/* ================================================================
-          Detail Modal
-          ================================================================ */}
+      {}
       {selectedResult && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4"
           onClick={() => setSelectedResult(null)}
         >
-          {/* Backdrop */}
+          {}
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-fade-in" />
 
-          {/* Modal */}
+          {}
           <div
             className="relative z-10 w-full max-w-4xl max-h-[85vh] overflow-y-auto rounded-[var(--radius-xl)] glass-elevated shadow-[var(--shadow-lg)] animate-scale-in"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Modal Header */}
+            {}
             <div className="sticky top-0 z-10 flex items-center justify-between p-5 border-b border-[var(--color-border)] glass">
               <div>
                 <h2 className="text-[16px] font-bold text-[var(--color-text-primary)]">
@@ -301,9 +291,9 @@ export default function HistoryPage() {
               </button>
             </div>
 
-            {/* Modal Content */}
+            {}
             <div className="p-5 space-y-6">
-              {/* Badges */}
+              {}
               <div className="flex flex-wrap gap-2">
                 <Badge variant={cloudTypeBadge(selectedResult.cloudType)} dot size="md">
                   {selectedResult.cloudType}
@@ -313,13 +303,13 @@ export default function HistoryPage() {
                 </Badge>
               </div>
 
-              {/* Before/After */}
+              {}
               <ResultsPanel
                 inputImage={selectedResult.inputPreview}
                 outputImage={selectedResult.outputImage}
               />
 
-              {/* Quality + Heatmap Row */}
+              {}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="rounded-[var(--radius-lg)] glass bg-[var(--color-surface)]/20 p-5">
                   <QualityScore

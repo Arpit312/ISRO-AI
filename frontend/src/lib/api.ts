@@ -1,30 +1,21 @@
 import axios, { AxiosError, type AxiosInstance } from "axios";
 import type { ProcessingResponse } from "@/types";
 
-// ============================================================================
-// NOVA-SYNC Centralized API Service
-// Supports both real backend and mock mode via NEXT_PUBLIC_API_MOCK env var.
-// ============================================================================
-
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 const IS_MOCK_MODE = process.env.NEXT_PUBLIC_API_MOCK === "true";
 
-/**
- * Configured Axios instance with interceptors for auth and error handling.
- */
 const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 120_000, // 2 minutes — satellite processing can be slow
+  timeout: 120_000, 
   headers: {
     Accept: "application/json",
   },
 });
 
-// ── Request Interceptor: Attach auth token ──────────────────────────────────
 apiClient.interceptors.request.use(
   (config) => {
-    // If Firebase auth is configured, attach the ID token
+
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("nova_sync_token");
       if (token) {
@@ -36,7 +27,6 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// ── Response Interceptor: Normalize errors ──────────────────────────────────
 apiClient.interceptors.response.use(
   (response) => response,
   (error: AxiosError<{ message?: string; detail?: string }>) => {
@@ -48,9 +38,8 @@ apiClient.interceptors.response.use(
 
     const status = error.response?.status;
 
-    // Handle specific status codes
     if (status === 401) {
-      // Token expired or invalid — clear auth state
+
       if (typeof window !== "undefined") {
         localStorage.removeItem("nova_sync_token");
       }
@@ -60,16 +49,11 @@ apiClient.interceptors.response.use(
   }
 );
 
-// ============================================================================
-// Mock Data Generator
-// ============================================================================
-
-/** Generates a realistic mock response with a simulated delay */
 async function generateMockResponse(
   fileName: string,
   month: number
 ): Promise<ProcessingResponse> {
-  // Simulate processing delay (1.5–3s)
+
   await new Promise((resolve) =>
     setTimeout(resolve, 1500 + Math.random() * 1500)
   );
@@ -89,9 +73,8 @@ async function generateMockResponse(
     "Clear Sky",
   ];
 
-  const qualityScore = 75 + Math.random() * 25; // 75–100
+  const qualityScore = 75 + Math.random() * 25; 
 
-  // Generate a 1x1 blue pixel as a minimal valid base64 PNG for mock
   const mockImageBase64 =
     "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==";
 
@@ -110,14 +93,6 @@ async function generateMockResponse(
   };
 }
 
-// ============================================================================
-// API Functions
-// ============================================================================
-
-/**
- * Process a satellite image through the NOVA-SYNC pipeline.
- * In mock mode, returns simulated data. In production, calls POST /api/v1/process.
- */
 export async function processImage(
   file: File,
   month: number
@@ -142,9 +117,6 @@ export async function processImage(
   return response.data;
 }
 
-/**
- * Health check — ping the backend to verify it's online.
- */
 export async function checkHealth(): Promise<boolean> {
   if (IS_MOCK_MODE) {
     return true;
