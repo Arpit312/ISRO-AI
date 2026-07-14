@@ -61,7 +61,7 @@
     setStatus("Searching…", "busy");
     try {
       const res = await fetch(
-        `https:
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}`
       );
       const data = await res.json();
       if (!data.length) {
