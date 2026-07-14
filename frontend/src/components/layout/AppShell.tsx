@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Sidebar from "@/components/layout/Sidebar";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -13,6 +14,17 @@ interface AppShellProps {
 export default function AppShell({ children }: AppShellProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isLandingPage = pathname === "/";
+
+  if (isLandingPage) {
+    return (
+      <div className="min-h-screen relative overflow-hidden bg-black text-white">
+        {children}
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
@@ -21,7 +33,6 @@ export default function AppShell({ children }: AppShellProps) {
         <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-blue-600/5 blur-[150px] mix-blend-screen animate-float opacity-10" style={{ animationDelay: '2s' }} />
       </div>
 
-        {}
       <Sidebar
         collapsed={sidebarCollapsed}
         onToggle={() => setSidebarCollapsed((prev) => !prev)}
@@ -29,7 +40,6 @@ export default function AppShell({ children }: AppShellProps) {
         onMobileClose={() => setMobileMenuOpen(false)}
       />
 
-      {}
       <div
         className={cn(
           "flex flex-col flex-1 transition-all duration-300 ease-[var(--ease-smooth)] will-change-transform",
@@ -39,18 +49,15 @@ export default function AppShell({ children }: AppShellProps) {
             : "md:ml-[var(--sidebar-width)]"
         )}
       >
-        {}
         <Navbar 
           sidebarCollapsed={sidebarCollapsed} 
           onMobileMenuToggle={() => setMobileMenuOpen((prev) => !prev)}
         />
 
-        {}
         <main className="flex-1 mt-[var(--navbar-height)] p-4 md:p-6 overflow-x-hidden">
           {children}
         </main>
 
-        {}
         <Footer />
       </div>
     </div>
