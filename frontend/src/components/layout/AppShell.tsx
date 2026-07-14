@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import Sidebar from "@/components/layout/Sidebar";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { useAppStore } from "@/store/appStore";
 import { cn } from "@/lib/utils";
 
 interface AppShellProps {
@@ -15,13 +16,45 @@ export default function AppShell({ children }: AppShellProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const { isAuthenticated } = useAppStore();
 
   const isLandingPage = pathname === "/";
+  const isLoginPage = pathname === "/login";
+
+  useEffect(() => {
+    if (!isLandingPage && !isLoginPage && !isAuthenticated) {
+      router.push("/login");
+    }
+  }, [isAuthenticated, isLandingPage, isLoginPage, router]);
 
   if (isLandingPage) {
     return (
       <div className="min-h-screen relative overflow-hidden bg-black text-white">
         {children}
+      </div>
+    );
+  }
+
+  // Hide sidebar/navbar if on login page
+  if (isLoginPage) {
+    return (
+      <div className="min-h-screen relative overflow-hidden bg-black text-white">
+        {/* Cinematic Monitor Background */}
+        <div className="fixed inset-0 z-[-2] pointer-events-none">
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+            className="w-full h-full object-cover opacity-30 mix-blend-lighten"
+          >
+            <source src="/cinematic-bg.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div className="relative z-10 w-full h-full">
+          {children}
+        </div>
       </div>
     );
   }

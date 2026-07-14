@@ -3,6 +3,10 @@ import { persist } from "zustand/middleware";
 import type { ProcessingResult, ToastMessage } from "@/types";
 
 interface AppState {
+  isAuthenticated: boolean;
+  userRole: "user" | "admin" | null;
+  login: (role: "user" | "admin") => void;
+  logout: () => void;
 
   sidebarCollapsed: boolean;
   toggleSidebar: () => void;
@@ -26,6 +30,10 @@ interface AppState {
 export const useAppStore = create<AppState>()(
   persist(
     (set) => ({
+      isAuthenticated: false,
+      userRole: null,
+      login: (role) => set({ isAuthenticated: true, userRole: role }),
+      logout: () => set({ isAuthenticated: false, userRole: null }),
 
       sidebarCollapsed: false,
       toggleSidebar: () =>
@@ -73,9 +81,10 @@ export const useAppStore = create<AppState>()(
     }),
     {
       name: "nova-sync-store",
-
       partialize: (state) => ({
         sidebarCollapsed: state.sidebarCollapsed,
+        isAuthenticated: state.isAuthenticated,
+        userRole: state.userRole,
       }),
     }
   )

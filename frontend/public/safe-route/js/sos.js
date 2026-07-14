@@ -22,6 +22,20 @@ const SOS = (() => {
     const msg = buildMessage(state);
     const encoded = encodeURIComponent(msg);
 
+    // Also POST to our new backend database for the Admin Dashboard
+    fetch('/api/sos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        lat: state.userLat,
+        lon: state.userLon,
+        message: msg,
+        // Since we don't have user profiles in this prototype, we'll use a random name
+        // In a real app this would come from the logged in user
+        senderName: `User-${Math.floor(Math.random() * 10000)}` 
+      })
+    }).catch(err => console.error("Failed to sync SOS to admin HQ:", err));
+
     const waLink = document.getElementById("sosWhatsapp");
     waLink.href = `https://wa.me/${DEMO_CONTACT_NUMBER}?text=${encoded}`;
 

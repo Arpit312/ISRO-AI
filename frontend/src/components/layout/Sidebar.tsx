@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { useAppStore } from "@/store/appStore";
 import {
   LayoutDashboard,
   Satellite,
@@ -16,6 +17,8 @@ import {
   Map,
   Shield,
   Info,
+  LogOut,
+  Siren,
 } from "lucide-react";
 
 interface SidebarLink {
@@ -25,7 +28,7 @@ interface SidebarLink {
   badge?: string;
 }
 
-const navLinks: SidebarLink[] = [
+const baseNavLinks: SidebarLink[] = [
   {
     label: "Dashboard",
     href: "/dashboard",
@@ -74,7 +77,30 @@ interface SidebarProps {
 
 export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose }: SidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const { userRole, logout } = useAppStore();
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+
+  const navLinks = useMemo(() => {
+    if (userRole === "admin") {
+      return [
+        ...baseNavLinks.slice(0, 5),
+        {
+          label: "SOS HQ (Admin)",
+          href: "/admin",
+          icon: <Siren size={20} />,
+          badge: "LIVE",
+        },
+        ...baseNavLinks.slice(5),
+      ];
+    }
+    return baseNavLinks;
+  }, [userRole]);
+
+  const handleLogout = () => {
+    logout();
+    router.push("/login");
+  };
 
   return (
     <>
@@ -215,6 +241,21 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
             </div>
           </div>
         )}
+        {}
+        <button
+          onClick={handleLogout}
+          className={cn(
+            "mt-3 flex items-center gap-3 w-full rounded-[var(--radius-md)] py-2.5 transition-all duration-200",
+            "text-red-400/70 hover:text-red-400 hover:bg-red-400/10 border border-transparent hover:border-red-400/20",
+            collapsed ? "justify-center px-0" : "px-3"
+          )}
+          title="Logout"
+        >
+          <LogOut size={18} />
+          {!collapsed && (
+            <span className="text-[13px] font-medium">Secure Logout</span>
+          )}
+        </button>
       </div>
     </aside>
     </>
