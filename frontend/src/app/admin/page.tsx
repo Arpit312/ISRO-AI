@@ -86,7 +86,7 @@ export default function AdminDashboardPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-white/10 bg-black/40">
+              <tr className="border-b border-white/10 bg-[var(--color-surface)]">
                 <th className="p-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Status</th>
                 <th className="p-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Sender Name</th>
                 <th className="p-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Location (Lat, Lon)</th>
@@ -123,8 +123,8 @@ export default function AdminDashboardPage() {
                   </td>
                   <td className="p-4 font-medium">{sos.senderName}</td>
                   <td className="p-4">
-                    <div className="flex items-center gap-2 text-slate-300 font-mono text-sm bg-black/30 px-2 py-1 rounded w-max">
-                      <MapPin size={14} className="text-cyan-400" />
+                    <div className="flex items-center gap-2 text-slate-300 font-mono text-sm bg-[var(--color-bg)] px-2 py-1 rounded w-max">
+                      <MapPin size={14} className="text-[var(--color-primary)]" />
                       {sos.lat.toFixed(5)}, {sos.lon.toFixed(5)}
                     </div>
                   </td>
@@ -139,7 +139,7 @@ export default function AdminDashboardPage() {
                       href={`https://maps.google.com/?q=${sos.lat},${sos.lon}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 hover:bg-cyan-500/20 transition-colors text-sm font-medium"
+                      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary-light)] border border-[var(--color-primary)]/20 hover:bg-[var(--color-primary)]/20 transition-colors text-sm font-medium"
                     >
                       Open Map
                     </a>

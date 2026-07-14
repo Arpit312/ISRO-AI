@@ -1,16 +1,16 @@
 :root{
-  --bg: #030712;
-  --panel: #0B1120;
-  --panel-2: #111827;
+  --bg: #1e2028;
+  --panel: #282a31;
+  --panel-2: #383a42;
   --border: rgba(255, 255, 255, 0.06);
-  --text: #FAFAFA;
-  --text-muted: #8c9ac0;
+  --text: #ffffff;
+  --text-muted: #8a8d98;
   --safe: #2dd4a7;
   --safe-dim: #123a30;
   --risk: #f2545b;
   --risk-dim: #3a1a1e;
   --warn: #f2a93c;
-  --accent: #00D4FF;
+  --accent: #1da1f2;
   --sans: "Inter", system-ui, -apple-system, sans-serif;
   --mono: "Geist Mono", "JetBrains Mono", monospace;
 }

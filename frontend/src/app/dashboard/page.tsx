@@ -114,7 +114,7 @@ export default function DashboardPage() {
   return (
     <div className="max-w-[1400px] mx-auto space-y-8">
       {}
-      <section className="relative overflow-hidden rounded-[var(--radius-xl)] bg-black/40 backdrop-blur-md border border-white/10 p-8 md:p-10 animate-fade-in shadow-[0_0_30px_rgba(0,0,0,0.8)]">
+      <section className="relative overflow-hidden rounded-[var(--radius-xl)] bg-[var(--color-surface)]/80 backdrop-blur-xl border border-white/10 p-8 md:p-10 animate-fade-in shadow-2xl">
         {/* Glow Effects */}
         <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)]/10 via-transparent to-[var(--color-primary)]/5 pointer-events-none" />
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--color-primary)]/20 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />

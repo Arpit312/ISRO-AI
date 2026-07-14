@@ -126,12 +126,12 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
       >
       {/* Branding */}
       <div className="flex items-center gap-3 px-5 h-[var(--navbar-height)] border-b border-[var(--color-border)] shrink-0">
-        <div className="relative flex items-center justify-center w-9 h-9 rounded-[var(--radius-md)] bg-black shrink-0 overflow-hidden border border-white/10 shadow-[0_0_15px_rgba(34,211,238,0.15)] group">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-cyan-400 group-hover:scale-110 transition-transform duration-300">
+        <div className="relative flex items-center justify-center w-9 h-9 rounded-[var(--radius-md)] bg-[#282a31] shrink-0 overflow-hidden border border-white/10 shadow-[0_0_15px_rgba(29,161,242,0.15)] group">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#1da1f2] group-hover:scale-110 transition-transform duration-300">
             <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" opacity="0.8"/>
             <path d="M2 17L12 22L22 17M2 12L12 17L22 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
-          <div className="absolute inset-0 rounded-[var(--radius-md)] animate-pulse-glow pointer-events-none border border-cyan-400/20" />
+          <div className="absolute inset-0 rounded-[var(--radius-md)] animate-pulse-glow pointer-events-none border border-[#1da1f2]/20" />
         </div>
         {!collapsed && (
           <div className="animate-fade-in overflow-hidden">

@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-    --color-primary: #00D4FF;
-  --color-primary-light: #5BE6FF;
-  --color-primary-dark: #0099CC;
-  --color-primary-glow: rgba(0, 212, 255, 0.25);
-  --color-primary-subtle: rgba(0, 212, 255, 0.1);
+    --color-primary: #1da1f2;
+  --color-primary-light: #4db3ff;
+  --color-primary-dark: #0077d6;
+  --color-primary-glow: rgba(29, 161, 242, 0.25);
+  --color-primary-subtle: rgba(29, 161, 242, 0.1);
 
     --color-success: #10B981;
   --color-success-subtle: rgba(16, 185, 129, 0.12);
@@ -16,23 +16,23 @@
   --color-info: #3B82F6;
   --color-info-subtle: rgba(59, 130, 246, 0.12);
 
-    --color-bg: #000000;
-  --color-bg-elevated: #0A0A0A;
-  --color-surface: #111111;
-  --color-surface-hover: #1A1A1A;
-  --color-surface-elevated: #222222;
-  --color-surface-overlay: rgba(0, 0, 0, 0.85);
+    --color-bg: #1e2028;
+  --color-bg-elevated: #23252e;
+  --color-surface: #282a31;
+  --color-surface-hover: #383a42;
+  --color-surface-elevated: #282a31;
+  --color-surface-overlay: rgba(30, 32, 40, 0.85);
 
     --color-border: rgba(255, 255, 255, 0.08);
   --color-border-hover: rgba(255, 255, 255, 0.15);
-  --color-border-focus: #00D4FF;
+  --color-border-focus: #1da1f2;
   --color-border-subtle: rgba(255, 255, 255, 0.04);
 
-    --color-text-primary: #F8FAFC;
-  --color-text-secondary: #94A3B8;
-  --color-text-tertiary: #64748B;
-  --color-text-muted: #475569;
-  --color-text-inverse: #020617;
+    --color-text-primary: #ffffff;
+  --color-text-secondary: #8a8d98;
+  --color-text-tertiary: #6b6e78;
+  --color-text-muted: #4e5058;
+  --color-text-inverse: #000000;
 
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
@@ -102,7 +102,7 @@ body {
 }
 
 .glass {
-  background: rgba(5, 5, 5, 0.2);
+  background: rgba(40, 42, 49, 0.4);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -111,14 +111,14 @@ body {
 }
 
 .glass-hover:hover {
-  background: rgba(10, 10, 10, 0.3);
+  background: rgba(40, 42, 49, 0.6);
   border-color: rgba(255, 255, 255, 0.15);
   box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 10px 15px -3px rgba(0, 0, 0, 0.4);
   transform: translateY(-2px);
 }
 
 .glass-elevated {
-  background: rgba(5, 5, 5, 0.4);
+  background: rgba(40, 42, 49, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -136,9 +136,9 @@ body {
   border-radius: inherit;
   background: linear-gradient(
     135deg,
-    rgba(59, 130, 246, 0.4),
+    rgba(29, 161, 242, 0.4),
     rgba(255, 255, 255, 0.05),
-    rgba(0, 212, 255, 0.4)
+    rgba(29, 161, 242, 0.4)
   );
   z-index: -1;
   opacity: 0;
