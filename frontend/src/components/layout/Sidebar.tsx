@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 import {
   LayoutDashboard,
   Satellite,
@@ -97,11 +98,11 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
           collapsed ? "md:w-[var(--sidebar-collapsed-width)]" : "md:w-[var(--sidebar-width)]"
         )}
       >
-      {}
+      {/* Branding */}
       <div className="flex items-center gap-3 px-5 h-[var(--navbar-height)] border-b border-[var(--color-border)] shrink-0">
-        <div className="relative flex items-center justify-center w-9 h-9 rounded-[var(--radius-md)] bg-[var(--color-primary)] shrink-0">
-          <Zap size={18} className="text-white" />
-          <div className="absolute inset-0 rounded-[var(--radius-md)] animate-pulse-glow" />
+        <div className="relative flex items-center justify-center w-9 h-9 rounded-[var(--radius-md)] bg-[var(--color-bg-elevated)] shrink-0 overflow-hidden border border-[var(--color-border)] shadow-md">
+          <Image src="/logo.png" alt="Logo" fill className="object-cover" />
+          <div className="absolute inset-0 rounded-[var(--radius-md)] animate-pulse-glow pointer-events-none border border-[var(--color-primary-subtle)]" />
         </div>
         {!collapsed && (
           <div className="animate-fade-in overflow-hidden">
