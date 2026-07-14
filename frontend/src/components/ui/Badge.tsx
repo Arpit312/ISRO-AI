@@ -51,7 +51,7 @@ export default function Badge({
       className={cn(
         "inline-flex items-center gap-1.5 font-semibold border rounded-[var(--radius-full)]",
         "transition-colors duration-200",
-        size === "sm" ? "px-2 py-0.5 text-base" : "px-2.5 py-1 text-2xl",
+        size === "sm" ? "px-2 py-0.5 text-[10px]" : "px-2.5 py-1 text-[11px]",
         variantStyles[variant],
         className
       )}

@@ -296,8 +296,8 @@ export default function MapExplorer() {
             <MousePointerClick size={20} />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-[var(--color-text-primary)]">Fast Interactive Search</h2>
-            <p className="text-base text-[var(--color-text-secondary)]">Search & Right-Click on Map</p>
+            <h2 className="text-[15px] font-bold text-[var(--color-text-primary)]">Fast Interactive Search</h2>
+            <p className="text-[12px] text-[var(--color-text-secondary)]">Search & Right-Click on Map</p>
           </div>
         </div>
 
@@ -313,7 +313,7 @@ export default function MapExplorer() {
               className={cn(
                 "w-full pl-10 pr-4 py-2.5 rounded-[var(--radius-md)]",
                 "bg-[var(--color-bg)] border border-[var(--color-border)]",
-                "text-2xl text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)]",
+                "text-[13px] text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)]",
                 "focus:border-[var(--color-primary)] focus:ring-1 focus:ring-[var(--color-primary)]",
                 "transition-all outline-none disabled:opacity-50"
               )}
@@ -341,10 +341,10 @@ export default function MapExplorer() {
                 <div className="w-12 h-12 rounded-full border-4 border-[var(--color-primary)] border-t-transparent animate-spin absolute inset-0" />
               </div>
               <div className="text-center">
-                <p className="text-2xl font-bold text-[var(--color-text-primary)]">
+                <p className="text-[14px] font-bold text-[var(--color-text-primary)]">
                   {isEnhancing ? "Nova-Sync AI Processing" : isFetchingImage ? "Reconstructing Surface" : "Proxying Coordinates"}
                 </p>
-                <p className="text-base text-[var(--color-text-secondary)] mt-1">
+                <p className="text-[12px] text-[var(--color-text-secondary)] mt-1">
                   {isEnhancing ? "Running Diffusion & Shadow Correction..." : isFetchingImage ? "Fast-path temporal compositing active..." : "Querying Nominatim..."}
                 </p>
               </div>
@@ -400,8 +400,8 @@ export default function MapExplorer() {
               <Marker position={[overlay.lat, overlay.lng]}>
                 <Popup>
                   <div className="text-center">
-                    <p className="font-bold text-2xl mb-1">Generated Center</p>
-                    <p className="text-2xl text-gray-500">
+                    <p className="font-bold text-[13px] mb-1">Generated Center</p>
+                    <p className="text-[11px] text-gray-500">
                       {overlay.lat.toFixed(4)}, {overlay.lng.toFixed(4)}
                     </p>
                   </div>
@@ -421,7 +421,7 @@ export default function MapExplorer() {
                 ) : (
                   <CloudOff size={16} className="text-[var(--color-primary)]" />
                 )}
-                <h3 className="text-2xl font-bold text-[var(--color-text-primary)]">
+                <h3 className="text-[13px] font-bold text-[var(--color-text-primary)]">
                   {overlay.isAIEnhanced ? "Nova-Sync AI Results" : "Composite Quality"}
                 </h3>
               </div>
@@ -430,22 +430,22 @@ export default function MapExplorer() {
                 {!overlay.isAIEnhanced ? (
                   <>
                     <div className="flex items-center justify-between gap-4">
-                      <span className="text-base text-[var(--color-text-secondary)]">Clear Pixels:</span>
+                      <span className="text-[12px] text-[var(--color-text-secondary)]">Clear Pixels:</span>
                       <Badge variant="success" size="sm">{overlay.qualityScore}%</Badge>
                     </div>
                     <div className="flex items-center justify-between gap-4">
-                      <span className="text-base text-[var(--color-text-secondary)]">Single-date Cloud:</span>
+                      <span className="text-[12px] text-[var(--color-text-secondary)]">Single-date Cloud:</span>
                       <Badge variant="warning" size="sm">{overlay.cloudPct}%</Badge>
                     </div>
                   </>
                 ) : (
                   <>
                     <div className="flex items-center justify-between gap-4">
-                      <span className="text-base text-[var(--color-text-secondary)]">Physics Score:</span>
+                      <span className="text-[12px] text-[var(--color-text-secondary)]">Physics Score:</span>
                       <Badge variant="success" size="sm">{(overlay.aiMetrics?.physicsScore || 0).toFixed(1)}%</Badge>
                     </div>
                     <div className="flex items-center justify-between gap-4">
-                      <span className="text-base text-[var(--color-text-secondary)]">Cloud Type:</span>
+                      <span className="text-[12px] text-[var(--color-text-secondary)]">Cloud Type:</span>
                       <Badge variant="default" size="sm" className="truncate max-w-[100px]" title={overlay.aiMetrics?.cloudType}>
                         {overlay.aiMetrics?.cloudType}
                       </Badge>
@@ -478,7 +478,7 @@ export default function MapExplorer() {
         {mouseCoords && (
           <div className="absolute bottom-6 right-6 z-[1000] bg-[var(--color-surface)]/80 backdrop-blur-md border border-[var(--color-border)] px-3 py-2 rounded-full shadow-[var(--shadow-sm)] flex items-center gap-2 pointer-events-none animate-fade-in-up">
             <Crosshair size={14} className="text-[var(--color-primary)]" />
-            <span className="text-base font-mono text-[var(--color-text-secondary)]">
+            <span className="text-[12px] font-mono text-[var(--color-text-secondary)]">
               {mouseCoords.lat.toFixed(5)}, {mouseCoords.lng.toFixed(5)}
             </span>
           </div>
@@ -498,7 +498,7 @@ export default function MapExplorer() {
 
                 {}
                 <div className="flex flex-col items-center">
-                  <span className="text-2xl font-bold text-blue-300 mb-2 tracking-wider uppercase">NOVA-SYNC Output</span>
+                  <span className="text-[11px] font-bold text-blue-300 mb-2 tracking-wider uppercase">NOVA-SYNC Output</span>
                   <div className="w-32 h-32 rounded-xl overflow-hidden border-2 border-blue-500/50 relative">
                     {isFetchingImage ? (
                       <div className="w-full h-full flex flex-col items-center justify-center bg-black/60 text-blue-400">
@@ -506,12 +506,12 @@ export default function MapExplorer() {
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        <span className="text-[11px] font-bold animate-pulse tracking-widest text-center">GENERATING<br/>COMPOSITE...</span>
+                        <span className="text-[9px] font-bold animate-pulse tracking-widest text-center">GENERATING<br/>COMPOSITE...</span>
                       </div>
                     ) : (
                       <>
                         <img src={overlay?.url} alt="Satellite Clear" className="w-full h-full object-cover" />
-                        <div className="absolute top-1 right-1 bg-blue-600 text-white text-[11px] px-1.5 py-0.5 rounded font-bold shadow-md">AI Cleared</div>
+                        <div className="absolute top-1 right-1 bg-blue-600 text-white text-[9px] px-1.5 py-0.5 rounded font-bold shadow-md">AI Cleared</div>
                       </>
                     )}
                   </div>
@@ -522,7 +522,7 @@ export default function MapExplorer() {
 
                 {}
                 <div className="flex flex-col items-center">
-                  <span className="text-2xl font-bold text-emerald-300 mb-2 tracking-wider uppercase">Ground Truth</span>
+                  <span className="text-[11px] font-bold text-emerald-300 mb-2 tracking-wider uppercase">Ground Truth</span>
                   <div className="w-32 h-32 rounded-xl overflow-hidden border-2 border-emerald-500/50 relative group">
                     {isFetchingImage ? (
                       <div className="w-full h-full flex flex-col items-center justify-center bg-black/60 text-emerald-400">
@@ -530,13 +530,13 @@ export default function MapExplorer() {
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        <span className="text-[11px] font-bold animate-pulse tracking-widest text-center">SCANNING<br/>TERRAIN...</span>
+                        <span className="text-[9px] font-bold animate-pulse tracking-widest text-center">SCANNING<br/>TERRAIN...</span>
                       </div>
                     ) : overlay?.groundTruthUrl ? (
                       <>
                         <img src={overlay.groundTruthUrl} alt="Street View" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                         {}
-                        <div className="absolute top-1 right-1 bg-emerald-500 flex items-center gap-1 text-white text-[11px] px-1.5 py-0.5 rounded font-bold shadow-md">
+                        <div className="absolute top-1 right-1 bg-emerald-500 flex items-center gap-1 text-white text-[9px] px-1.5 py-0.5 rounded font-bold shadow-md">
                           <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
                           Verified
                         </div>
@@ -544,7 +544,7 @@ export default function MapExplorer() {
                     ) : (
                       <div className="w-full h-full flex flex-col items-center justify-center bg-black/40 text-gray-400 p-2 text-center">
                         <svg className="w-6 h-6 mb-1 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                        <span className="text-[11px]">No street view</span>
+                        <span className="text-[9px]">No street view</span>
                       </div>
                     )}
                   </div>

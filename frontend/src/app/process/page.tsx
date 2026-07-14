@@ -81,10 +81,10 @@ export default function ProcessPage() {
       {}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
         <div>
-          <h1 className="text-5xl font-bold text-[var(--color-text-primary)] tracking-tight">
+          <h1 className="text-2xl font-bold text-[var(--color-text-primary)] tracking-tight">
             Process Satellite Image
           </h1>
-          <p className="text-2xl text-[var(--color-text-secondary)] mt-1">
+          <p className="text-[14px] text-[var(--color-text-secondary)] mt-1">
             Upload LISS-IV imagery and run the 7-stage AI cloud removal pipeline.
           </p>
         </div>
@@ -117,7 +117,7 @@ export default function ProcessPage() {
           {}
           <div className="space-y-4">
             <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-5 space-y-4">
-              <h3 className="text-2xl font-semibold text-[var(--color-text-primary)]">
+              <h3 className="text-[14px] font-semibold text-[var(--color-text-primary)]">
                 How it works
               </h3>
               <div className="space-y-3">
@@ -128,14 +128,14 @@ export default function ProcessPage() {
                   { step: "4", label: "Get cloud-free result", desc: "With quality validation" },
                 ].map((item) => (
                   <div key={item.step} className="flex items-start gap-3">
-                    <div className="flex items-center justify-center w-6 h-6 rounded-full bg-[var(--color-primary-subtle)] text-[var(--color-primary)] text-2xl font-bold shrink-0 mt-0.5">
+                    <div className="flex items-center justify-center w-6 h-6 rounded-full bg-[var(--color-primary-subtle)] text-[var(--color-primary)] text-[11px] font-bold shrink-0 mt-0.5">
                       {item.step}
                     </div>
                     <div>
-                      <p className="text-2xl font-medium text-[var(--color-text-primary)]">
+                      <p className="text-[13px] font-medium text-[var(--color-text-primary)]">
                         {item.label}
                       </p>
-                      <p className="text-2xl text-[var(--color-text-tertiary)]">
+                      <p className="text-[11px] text-[var(--color-text-tertiary)]">
                         {item.desc}
                       </p>
                     </div>
@@ -146,7 +146,7 @@ export default function ProcessPage() {
 
             {}
             <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-5">
-              <h3 className="text-2xl font-semibold text-[var(--color-text-primary)] mb-3">
+              <h3 className="text-[13px] font-semibold text-[var(--color-text-primary)] mb-3">
                 Supported Sensors
               </h3>
               <div className="flex flex-wrap gap-2">
@@ -178,7 +178,7 @@ export default function ProcessPage() {
                   <div className="absolute inset-0 flex items-center justify-center bg-black/30">
                     <div className="flex flex-col items-center gap-3">
                       <div className="w-12 h-12 rounded-full border-2 border-[var(--color-primary)] border-t-transparent animate-spin" />
-                      <p className="text-2xl font-semibold text-white/90">
+                      <p className="text-[13px] font-semibold text-white/90">
                         Running AI Pipeline...
                       </p>
                     </div>

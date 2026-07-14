@@ -46,11 +46,11 @@ function ToastItem({ toast }: { toast: ToastMessage }) {
     >
       <span className="shrink-0 mt-0.5">{iconMap[toast.type]}</span>
       <div className="flex-1 min-w-0">
-        <p className="text-2xl font-semibold text-[var(--color-text-primary)]">
+        <p className="text-[13px] font-semibold text-[var(--color-text-primary)]">
           {toast.title}
         </p>
         {toast.description && (
-          <p className="text-base text-[var(--color-text-secondary)] mt-0.5 leading-relaxed">
+          <p className="text-[12px] text-[var(--color-text-secondary)] mt-0.5 leading-relaxed">
             {toast.description}
           </p>
         )}

@@ -125,16 +125,16 @@ export default function DashboardPage() {
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-3 max-w-xl">
             <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[var(--radius-full)] bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 text-2xl font-semibold text-[var(--color-primary-light)] tracking-wide uppercase">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[var(--radius-full)] bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 text-[11px] font-semibold text-[var(--color-primary-light)] tracking-wide uppercase">
                 <Zap size={12} />
                 AI Engine Active
               </span>
             </div>
-            <h1 className="text-5xl md:text-4xl font-bold tracking-tight">
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
               Welcome to{" "}
               <span className="gradient-text">NOVA-SYNC</span>
             </h1>
-            <p className="text-2xl text-[var(--color-text-secondary)] leading-relaxed">
+            <p className="text-[15px] text-[var(--color-text-secondary)] leading-relaxed">
               7-stage multi-modal AI pipeline for reconstructing cloud-occluded
               ISRO LISS-IV satellite imagery. Upload, process, and validate —
               all in one place.
@@ -145,7 +145,7 @@ export default function DashboardPage() {
             href="/process"
             className={cn(
               "group flex items-center gap-3 px-6 py-3.5 rounded-[var(--radius-lg)]",
-              "bg-[var(--color-primary)] text-white font-semibold text-2xl",
+              "bg-[var(--color-primary)] text-white font-semibold text-[14px]",
               "hover:bg-[var(--color-primary-light)] hover:shadow-[var(--shadow-glow-lg)]",
               "transition-all duration-300",
               "shrink-0"
@@ -183,7 +183,7 @@ export default function DashboardPage() {
               </div>
               <span
                 className={cn(
-                  "text-base font-semibold px-2 py-0.5 rounded-[var(--radius-full)]",
+                  "text-[12px] font-semibold px-2 py-0.5 rounded-[var(--radius-full)]",
                   stat.trend === "up" &&
                     "text-[var(--color-success)] bg-[var(--color-success-subtle)]",
                   stat.trend === "down" &&
@@ -195,10 +195,10 @@ export default function DashboardPage() {
                 {stat.change}
               </span>
             </div>
-            <p className="text-5xl font-mono font-medium text-[var(--color-text-primary)] tracking-tight">
+            <p className="text-3xl font-mono font-medium text-[var(--color-text-primary)] tracking-tight">
               {stat.value}
             </p>
-            <p className="text-base text-[var(--color-text-tertiary)] font-medium mt-1">
+            <p className="text-[12px] text-[var(--color-text-tertiary)] font-medium mt-1">
               {stat.label}
             </p>
           </div>
@@ -209,16 +209,16 @@ export default function DashboardPage() {
       <section className="animate-fade-in-up stagger-5">
         <div className="flex items-center justify-between mb-5">
           <div>
-            <h2 className="text-2xl font-bold text-[var(--color-text-primary)]">
+            <h2 className="text-lg font-bold text-[var(--color-text-primary)]">
               7-Stage AI Pipeline
             </h2>
-            <p className="text-2xl text-[var(--color-text-tertiary)] mt-0.5">
+            <p className="text-[13px] text-[var(--color-text-tertiary)] mt-0.5">
               Multi-modal reconstruction architecture
             </p>
           </div>
           <Link
             href="/process"
-            className="text-2xl font-medium text-[var(--color-primary)] hover:text-[var(--color-primary-light)] flex items-center gap-1 transition-colors"
+            className="text-[13px] font-medium text-[var(--color-primary)] hover:text-[var(--color-primary-light)] flex items-center gap-1 transition-colors"
           >
             Start Processing
             <ArrowRight size={14} />
@@ -239,7 +239,7 @@ export default function DashboardPage() {
               )}
             >
               {}
-              <div className="absolute top-2 right-3 text-base font-bold text-[var(--color-text-muted)]">
+              <div className="absolute top-2 right-3 text-[10px] font-bold text-[var(--color-text-muted)]">
                 {String(idx + 1).padStart(2, "0")}
               </div>
 
@@ -256,10 +256,10 @@ export default function DashboardPage() {
 
               {}
               <div className="min-w-0">
-                <p className="text-2xl font-semibold text-[var(--color-text-primary)] truncate">
+                <p className="text-[13px] font-semibold text-[var(--color-text-primary)] truncate">
                   {stage.name}
                 </p>
-                <p className="text-2xl text-[var(--color-text-tertiary)] mt-0.5 truncate">
+                <p className="text-[11px] text-[var(--color-text-tertiary)] mt-0.5 truncate">
                   {stage.desc}
                 </p>
               </div>
@@ -290,14 +290,14 @@ export default function DashboardPage() {
             >
               <CloudOff size={22} />
             </div>
-            <h3 className="text-2xl font-bold text-[var(--color-text-primary)]">
+            <h3 className="text-[15px] font-bold text-[var(--color-text-primary)]">
               Cloud Removal
             </h3>
-            <p className="text-2xl text-[var(--color-text-secondary)] mt-1.5 leading-relaxed">
+            <p className="text-[13px] text-[var(--color-text-secondary)] mt-1.5 leading-relaxed">
               Upload LISS-IV imagery and let the 7-stage pipeline reconstruct
               cloud-free ground truth with physics validation.
             </p>
-            <span className="inline-flex items-center gap-1 mt-4 text-2xl font-semibold text-[var(--color-primary)] group-hover:gap-2 transition-all duration-200">
+            <span className="inline-flex items-center gap-1 mt-4 text-[13px] font-semibold text-[var(--color-primary)] group-hover:gap-2 transition-all duration-200">
               Start Processing <ArrowRight size={14} />
             </span>
           </div>
@@ -323,14 +323,14 @@ export default function DashboardPage() {
             >
               <BarChart3 size={22} />
             </div>
-            <h3 className="text-2xl font-bold text-[var(--color-text-primary)]">
+            <h3 className="text-[15px] font-bold text-[var(--color-text-primary)]">
               Processing History
             </h3>
-            <p className="text-2xl text-[var(--color-text-secondary)] mt-1.5 leading-relaxed">
+            <p className="text-[13px] text-[var(--color-text-secondary)] mt-1.5 leading-relaxed">
               Review past processing results, compare quality scores, and export
               spectral analysis reports.
             </p>
-            <span className="inline-flex items-center gap-1 mt-4 text-2xl font-semibold text-[var(--color-success)] group-hover:gap-2 transition-all duration-200">
+            <span className="inline-flex items-center gap-1 mt-4 text-[13px] font-semibold text-[var(--color-success)] group-hover:gap-2 transition-all duration-200">
               View History <ArrowRight size={14} />
             </span>
           </div>

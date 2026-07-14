@@ -64,7 +64,7 @@ export default function Spinner({
       </div>
 
       {label && (
-        <p className="text-base font-medium text-[var(--color-text-tertiary)] animate-pulse">
+        <p className="text-[12px] font-medium text-[var(--color-text-tertiary)] animate-pulse">
           {label}
         </p>
       )}

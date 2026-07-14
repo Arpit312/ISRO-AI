@@ -65,7 +65,7 @@ export default function ResultsPanel({
     <div className={cn("space-y-3", className)}>
       {}
       <div className="flex items-center justify-between">
-        <h3 className="text-2xl font-semibold text-[var(--color-text-primary)]">
+        <h3 className="text-[14px] font-semibold text-[var(--color-text-primary)]">
           Before / After Comparison
         </h3>
         <div className="flex items-center gap-2">
@@ -131,10 +131,10 @@ export default function ResultsPanel({
         </div>
 
         {}
-        <div className="absolute top-3 left-3 px-2 py-1 rounded-[var(--radius-md)] bg-black/50 backdrop-blur-sm text-base font-bold text-white/90 uppercase tracking-wider z-20">
+        <div className="absolute top-3 left-3 px-2 py-1 rounded-[var(--radius-md)] bg-black/50 backdrop-blur-sm text-[10px] font-bold text-white/90 uppercase tracking-wider z-20">
           Original
         </div>
-        <div className="absolute top-3 right-3 px-2 py-1 rounded-[var(--radius-md)] bg-black/50 backdrop-blur-sm text-base font-bold text-white/90 uppercase tracking-wider z-20">
+        <div className="absolute top-3 right-3 px-2 py-1 rounded-[var(--radius-md)] bg-black/50 backdrop-blur-sm text-[10px] font-bold text-white/90 uppercase tracking-wider z-20">
           Processed
         </div>
       </div>

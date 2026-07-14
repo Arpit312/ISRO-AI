@@ -16,9 +16,9 @@ interface QualityScoreProps {
 }
 
 const sizeConfig = {
-  sm: { radius: 36, stroke: 5, fontSize: "text-2xl", labelSize: "text-[11px]", container: "w-24 h-24" },
-  md: { radius: 52, stroke: 6, fontSize: "text-5xl", labelSize: "text-base", container: "w-36 h-36" },
-  lg: { radius: 68, stroke: 7, fontSize: "text-5xl", labelSize: "text-2xl", container: "w-44 h-44" },
+  sm: { radius: 36, stroke: 5, fontSize: "text-lg", labelSize: "text-[9px]", container: "w-24 h-24" },
+  md: { radius: 52, stroke: 6, fontSize: "text-2xl", labelSize: "text-[10px]", container: "w-36 h-36" },
+  lg: { radius: 68, stroke: 7, fontSize: "text-3xl", labelSize: "text-[11px]", container: "w-44 h-44" },
 };
 
 export default function QualityScore({
@@ -64,7 +64,7 @@ export default function QualityScore({
       {}
       <div className="flex items-center gap-2">
         <Shield size={16} style={{ color: quality.color }} />
-        <h3 className="text-2xl font-semibold text-[var(--color-text-primary)]">
+        <h3 className="text-[14px] font-semibold text-[var(--color-text-primary)]">
           Physics Quality Score
         </h3>
       </div>
@@ -123,7 +123,7 @@ export default function QualityScore({
         {}
         {showDetails && spectralReport && (
           <div className="flex-1 space-y-2.5">
-            <p className="text-2xl font-semibold text-[var(--color-text-tertiary)] uppercase tracking-wider">
+            <p className="text-[11px] font-semibold text-[var(--color-text-tertiary)] uppercase tracking-wider">
               Spectral Indices
             </p>
             {Object.entries(spectralReport).map(([key, data]) => {
@@ -131,10 +131,10 @@ export default function QualityScore({
               return (
               <div key={key} className="space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className="text-base font-medium text-[var(--color-text-secondary)]">
+                  <span className="text-[12px] font-medium text-[var(--color-text-secondary)]">
                     {key}
                   </span>
-                  <span className="text-base font-mono font-bold text-[var(--color-text-primary)]">
+                  <span className="text-[12px] font-mono font-bold text-[var(--color-text-primary)]">
                     {Number(value).toFixed(3)}
                   </span>
                 </div>
@@ -158,20 +158,20 @@ export default function QualityScore({
       {initialCloudPct !== undefined && finalCloudPct !== undefined && (
         <div className="pt-4 border-t border-[var(--color-border)] flex items-center justify-between">
           <div>
-            <p className="text-base font-semibold text-[var(--color-text-secondary)]">
+            <p className="text-[12px] font-semibold text-[var(--color-text-secondary)]">
               Cloud Coverage
             </p>
             <div className="flex items-center gap-2 mt-1">
-              <span className="text-2xl font-mono font-bold text-[var(--color-error)]">
+              <span className="text-[15px] font-mono font-bold text-[var(--color-error)]">
                 {initialCloudPct.toFixed(1)}%
               </span>
-              <span className="text-[var(--color-text-tertiary)] text-base">→</span>
-              <span className="text-2xl font-mono font-bold text-[var(--color-success)]">
+              <span className="text-[var(--color-text-tertiary)] text-[12px]">→</span>
+              <span className="text-[15px] font-mono font-bold text-[var(--color-success)]">
                 {finalCloudPct.toFixed(1)}%
               </span>
             </div>
           </div>
-          <div className="h-10 w-10 rounded-full flex items-center justify-center bg-[var(--color-success-subtle)] text-[var(--color-success)] font-bold text-2xl">
+          <div className="h-10 w-10 rounded-full flex items-center justify-center bg-[var(--color-success-subtle)] text-[var(--color-success)] font-bold text-[11px]">
             -{Math.max(0, initialCloudPct - finalCloudPct).toFixed(0)}%
           </div>
         </div>

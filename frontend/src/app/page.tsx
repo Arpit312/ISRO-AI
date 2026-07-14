@@ -207,14 +207,14 @@ export default function LandingPage() {
                 Redefined.
               </span>
             </h2>
-            <p className="text-2xl md:text-2xl text-[var(--color-text-secondary)] max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-[var(--color-text-secondary)] max-w-3xl mx-auto leading-relaxed">
               Optical satellites are blinded by clouds during critical disasters. NOVA-SYNC uses physics-constrained AI and SAR fusion to reconstruct the ground truth with zero hallucinations.
             </p>
 
             <div className="pt-10 flex flex-col sm:flex-row items-center justify-center gap-6">
               <Link 
                 href="/login"
-                className="group relative inline-flex items-center justify-center gap-3 px-10 py-5 bg-[#00D4FF] text-black font-bold text-2xl rounded-full overflow-hidden transition-all hover:scale-105 shadow-[0_0_30px_rgba(0,212,255,0.4)]"
+                className="group relative inline-flex items-center justify-center gap-3 px-10 py-5 bg-[#00D4FF] text-black font-bold text-lg rounded-full overflow-hidden transition-all hover:scale-105 shadow-[0_0_30px_rgba(0,212,255,0.4)]"
               >
                 <span className="relative z-10">Enter Control Center</span>
                 <ArrowRight size={20} className="relative z-10 group-hover:translate-x-1 transition-transform" />
@@ -223,7 +223,7 @@ export default function LandingPage() {
           </div>
 
           <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce flex flex-col items-center text-[var(--color-text-tertiary)] z-10">
-            <span className="text-base tracking-widest uppercase mb-2">Discover Pipeline</span>
+            <span className="text-[10px] tracking-widest uppercase mb-2">Discover Pipeline</span>
             <ChevronDown size={24} />
           </div>
         </section>
@@ -233,9 +233,9 @@ export default function LandingPage() {
 
           {}
           <div className="text-center max-w-3xl mx-auto mb-32">
-            <h3 className="text-base text-[#00D4FF] tracking-[0.3em] font-bold uppercase mb-4">About The Mission</h3>
-            <h2 className="text-5xl md:text-5xl font-bold mb-6">Why NOVA-SYNC?</h2>
-            <p className="text-2xl text-[#A1A1AA] leading-relaxed">
+            <h3 className="text-[12px] text-[#00D4FF] tracking-[0.3em] font-bold uppercase mb-4">About The Mission</h3>
+            <h2 className="text-3xl md:text-5xl font-bold mb-6">Why NOVA-SYNC?</h2>
+            <p className="text-lg text-[#A1A1AA] leading-relaxed">
               During the devastating Assam floods, rescue operations were severely delayed because optical satellites (like ISRO's LISS-IV) couldn't see through the dense monsoon cloud cover. Lives were lost waiting for clear skies. NOVA-SYNC solves this "blindspot" by fusing multi-spectral optical data with cloud-penetrating SAR (radar) data, creating a real-time, cloud-free view of the Earth when it matters most.
             </p>
           </div>
@@ -243,8 +243,8 @@ export default function LandingPage() {
           {}
           <div className="relative">
             <div className="text-center mb-16">
-              <h3 className="text-base text-[#00D4FF] tracking-[0.3em] font-bold uppercase mb-4">The Architecture</h3>
-              <h2 className="text-5xl md:text-5xl font-bold">7-Stage AI Pipeline</h2>
+              <h3 className="text-[12px] text-[#00D4FF] tracking-[0.3em] font-bold uppercase mb-4">The Architecture</h3>
+              <h2 className="text-3xl md:text-5xl font-bold">7-Stage AI Pipeline</h2>
             </div>
 
             {}
@@ -295,10 +295,10 @@ export default function LandingPage() {
                     )}>
                       <div className="bg-[#040914] border border-[#112240] p-6 rounded-2xl shadow-xl hover:border-[#1E3A8A] transition-colors relative overflow-hidden group">
                         <motion.div style={{ opacity: glowOpacity }} className="absolute inset-0 bg-gradient-to-r from-[#00D4FF]/5 to-transparent pointer-events-none" />
-                        <span className="text-base font-bold text-[#00D4FF] tracking-widest uppercase mb-2 block">
+                        <span className="text-[10px] font-bold text-[#00D4FF] tracking-widest uppercase mb-2 block">
                           Stage 0{idx + 1}
                         </span>
-                        <h4 className="text-5xl font-bold text-white mb-2">{stage.name}</h4>
+                        <h4 className="text-2xl font-bold text-white mb-2">{stage.name}</h4>
                         <p className="text-[#A1A1AA]">{stage.desc}</p>
                       </div>
                     </div>
@@ -311,10 +311,10 @@ export default function LandingPage() {
 
         {}
         <section className="py-32 text-center border-t border-[#112240]">
-           <h2 className="text-5xl md:text-5xl font-bold mb-8">Experience the Future of Earth Observation</h2>
+           <h2 className="text-4xl md:text-5xl font-bold mb-8">Experience the Future of Earth Observation</h2>
            <Link 
               href="/dashboard"
-              className="inline-flex items-center justify-center gap-3 px-12 py-6 border-2 border-[#00D4FF] text-[#00D4FF] hover:bg-[#00D4FF] hover:text-black font-bold text-2xl rounded-full transition-all duration-300 shadow-[0_0_30px_rgba(0,212,255,0.2)] hover:shadow-[0_0_60px_rgba(0,212,255,0.5)]"
+              className="inline-flex items-center justify-center gap-3 px-12 py-6 border-2 border-[#00D4FF] text-[#00D4FF] hover:bg-[#00D4FF] hover:text-black font-bold text-xl rounded-full transition-all duration-300 shadow-[0_0_30px_rgba(0,212,255,0.2)] hover:shadow-[0_0_60px_rgba(0,212,255,0.5)]"
             >
               Access Dashboard
             </Link>

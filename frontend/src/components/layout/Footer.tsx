@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer className="px-6 py-4 border-t border-[var(--color-border)] bg-[var(--color-bg)]">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-2xl text-[var(--color-text-muted)]">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-[var(--color-text-muted)]">
         <p>
           © {new Date().getFullYear()}{" "}
           <span className="font-semibold text-[var(--color-text-tertiary)]">
