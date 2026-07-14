@@ -68,7 +68,20 @@ body{
   min-height:0;
 }
 @media (max-width:820px){
-  .layout{grid-template-columns:1fr}
+  .layout{
+    display: flex;
+    flex-direction: column;
+  }
+  .panel.controls{
+    flex: none;
+    max-height: 40vh;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .map-wrap{
+    flex: 1;
+    min-height: 40vh;
+  }
 }
 
 .panel.controls{
