@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useAppStore } from "@/store/appStore";
 import {
   Bell,
   Search,
@@ -29,6 +30,8 @@ const routeLabels: Record<string, string> = {
 
 export default function Navbar({ sidebarCollapsed, onMobileMenuToggle }: NavbarProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const { logout, userRole } = useAppStore();
   const currentLabel = routeLabels[pathname] || "Page";
 
   // Dropdown states
@@ -188,14 +191,33 @@ export default function Navbar({ sidebarCollapsed, onMobileMenuToggle }: NavbarP
                   <p className="text-[11px] text-[var(--color-text-tertiary)] mt-0.5 truncate">2005arpitpathak@gmai.com</p>
                 </div>
                 <div className="p-1">
-                  <button className="w-full flex items-center gap-2 px-3 py-2 text-[12px] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-white/10 rounded-md transition-colors text-left">
+                  <button 
+                    onClick={() => {
+                      setIsProfileOpen(false);
+                      router.push("/settings");
+                    }}
+                    className="w-full flex items-center gap-2 px-3 py-2 text-[12px] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-white/10 rounded-md transition-colors text-left"
+                  >
                     <User size={14} /> My Profile
                   </button>
-                  <button className="w-full flex items-center gap-2 px-3 py-2 text-[12px] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-white/10 rounded-md transition-colors text-left">
+                  <button 
+                    onClick={() => {
+                      setIsProfileOpen(false);
+                      router.push("/settings");
+                    }}
+                    className="w-full flex items-center gap-2 px-3 py-2 text-[12px] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-white/10 rounded-md transition-colors text-left"
+                  >
                     <Settings size={14} /> Preferences
                   </button>
                   <div className="h-px bg-[var(--color-border-subtle)] my-1" />
-                  <button className="w-full flex items-center gap-2 px-3 py-2 text-[12px] text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-md transition-colors text-left">
+                  <button 
+                    onClick={() => {
+                      setIsProfileOpen(false);
+                      logout();
+                      router.push("/login");
+                    }}
+                    className="w-full flex items-center gap-2 px-3 py-2 text-[12px] text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded-md transition-colors text-left"
+                  >
                     <LogOut size={14} /> Sign Out
                   </button>
                 </div>
