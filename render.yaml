@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: novasync-backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    plan: free
+    autoDeploy: false
+    envVars:
+      - key: PORT
+        value: "8000"
