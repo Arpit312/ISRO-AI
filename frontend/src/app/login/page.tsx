@@ -90,25 +90,25 @@ export default function LoginPage() {
           }}
         />
 
-        {/* Content */}
-        <div className="relative z-10 max-w-lg">
+        {/* Content — Centered */}
+        <div className="relative z-10 w-full max-w-xl mx-auto flex flex-col items-center text-center lg:items-start lg:text-left">
           {/* Logo */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="flex items-center gap-4 mb-10"
+            className="flex items-center gap-4 mb-12"
           >
             <div className="relative">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-400/30 flex items-center justify-center shadow-[0_0_40px_rgba(34,211,238,0.15)]">
-                <Satellite size={26} className="text-cyan-400" />
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-400/30 flex items-center justify-center shadow-[0_0_40px_rgba(34,211,238,0.15)]">
+                <Satellite size={30} className="text-cyan-400" />
               </div>
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(52,211,153,0.5)]" />
+              <div className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(52,211,153,0.5)]" />
             </div>
             <div>
-              <h2 className="text-xl font-bold tracking-tight">NOVA-SYNC</h2>
-              <p className="text-[10px] uppercase tracking-[0.3em] text-cyan-400/60">
-                Satellite Intelligence
+              <h2 className="text-2xl font-bold tracking-tight">NOVA-SYNC</h2>
+              <p className="text-[11px] uppercase tracking-[0.3em] text-cyan-400/60">
+                Satellite Intelligence Platform
               </p>
             </div>
           </motion.div>
@@ -119,7 +119,7 @@ export default function LoginPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.15 }}
           >
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] mb-6">
+            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.05] mb-8">
               Mission{" "}
               <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent">
                 Control
@@ -134,18 +134,39 @@ export default function LoginPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="text-slate-400 text-base leading-relaxed mb-10 max-w-md"
+            className="text-slate-400 text-lg leading-relaxed mb-6 max-w-lg"
           >
-            Secure gateway to India&apos;s next-generation satellite imagery
-            analysis platform. Access real-time geospatial intelligence,
-            disaster monitoring, and emergency response systems.
+            India&apos;s next-generation satellite imagery analysis platform.
+            Powered by advanced AI for real-time geospatial intelligence,
+            disaster monitoring, and emergency response.
           </motion.p>
+
+          {/* Extra Details */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.4 }}
+            className="mb-10 space-y-3 text-sm text-slate-500 w-full max-w-lg"
+          >
+            <div className="flex items-start gap-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-2 flex-shrink-0" />
+              <span>Multi-spectral SAR image processing with ResNet-18 cloud classification and physics-based validation</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 flex-shrink-0" />
+              <span>Safe-Route rescue navigation with real-time risk scanning and SOS emergency broadcast</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2 flex-shrink-0" />
+              <span>Admin SOS HQ command center with live distress signal monitoring and geolocation tracking</span>
+            </div>
+          </motion.div>
 
           {/* Feature Pills */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.45 }}
+            transition={{ duration: 0.7, delay: 0.5 }}
             className="flex flex-wrap gap-3"
           >
             {[
@@ -156,7 +177,7 @@ export default function LoginPage() {
             ].map((pill) => (
               <div
                 key={pill.text}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 text-slate-300 text-xs backdrop-blur-sm"
+                className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 text-slate-300 text-sm backdrop-blur-sm"
               >
                 <span className="text-cyan-400">{pill.icon}</span>
                 {pill.text}
@@ -169,7 +190,7 @@ export default function LoginPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2 }}
-            className="mt-16 flex items-center gap-4 text-[11px] text-slate-600 font-mono"
+            className="mt-14 flex items-center gap-4 text-[11px] text-slate-600 font-mono"
           >
             <span className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
@@ -177,25 +198,20 @@ export default function LoginPage() {
             </span>
             <span>•</span>
             <span>ENCRYPTION: ACTIVE</span>
+            <span>•</span>
+            <span>© 2025 ISRO × NOVA-SYNC</span>
           </motion.div>
         </div>
       </div>
 
-      {/* ==================== RIGHT SIDE — Login Panel ==================== */}
+      {/* ==================== RIGHT SIDE — Login Form (no box) ==================== */}
       <motion.div
         initial={{ opacity: 0, x: 60 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="w-full lg:w-[520px] xl:w-[560px] flex-shrink-0 relative"
+        className="w-full lg:w-[540px] xl:w-[580px] flex-shrink-0 relative"
       >
-        {/* Glass panel that fills the full height */}
-        <div className="h-full bg-white/[0.03] backdrop-blur-2xl border-l border-white/[0.08] flex flex-col justify-center px-8 md:px-14 py-12 relative overflow-hidden">
-
-          {/* Top glow line */}
-          <div className="absolute top-0 left-12 right-12 h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent" />
-
-          {/* Subtle vertical glow on left edge */}
-          <div className="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-transparent via-cyan-400/20 to-transparent" />
+        <div className="h-full flex flex-col justify-center px-10 md:px-16 lg:px-20 py-12 relative overflow-hidden">
 
           {/* Icon */}
           <div className="flex justify-center mb-8">
