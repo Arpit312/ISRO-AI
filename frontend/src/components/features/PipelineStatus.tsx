@@ -94,17 +94,17 @@ export default function PipelineStatus({
     <div className={cn("space-y-3", className)}>
       {}
       <div className="flex items-center justify-between">
-        <h3 className="text-[14px] font-semibold text-[var(--color-text-primary)]">
+        <h3 className="text-2xl font-semibold text-[var(--color-text-primary)]">
           Pipeline Progress
         </h3>
         {isProcessing && (
-          <span className="flex items-center gap-1.5 text-[11px] font-medium text-[var(--color-primary)] animate-pulse">
+          <span className="flex items-center gap-1.5 text-2xl font-medium text-[var(--color-primary)] animate-pulse">
             <Loader2 size={12} className="animate-spin" />
             Processing
           </span>
         )}
         {isComplete && (
-          <span className="flex items-center gap-1.5 text-[11px] font-medium text-[var(--color-success)]">
+          <span className="flex items-center gap-1.5 text-2xl font-medium text-[var(--color-success)]">
             <Check size={12} />
             Complete
           </span>
@@ -148,7 +148,7 @@ export default function PipelineStatus({
                 ) : status === "active" ? (
                   <Loader2 size={14} className="animate-spin" />
                 ) : (
-                  <span className="text-[10px] font-bold">{stage.id}</span>
+                  <span className="text-base font-bold">{stage.id}</span>
                 )}
               </div>
 
@@ -156,7 +156,7 @@ export default function PipelineStatus({
               <div className="flex-1 min-w-0">
                 <p
                   className={cn(
-                    "text-[12px] font-semibold truncate transition-colors duration-200",
+                    "text-base font-semibold truncate transition-colors duration-200",
                     status === "pending" && "text-[var(--color-text-muted)]",
                     status === "active" && "text-[var(--color-text-primary)]",
                     status === "completed" && "text-[var(--color-text-secondary)]"
@@ -169,7 +169,7 @@ export default function PipelineStatus({
               {}
               <span
                 className={cn(
-                  "text-[10px] font-mono font-bold shrink-0 transition-colors duration-200",
+                  "text-base font-mono font-bold shrink-0 transition-colors duration-200",
                   status === "pending" && "text-[var(--color-text-muted)]",
                   status === "active" && "text-[var(--color-text-primary)]",
                   status === "completed" && "text-[var(--color-text-tertiary)]"

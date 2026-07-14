@@ -24,14 +24,14 @@ export default function HeatmapViewer({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Layers size={16} className="text-[var(--color-warning)]" />
-          <h3 className="text-[14px] font-semibold text-[var(--color-text-primary)]">
+          <h3 className="text-2xl font-semibold text-[var(--color-text-primary)]">
             Uncertainty Heatmap
           </h3>
         </div>
         <button
           onClick={() => setShowHeatmap(!showHeatmap)}
           className={cn(
-            "flex items-center gap-1.5 px-2.5 py-1.5 rounded-[var(--radius-md)] text-[12px] font-medium transition-all duration-200",
+            "flex items-center gap-1.5 px-2.5 py-1.5 rounded-[var(--radius-md)] text-base font-medium transition-all duration-200",
             showHeatmap
               ? "bg-[var(--color-warning-subtle)] text-[var(--color-warning)] border border-[var(--color-warning)]/20"
               : "bg-[var(--color-surface)] text-[var(--color-text-secondary)] border border-[var(--color-border)]"
@@ -63,7 +63,7 @@ export default function HeatmapViewer({
 
         {}
         <div className="absolute bottom-3 right-3 px-3 py-2 rounded-[var(--radius-md)] bg-black/60 backdrop-blur-sm z-10">
-          <div className="flex items-center gap-3 text-[10px] font-semibold text-white/90">
+          <div className="flex items-center gap-3 text-base font-semibold text-white/90">
             <span className="flex items-center gap-1">
               <span className="w-3 h-3 rounded-sm bg-green-500" />
               High Confidence
@@ -83,7 +83,7 @@ export default function HeatmapViewer({
       {}
       {showHeatmap && (
         <div className="flex items-center gap-3 px-1 animate-fade-in">
-          <label className="text-[11px] font-medium text-[var(--color-text-tertiary)] whitespace-nowrap">
+          <label className="text-2xl font-medium text-[var(--color-text-tertiary)] whitespace-nowrap">
             Overlay Opacity
           </label>
           <input
@@ -94,7 +94,7 @@ export default function HeatmapViewer({
             onChange={(e) => setOpacity(Number(e.target.value))}
             className="flex-1 h-1.5 rounded-full appearance-none bg-[var(--color-surface-elevated)] cursor-pointer accent-[var(--color-warning)]"
           />
-          <span className="text-[11px] font-mono font-bold text-[var(--color-text-secondary)] min-w-[35px] text-right">
+          <span className="text-2xl font-mono font-bold text-[var(--color-text-secondary)] min-w-[35px] text-right">
             {opacity}%
           </span>
         </div>

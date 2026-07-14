@@ -60,11 +60,11 @@ export default function AboutPage() {
           <div className="w-12 h-12 rounded-full bg-[var(--color-primary-subtle)] flex items-center justify-center text-[var(--color-primary)] shrink-0">
             <InfoIcon size={24} />
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-[var(--color-text-primary)] tracking-tight">
+          <h1 className="text-5xl sm:text-4xl font-bold text-[var(--color-text-primary)] tracking-tight">
             About NOVA-SYNC
           </h1>
         </div>
-        <p className="text-[15px] sm:text-[16px] text-[var(--color-text-secondary)] mt-4 leading-relaxed max-w-3xl">
+        <p className="text-2xl sm:text-[16px] text-[var(--color-text-secondary)] mt-4 leading-relaxed max-w-3xl">
           NOVA-SYNC is a state-of-the-art AI platform designed specifically to resolve the challenge of cloud occlusion in satellite imagery. Built with a focus on ISRO's LISS-IV sensor, this platform leverages the power of generative artificial intelligence and multi-modal sensor fusion to provide continuous, high-fidelity Earth observation data regardless of atmospheric conditions.
         </p>
       </div>
@@ -107,10 +107,10 @@ export default function AboutPage() {
                     {stage.icon}
                   </div>
                   <div>
-                    <h3 className="text-[14px] font-bold text-[var(--color-text-primary)] mb-1">
+                    <h3 className="text-2xl font-bold text-[var(--color-text-primary)] mb-1">
                       {stage.title}
                     </h3>
-                    <p className="text-[12px] text-[var(--color-text-tertiary)] leading-relaxed">
+                    <p className="text-base text-[var(--color-text-tertiary)] leading-relaxed">
                       {stage.desc}
                     </p>
                   </div>
@@ -130,18 +130,18 @@ export default function AboutPage() {
           </h2>
 
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 relative z-10">
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-blue-600 flex items-center justify-center text-white text-3xl font-bold shadow-lg ring-4 ring-[var(--color-bg)] shrink-0">
+            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[var(--color-primary)] to-blue-600 flex items-center justify-center text-white text-5xl font-bold shadow-lg ring-4 ring-[var(--color-bg)] shrink-0">
               AKP
             </div>
             <div className="flex-1 text-center sm:text-left space-y-2 pt-2">
-              <h3 className="text-2xl font-bold text-[var(--color-text-primary)]">
+              <h3 className="text-5xl font-bold text-[var(--color-text-primary)]">
                 Arpit Kishor Pathak
               </h3>
-              <p className="text-[14px] text-[var(--color-primary)] font-medium">
+              <p className="text-2xl text-[var(--color-primary)] font-medium">
                 Lead AI Researcher & Full-Stack Developer
               </p>
               
-              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 mt-4 text-[13px] text-[var(--color-text-secondary)]">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 mt-4 text-2xl text-[var(--color-text-secondary)]">
                 <div className="flex items-center gap-2 bg-[var(--color-surface-elevated)] px-3 py-1.5 rounded-md border border-[var(--color-border)]">
                   <Mail size={14} className="text-[var(--color-text-tertiary)]" />
                   <a href="mailto:2005arpitpathak@gmai.com" className="hover:text-[var(--color-primary)] transition-colors">

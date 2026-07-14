@@ -75,10 +75,10 @@ export default function HistoryPage() {
       {}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--color-text-primary)] tracking-tight">
+          <h1 className="text-5xl font-bold text-[var(--color-text-primary)] tracking-tight">
             Processing History
           </h1>
-          <p className="text-[14px] text-[var(--color-text-secondary)] mt-1">
+          <p className="text-2xl text-[var(--color-text-secondary)] mt-1">
             {history.length} result{history.length !== 1 ? "s" : ""} stored
           </p>
         </div>
@@ -99,19 +99,19 @@ export default function HistoryPage() {
                 <div className="fixed inset-0 z-40" onClick={() => setShowClearMenu(false)} />
                 <div className="absolute right-0 mt-2 w-48 rounded-[var(--radius-md)] glass-elevated border border-[var(--color-border)] shadow-[var(--shadow-lg)] z-50 animate-scale-in overflow-hidden">
                   <button
-                    className="w-full text-left px-4 py-2.5 text-[13px] font-medium text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text-primary)] transition-colors border-b border-[var(--color-border)]"
+                    className="w-full text-left px-4 py-2.5 text-2xl font-medium text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text-primary)] transition-colors border-b border-[var(--color-border)]"
                     onClick={() => { clearRecentHistory(24); setShowClearMenu(false); }}
                   >
                     Clear Last 24 Hours
                   </button>
                   <button
-                    className="w-full text-left px-4 py-2.5 text-[13px] font-medium text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text-primary)] transition-colors border-b border-[var(--color-border)]"
+                    className="w-full text-left px-4 py-2.5 text-2xl font-medium text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text-primary)] transition-colors border-b border-[var(--color-border)]"
                     onClick={() => { clearRecentHistory(168); setShowClearMenu(false); }}
                   >
                     Clear Last 7 Days
                   </button>
                   <button
-                    className="w-full text-left px-4 py-2.5 text-[13px] font-bold text-[var(--color-error)] hover:bg-[var(--color-error-subtle)] transition-colors"
+                    className="w-full text-left px-4 py-2.5 text-2xl font-bold text-[var(--color-error)] hover:bg-[var(--color-error-subtle)] transition-colors"
                     onClick={() => { clearHistory(); setShowClearMenu(false); }}
                   >
                     Clear All Data
@@ -129,10 +129,10 @@ export default function HistoryPage() {
           <div className="flex items-center justify-center w-16 h-16 rounded-full bg-[var(--color-info-subtle)] mb-4 animate-float">
             <HistoryIcon size={28} className="text-[var(--color-info)]" />
           </div>
-          <h2 className="text-lg font-semibold text-[var(--color-text-primary)]">
+          <h2 className="text-2xl font-semibold text-[var(--color-text-primary)]">
             No processing history yet
           </h2>
-          <p className="text-[13px] text-[var(--color-text-tertiary)] mt-2 max-w-md text-center">
+          <p className="text-2xl text-[var(--color-text-tertiary)] mt-2 max-w-md text-center">
             Process your first satellite image to see results here. All results are stored locally in your browser.
           </p>
           <Button
@@ -162,7 +162,7 @@ export default function HistoryPage() {
                 className={cn(
                   "w-full pl-9 pr-4 py-2.5 rounded-[var(--radius-md)]",
                   "glass bg-[var(--color-surface)]/30",
-                  "text-[13px] text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)]",
+                  "text-2xl text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)]",
                   "hover:border-[var(--color-border-hover)] focus:border-[var(--color-primary)] focus:ring-1 focus:ring-[var(--color-primary)]",
                   "transition-all duration-200 outline-none"
                 )}
@@ -177,7 +177,7 @@ export default function HistoryPage() {
                 className={cn(
                   "appearance-none pl-3 pr-8 py-2.5 rounded-[var(--radius-md)]",
                   "glass bg-[var(--color-surface)]/30",
-                  "text-[13px] font-medium text-[var(--color-text-primary)]",
+                  "text-2xl font-medium text-[var(--color-text-primary)]",
                   "hover:border-[var(--color-border-hover)] focus:border-[var(--color-primary)]",
                   "transition-all duration-200 outline-none cursor-pointer"
                 )}
@@ -229,11 +229,11 @@ export default function HistoryPage() {
                       {}
                       <div className="flex-1 min-w-0 sm:hidden">
                         <div className="flex items-center gap-2 mb-1">
-                          <p className="text-[13px] font-semibold text-[var(--color-text-primary)] truncate">
+                          <p className="text-2xl font-semibold text-[var(--color-text-primary)] truncate">
                             {result.fileName}
                           </p>
                         </div>
-                        <div className="flex flex-wrap items-center gap-2 text-[11px]">
+                        <div className="flex flex-wrap items-center gap-2 text-2xl">
                           <Badge variant={cloudTypeBadge(result.cloudType)} size="sm">
                             {result.cloudType}
                           </Badge>
@@ -251,14 +251,14 @@ export default function HistoryPage() {
                     {}
                     <div className="hidden sm:block flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <p className="text-[13px] font-semibold text-[var(--color-text-primary)] truncate">
+                        <p className="text-2xl font-semibold text-[var(--color-text-primary)] truncate">
                           {result.fileName}
                         </p>
                         <Badge variant={cloudTypeBadge(result.cloudType)} size="sm">
                           {result.cloudType}
                         </Badge>
                       </div>
-                      <div className="flex flex-wrap items-center gap-4 text-[11px] text-[var(--color-text-tertiary)]">
+                      <div className="flex flex-wrap items-center gap-4 text-2xl text-[var(--color-text-tertiary)]">
                         <span className="flex items-center gap-1">
                           <Calendar size={11} />
                           {formatDate(result.timestamp)}
@@ -279,7 +279,7 @@ export default function HistoryPage() {
 
                     {}
                     <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-1 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-[var(--color-border)]">
-                      <div className="sm:hidden flex items-center gap-4 text-[11px] text-[var(--color-text-tertiary)]">
+                      <div className="sm:hidden flex items-center gap-4 text-2xl text-[var(--color-text-tertiary)]">
                         <span className="flex items-center gap-1">
                           <Calendar size={11} />
                           {formatDate(result.timestamp).split(',')[0]}
@@ -312,7 +312,7 @@ export default function HistoryPage() {
           {filteredHistory.length === 0 && searchQuery.trim() && (
             <div className="text-center py-12 text-[var(--color-text-tertiary)]">
               <Search size={32} className="mx-auto mb-3 opacity-40" />
-              <p className="text-[14px] font-medium">
+              <p className="text-2xl font-medium">
                 No results match &quot;{searchQuery}&quot;
               </p>
             </div>
@@ -340,7 +340,7 @@ export default function HistoryPage() {
                 <h2 className="text-[16px] font-bold text-[var(--color-text-primary)]">
                   {selectedResult.fileName}
                 </h2>
-                <p className="text-[12px] text-[var(--color-text-tertiary)] mt-0.5">
+                <p className="text-base text-[var(--color-text-tertiary)] mt-0.5">
                   Processed {formatDate(selectedResult.timestamp)}
                 </p>
               </div>

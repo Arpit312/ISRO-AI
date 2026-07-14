@@ -155,11 +155,11 @@ export default function ImageUploader({
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <ImageIcon size={14} className="text-white/80" />
-                  <span className="text-[12px] font-medium text-white/90 truncate max-w-xs">
+                  <span className="text-base font-medium text-white/90 truncate max-w-xs">
                     {file.name}
                   </span>
                 </div>
-                <span className="text-[11px] text-white/60">
+                <span className="text-2xl text-white/60">
                   {formatFileSize(file.size)}
                 </span>
               </div>
@@ -177,16 +177,16 @@ export default function ImageUploader({
             >
               <Upload size={24} />
             </div>
-            <p className="text-[14px] font-semibold text-[var(--color-text-primary)] mb-1">
+            <p className="text-2xl font-semibold text-[var(--color-text-primary)] mb-1">
               {isDragging ? "Drop your image here" : "Upload Satellite Image"}
             </p>
-            <p className="text-[12px] text-[var(--color-text-tertiary)] text-center">
+            <p className="text-base text-[var(--color-text-tertiary)] text-center">
               Drag & drop LISS-IV imagery, or{" "}
               <span className="text-[var(--color-primary)] font-medium">
                 browse files
               </span>
             </p>
-            <p className="text-[11px] text-[var(--color-text-muted)] mt-2">
+            <p className="text-2xl text-[var(--color-text-muted)] mt-2">
               JPEG, PNG, TIFF, WebP • Max 50MB
             </p>
           </div>
@@ -195,7 +195,7 @@ export default function ImageUploader({
 
       {}
       {error && (
-        <p className="text-[12px] text-[var(--color-error)] font-medium px-1 animate-fade-in">
+        <p className="text-base text-[var(--color-error)] font-medium px-1 animate-fade-in">
           {error}
         </p>
       )}
@@ -204,7 +204,7 @@ export default function ImageUploader({
       <div className="flex flex-col sm:flex-row items-stretch sm:items-end gap-4">
         {}
         <div className="flex-1 space-y-2">
-          <label className="flex items-center gap-1.5 text-[12px] font-semibold text-[var(--color-text-secondary)] uppercase tracking-wider">
+          <label className="flex items-center gap-1.5 text-base font-semibold text-[var(--color-text-secondary)] uppercase tracking-wider">
             <Calendar size={13} />
             Acquisition Month
           </label>
@@ -215,7 +215,7 @@ export default function ImageUploader({
               className={cn(
                 "w-full appearance-none px-4 py-2.5 rounded-[var(--radius-md)]",
                 "bg-[var(--color-surface)] border border-[var(--color-border)]",
-                "text-[13px] font-medium text-[var(--color-text-primary)]",
+                "text-2xl font-medium text-[var(--color-text-primary)]",
                 "hover:border-[var(--color-border-hover)] focus:border-[var(--color-primary)] focus:ring-1 focus:ring-[var(--color-primary)]",
                 "transition-all duration-200 outline-none cursor-pointer"
               )}
@@ -227,7 +227,7 @@ export default function ImageUploader({
               ))}
             </select>
             {}
-            <span className="absolute right-10 top-1/2 -translate-y-1/2 px-2 py-0.5 rounded-[var(--radius-full)] bg-[var(--color-success-subtle)] text-[var(--color-success)] text-[10px] font-bold uppercase pointer-events-none">
+            <span className="absolute right-10 top-1/2 -translate-y-1/2 px-2 py-0.5 rounded-[var(--radius-full)] bg-[var(--color-success-subtle)] text-[var(--color-success)] text-base font-bold uppercase pointer-events-none">
               {currentSeason}
             </span>
           </div>

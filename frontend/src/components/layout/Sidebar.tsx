@@ -135,10 +135,10 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
         </div>
         {!collapsed && (
           <div className="animate-fade-in overflow-hidden">
-            <h1 className="text-[15px] font-bold tracking-tight text-[var(--color-text-primary)] whitespace-nowrap">
+            <h1 className="text-2xl font-bold tracking-tight text-[var(--color-text-primary)] whitespace-nowrap">
               NOVA-SYNC
             </h1>
-            <p className="text-[10px] font-medium text-[var(--color-text-tertiary)] tracking-widest uppercase whitespace-nowrap">
+            <p className="text-base font-medium text-[var(--color-text-tertiary)] tracking-widest uppercase whitespace-nowrap">
               AI Engine
             </p>
           </div>
@@ -148,7 +148,7 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
       {}
       <nav className="flex-1 py-4 px-3 space-y-1 overflow-y-auto overflow-x-hidden">
         {!collapsed && (
-          <p className="px-3 mb-3 text-[10px] font-bold tracking-widest uppercase text-[var(--color-text-muted)] mt-2">
+          <p className="px-3 mb-3 text-base font-bold tracking-widest uppercase text-[var(--color-text-muted)] mt-2">
             Navigation
           </p>
         )}
@@ -184,24 +184,24 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
 
               {/* Label */}
               {!collapsed && (
-                <span className="text-[13px] font-medium whitespace-nowrap">
+                <span className="text-2xl font-medium whitespace-nowrap">
                   {link.label}
                 </span>
               )}
 
               {}
               {!collapsed && link.badge && (
-                <span className="ml-auto px-1.5 py-0.5 text-[9px] font-bold tracking-wider rounded-[var(--radius-sm)] bg-[var(--color-primary)] text-white uppercase">
+                <span className="ml-auto px-1.5 py-0.5 text-[11px] font-bold tracking-wider rounded-[var(--radius-sm)] bg-[var(--color-primary)] text-white uppercase">
                   {link.badge}
                 </span>
               )}
 
               {}
               {collapsed && (isHovered) && (
-                <div className="absolute left-full ml-3 px-2.5 py-1.5 rounded-[var(--radius-md)] bg-[var(--color-surface-elevated)] border border-[var(--color-border-hover)] text-[12px] font-medium text-[var(--color-text-primary)] whitespace-nowrap shadow-[var(--shadow-lg)] z-50 animate-scale-in">
+                <div className="absolute left-full ml-3 px-2.5 py-1.5 rounded-[var(--radius-md)] bg-[var(--color-surface-elevated)] border border-[var(--color-border-hover)] text-base font-medium text-[var(--color-text-primary)] whitespace-nowrap shadow-[var(--shadow-lg)] z-50 animate-scale-in">
                   {link.label}
                   {link.badge && (
-                    <span className="ml-2 px-1.5 py-0.5 text-[9px] font-bold rounded bg-[var(--color-primary)] text-white">
+                    <span className="ml-2 px-1.5 py-0.5 text-[11px] font-bold rounded bg-[var(--color-primary)] text-white">
                       {link.badge}
                     </span>
                   )}
@@ -226,7 +226,7 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
         >
           {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
           {!collapsed && (
-            <span className="text-[13px] font-medium">Collapse</span>
+            <span className="text-2xl font-medium">Collapse</span>
           )}
         </button>
 
@@ -235,7 +235,7 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
           <div className="mt-3 px-3 py-2.5 rounded-[var(--radius-md)] bg-[var(--color-surface)] border border-[var(--color-border)]">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-[var(--color-success)] animate-pulse-glow" />
-              <span className="text-[11px] font-medium text-[var(--color-text-secondary)]">
+              <span className="text-2xl font-medium text-[var(--color-text-secondary)]">
                 Engine Online
               </span>
             </div>
@@ -253,7 +253,7 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
         >
           <LogOut size={18} />
           {!collapsed && (
-            <span className="text-[13px] font-medium">Secure Logout</span>
+            <span className="text-2xl font-medium">Secure Logout</span>
           )}
         </button>
       </div>
