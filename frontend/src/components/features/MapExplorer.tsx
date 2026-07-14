@@ -301,7 +301,7 @@ export default function MapExplorer() {
           </div>
         </div>
 
-        <form onSubmit={handleSearch} className="flex w-full sm:w-[400px] gap-2">
+        <form onSubmit={handleSearch} className="flex w-full max-w-[400px] gap-2">
           <div className="relative flex-1">
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" />
             <input

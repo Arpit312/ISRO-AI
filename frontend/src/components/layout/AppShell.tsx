@@ -27,7 +27,7 @@ export default function AppShell({ children }: AppShellProps) {
       {}
       <div
         className={cn(
-          "flex flex-col flex-1 transition-all duration-300 ease-[var(--ease-smooth)]",
+          "flex flex-col flex-1 transition-all duration-300 ease-[var(--ease-smooth)] will-change-transform",
           "ml-0", 
           sidebarCollapsed
             ? "md:ml-[var(--sidebar-collapsed-width)]"

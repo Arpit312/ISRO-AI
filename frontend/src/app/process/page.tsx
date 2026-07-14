@@ -79,7 +79,7 @@ export default function ProcessPage() {
   return (
     <div className="max-w-[1400px] mx-auto">
       {}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
         <div>
           <h1 className="text-2xl font-bold text-[var(--color-text-primary)] tracking-tight">
             Process Satellite Image

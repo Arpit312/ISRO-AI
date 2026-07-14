@@ -83,7 +83,7 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
         className={cn(
           "fixed top-0 left-0 z-40 h-screen flex flex-col",
           "glass border-r border-[var(--color-border)] shadow-[var(--shadow-lg)]",
-          "transition-transform duration-300 ease-[var(--ease-smooth)]",
+          "transition-transform duration-300 ease-[var(--ease-smooth)] will-change-transform",
 
           "w-[var(--sidebar-width)] md:transition-all",
           mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
