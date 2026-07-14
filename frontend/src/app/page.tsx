@@ -213,10 +213,10 @@ export default function LandingPage() {
 
             <div className="pt-10 flex flex-col sm:flex-row items-center justify-center gap-6">
               <Link 
-                href="/dashboard"
+                href="/login"
                 className="group relative inline-flex items-center justify-center gap-3 px-10 py-5 bg-[#00D4FF] text-black font-bold text-lg rounded-full overflow-hidden transition-all hover:scale-105 shadow-[0_0_30px_rgba(0,212,255,0.4)]"
               >
-                <span className="relative z-10">Initialize Engine</span>
+                <span className="relative z-10">Enter Control Center</span>
                 <ArrowRight size={20} className="relative z-10 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
