@@ -27,10 +27,12 @@ export default function HistoryPage() {
   const history = useAppStore((state) => state.history);
   const removeFromHistory = useAppStore((state) => state.removeFromHistory);
   const clearHistory = useAppStore((state) => state.clearHistory);
+  const clearRecentHistory = useAppStore((state) => state.clearRecentHistory);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedResult, setSelectedResult] = useState<ProcessingResult | null>(null);
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "quality">("newest");
+  const [showClearMenu, setShowClearMenu] = useState(false);
 
   const filteredHistory = useMemo(() => {
     let results = [...history];
@@ -81,15 +83,43 @@ export default function HistoryPage() {
           </p>
         </div>
         {history.length > 0 && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={clearHistory}
-            icon={<Trash2 size={14} />}
-            className="text-[var(--color-error)] hover:text-[var(--color-error)] hover:bg-[var(--color-error-subtle)]"
-          >
-            Clear All
-          </Button>
+          <div className="relative">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowClearMenu(!showClearMenu)}
+              icon={<Trash2 size={14} />}
+              className="text-[var(--color-error)] hover:text-[var(--color-error)] hover:bg-[var(--color-error-subtle)]"
+            >
+              Clear History <ChevronDown size={14} className={cn("transition-transform", showClearMenu && "rotate-180")} />
+            </Button>
+            
+            {showClearMenu && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={() => setShowClearMenu(false)} />
+                <div className="absolute right-0 mt-2 w-48 rounded-[var(--radius-md)] glass-elevated border border-[var(--color-border)] shadow-[var(--shadow-lg)] z-50 animate-scale-in overflow-hidden">
+                  <button
+                    className="w-full text-left px-4 py-2.5 text-[13px] font-medium text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text-primary)] transition-colors border-b border-[var(--color-border)]"
+                    onClick={() => { clearRecentHistory(24); setShowClearMenu(false); }}
+                  >
+                    Clear Last 24 Hours
+                  </button>
+                  <button
+                    className="w-full text-left px-4 py-2.5 text-[13px] font-medium text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text-primary)] transition-colors border-b border-[var(--color-border)]"
+                    onClick={() => { clearRecentHistory(168); setShowClearMenu(false); }}
+                  >
+                    Clear Last 7 Days
+                  </button>
+                  <button
+                    className="w-full text-left px-4 py-2.5 text-[13px] font-bold text-[var(--color-error)] hover:bg-[var(--color-error-subtle)] transition-colors"
+                    onClick={() => { clearHistory(); setShowClearMenu(false); }}
+                  >
+                    Clear All Data
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
         )}
       </div>
 
@@ -179,24 +209,47 @@ export default function HistoryPage() {
                     `stagger-${Math.min(idx + 1, 8)}`
                   )}
                 >
-                  <div className="flex items-center gap-4 p-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4 p-4">
                     {}
-                    <div className="w-16 h-16 rounded-[var(--radius-md)] overflow-hidden border border-[var(--color-border)] shrink-0 bg-[var(--color-surface-elevated)]">
-                      {result.inputPreview ? (
-                        <img
-                          src={result.inputPreview}
-                          alt={result.fileName}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <FileImage size={20} className="text-[var(--color-text-muted)]" />
+                    <div className="flex items-center gap-4 w-full sm:w-auto">
+                      <div className="w-16 h-16 rounded-[var(--radius-md)] overflow-hidden border border-[var(--color-border)] shrink-0 bg-[var(--color-surface-elevated)]">
+                        {result.inputPreview ? (
+                          <img
+                            src={result.inputPreview}
+                            alt={result.fileName}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <FileImage size={20} className="text-[var(--color-text-muted)]" />
+                          </div>
+                        )}
+                      </div>
+
+                      {}
+                      <div className="flex-1 min-w-0 sm:hidden">
+                        <div className="flex items-center gap-2 mb-1">
+                          <p className="text-[13px] font-semibold text-[var(--color-text-primary)] truncate">
+                            {result.fileName}
+                          </p>
                         </div>
-                      )}
+                        <div className="flex flex-wrap items-center gap-2 text-[11px]">
+                          <Badge variant={cloudTypeBadge(result.cloudType)} size="sm">
+                            {result.cloudType}
+                          </Badge>
+                          <span
+                            className="flex items-center gap-1 font-semibold"
+                            style={{ color: quality.color }}
+                          >
+                            <Shield size={11} />
+                            {result.qualityScore.toFixed(1)}%
+                          </span>
+                        </div>
+                      </div>
                     </div>
 
                     {}
-                    <div className="flex-1 min-w-0">
+                    <div className="hidden sm:block flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
                         <p className="text-[13px] font-semibold text-[var(--color-text-primary)] truncate">
                           {result.fileName}
@@ -205,7 +258,7 @@ export default function HistoryPage() {
                           {result.cloudType}
                         </Badge>
                       </div>
-                      <div className="flex items-center gap-4 text-[11px] text-[var(--color-text-tertiary)]">
+                      <div className="flex flex-wrap items-center gap-4 text-[11px] text-[var(--color-text-tertiary)]">
                         <span className="flex items-center gap-1">
                           <Calendar size={11} />
                           {formatDate(result.timestamp)}
@@ -225,21 +278,29 @@ export default function HistoryPage() {
                     </div>
 
                     {}
-                    <div className="flex items-center gap-1 shrink-0">
-                      <button
-                        onClick={() => setSelectedResult(result)}
-                        className="p-2 rounded-[var(--radius-md)] text-[var(--color-text-tertiary)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary-subtle)] transition-colors"
-                        title="View details"
-                      >
-                        <Eye size={16} />
-                      </button>
-                      <button
-                        onClick={() => removeFromHistory(result.id)}
-                        className="p-2 rounded-[var(--radius-md)] text-[var(--color-text-tertiary)] hover:text-[var(--color-error)] hover:bg-[var(--color-error-subtle)] transition-colors"
-                        title="Remove"
-                      >
-                        <Trash2 size={16} />
-                      </button>
+                    <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-1 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-[var(--color-border)]">
+                      <div className="sm:hidden flex items-center gap-4 text-[11px] text-[var(--color-text-tertiary)]">
+                        <span className="flex items-center gap-1">
+                          <Calendar size={11} />
+                          {formatDate(result.timestamp).split(',')[0]}
+                        </span>
+                      </div>
+                      <div className="flex gap-1">
+                        <button
+                          onClick={() => setSelectedResult(result)}
+                          className="p-2 rounded-[var(--radius-md)] text-[var(--color-text-tertiary)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary-subtle)] transition-colors"
+                          title="View details"
+                        >
+                          <Eye size={16} />
+                        </button>
+                        <button
+                          onClick={() => removeFromHistory(result.id)}
+                          className="p-2 rounded-[var(--radius-md)] text-[var(--color-text-tertiary)] hover:text-[var(--color-error)] hover:bg-[var(--color-error-subtle)] transition-colors"
+                          title="Remove"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>

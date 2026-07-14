@@ -12,6 +12,7 @@ interface AppState {
   addToHistory: (result: ProcessingResult) => void;
   removeFromHistory: (id: string) => void;
   clearHistory: () => void;
+  clearRecentHistory: (hours: number) => void;
 
   currentResult: ProcessingResult | null;
   setCurrentResult: (result: ProcessingResult | null) => void;
@@ -42,6 +43,13 @@ export const useAppStore = create<AppState>()(
           history: state.history.filter((r) => r.id !== id),
         })),
       clearHistory: () => set({ history: [] }),
+      clearRecentHistory: (hours) =>
+        set((state) => {
+          const cutoff = Date.now() - hours * 60 * 60 * 1000;
+          return {
+            history: state.history.filter((r) => r.timestamp < cutoff),
+          };
+        }),
 
       currentResult: null,
       setCurrentResult: (result) => set({ currentResult: result }),
