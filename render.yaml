@@ -3,7 +3,7 @@ services:
     name: novasync-backend
     env: docker
     dockerfilePath: ./backend/Dockerfile
-    dockerContext: .
+    dockerContext: ./backend
     plan: free
     autoDeploy: false
     envVars:
