@@ -165,13 +165,13 @@ export default function LoginPage() {
       </svg>
 
       {/* Main Content */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+      <div className="relative z-10 w-full h-full flex flex-col lg:flex-row items-stretch">
         {/* LEFT SIDE - Branding */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="flex-1 text-center lg:text-left"
+          className="flex-1 flex flex-col justify-center text-center lg:text-left px-6 md:px-12 lg:px-20 py-10"
         >
           {/* Logo */}
           <div className="flex items-center gap-4 justify-center lg:justify-start mb-8">
@@ -227,12 +227,12 @@ export default function LoginPage() {
 
         {/* RIGHT SIDE - Login Card */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="w-full max-w-md flex-shrink-0"
+          className="w-full lg:w-[480px] xl:w-[520px] flex-shrink-0 lg:min-h-screen"
         >
-          <div className="relative rounded-3xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-xl p-8 shadow-[0_0_80px_rgba(0,0,0,0.6)]">
+          <div className="relative h-full border-l border-white/[0.06] bg-black/30 backdrop-blur-2xl p-8 md:p-10 lg:p-12 flex flex-col justify-center shadow-[-20px_0_60px_rgba(0,0,0,0.5)] lg:rounded-none rounded-3xl lg:border-l">
             {/* Card header glow line */}
             <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" />
 
