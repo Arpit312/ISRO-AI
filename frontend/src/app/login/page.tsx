@@ -88,17 +88,17 @@ export default function LoginPage() {
         </div>
 
         {/* --- LEFT CONTENT (FORM) --- */}
-        <div className="relative z-20 h-full flex flex-col justify-center px-10 sm:px-16 md:px-24 w-full md:w-[60%] lg:w-[50%] pt-16">
+        <div className="relative z-20 flex-1 flex flex-col justify-center px-10 sm:px-16 md:px-32 lg:px-40 w-full md:w-[60%] lg:w-[55%] pt-16">
           
-          <p className="text-[#8a8d98] text-xs font-bold tracking-widest uppercase mb-4">
+          <p className="text-[#8a8d98] text-sm font-bold tracking-[0.2em] uppercase mb-4">
             Secure Access
           </p>
           
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-8">
             Mission Control<span className="text-[#1da1f2]">.</span>
           </h1>
           
-          <div className="flex items-center gap-2 mb-10 text-[15px]">
+          <div className="flex items-center gap-3 mb-12 text-lg">
             <span className="text-[#8a8d98]">Authorized Personnel Only?</span>
             <button 
               type="button"
@@ -109,81 +109,81 @@ export default function LoginPage() {
             </button>
           </div>
 
-          <form onSubmit={handleLogin} className="w-full max-w-[440px] space-y-4">
+          <form onSubmit={handleLogin} className="w-full max-w-[500px] space-y-6">
             
             {/* Clearances (2 columns) */}
-            <div className="flex gap-4">
+            <div className="flex gap-5">
               {/* ID Input */}
-              <div className="flex-1 bg-[#282a31] rounded-2xl px-5 py-3 border border-transparent focus-within:border-[#1da1f2] transition-colors group relative">
-                <label className="block text-[10px] text-[#8a8d98] font-medium mb-0.5 uppercase tracking-wide">
+              <div className="flex-1 bg-[#282a31] rounded-2xl px-6 py-4 border border-transparent focus-within:border-[#1da1f2] transition-colors group relative">
+                <label className="block text-xs text-[#8a8d98] font-medium mb-1 uppercase tracking-wide">
                   Clearance Level
                 </label>
                 <input
                   type="text"
                   readOnly
                   value={role === "admin" ? "Level-5" : "Level-2"}
-                  className="w-full bg-transparent text-white text-sm outline-none cursor-default font-medium"
+                  className="w-full bg-transparent text-white text-base outline-none cursor-default font-medium"
                 />
-                <Shield size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#8a8d98]" />
+                <Shield size={20} className="absolute right-5 top-1/2 -translate-y-1/2 text-[#8a8d98]" />
               </div>
 
               {/* Department Input */}
-              <div className="flex-1 bg-[#282a31] rounded-2xl px-5 py-3 border border-transparent focus-within:border-[#1da1f2] transition-colors group relative">
-                <label className="block text-[10px] text-[#8a8d98] font-medium mb-0.5 uppercase tracking-wide">
+              <div className="flex-1 bg-[#282a31] rounded-2xl px-6 py-4 border border-transparent focus-within:border-[#1da1f2] transition-colors group relative">
+                <label className="block text-xs text-[#8a8d98] font-medium mb-1 uppercase tracking-wide">
                   Department
                 </label>
                 <input
                   type="text"
                   readOnly
                   value={role === "admin" ? "SOS-Command" : "Analytics"}
-                  className="w-full bg-transparent text-white text-sm outline-none cursor-default font-medium"
+                  className="w-full bg-transparent text-white text-base outline-none cursor-default font-medium"
                 />
-                <Satellite size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-[#8a8d98]" />
+                <Satellite size={20} className="absolute right-5 top-1/2 -translate-y-1/2 text-[#8a8d98]" />
               </div>
             </div>
 
             {/* Email Input */}
-            <div className="w-full bg-[#282a31] rounded-2xl px-5 py-3 border border-transparent focus-within:border-[#1da1f2] transition-colors group relative">
-              <label className="block text-[10px] text-[#8a8d98] font-medium mb-0.5 uppercase tracking-wide">
+            <div className="w-full bg-[#282a31] rounded-2xl px-6 py-4 border border-transparent focus-within:border-[#1da1f2] transition-colors group relative">
+              <label className="block text-xs text-[#8a8d98] font-medium mb-1 uppercase tracking-wide">
                 Email
               </label>
               <input
                 type="email"
                 defaultValue={role === "admin" ? "admin.hq@nova-sync.isro" : "analyst.op@nova-sync.isro"}
-                className="w-full bg-transparent text-white text-[15px] outline-none"
+                className="w-full bg-transparent text-white text-lg outline-none"
                 required
               />
-              <Mail size={16} className="absolute right-5 top-1/2 -translate-y-1/2 text-[#8a8d98]" />
+              <Mail size={20} className="absolute right-6 top-1/2 -translate-y-1/2 text-[#8a8d98]" />
             </div>
 
-            {/* Password Input (Active style by default to match image) */}
-            <div className="w-full bg-[#282a31] rounded-2xl px-5 py-3 border border-[#1da1f2] shadow-[0_0_0_1px_rgba(29,161,242,0.3)] transition-colors group relative mt-2">
-              <label className="block text-[10px] text-[#1da1f2] font-medium mb-0.5 uppercase tracking-wide">
+            {/* Password Input */}
+            <div className="w-full bg-[#282a31] rounded-2xl px-6 py-4 border border-[#1da1f2] shadow-[0_0_0_1px_rgba(29,161,242,0.3)] transition-colors group relative mt-4">
+              <label className="block text-xs text-[#1da1f2] font-medium mb-1 uppercase tracking-wide">
                 Password
               </label>
               <input
                 type="password"
                 defaultValue="••••••••••••"
-                className="w-full bg-transparent text-white text-[15px] outline-none tracking-widest"
+                className="w-full bg-transparent text-white text-lg outline-none tracking-widest"
                 required
               />
-              <div className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 border-[#8a8d98] flex items-center justify-center">
-                <div className="w-1.5 h-1.5 bg-[#8a8d98] rounded-full" />
+              <div className="absolute right-6 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full border-2 border-[#8a8d98] flex items-center justify-center">
+                <div className="w-2 h-2 bg-[#8a8d98] rounded-full" />
               </div>
             </div>
 
             {/* Buttons */}
-            <div className="flex items-center gap-4 pt-6">
+            <div className="flex items-center gap-5 pt-8">
               <button
                 type="button"
-                className="px-8 py-3.5 rounded-full bg-[#383a42] text-white text-sm font-semibold hover:bg-[#40434c] transition-colors"
+                className="px-10 py-4 rounded-full bg-[#383a42] text-white text-base font-semibold hover:bg-[#40434c] transition-colors"
               >
                 Request access
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="px-8 py-3.5 rounded-full bg-[#1da1f2] text-white text-sm font-semibold hover:bg-[#1a91db] transition-colors shadow-[0_4px_14px_rgba(29,161,242,0.3)] flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                className="px-10 py-4 rounded-full bg-[#1da1f2] text-white text-base font-semibold hover:bg-[#1a91db] transition-colors shadow-[0_4px_14px_rgba(29,161,242,0.3)] flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {loading ? "Authenticating..." : "Authenticate"}
               </button>
