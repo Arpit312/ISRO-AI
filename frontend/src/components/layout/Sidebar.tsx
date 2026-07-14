@@ -14,6 +14,7 @@ import {
   Zap,
   Map,
   Shield,
+  Info,
 } from "lucide-react";
 
 interface SidebarLink {
@@ -55,6 +56,11 @@ const navLinks: SidebarLink[] = [
     label: "Settings",
     href: "/settings",
     icon: <Settings size={20} />,
+  },
+  {
+    label: "About",
+    href: "/about",
+    icon: <Info size={20} />,
   },
 ];
 

@@ -205,30 +205,6 @@ export default function SettingsPage() {
           </div>
         </div>
 
-        {}
-        <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6 animate-fade-in-up stagger-4">
-          <h2 className="text-[14px] font-semibold text-[var(--color-text-primary)] mb-3">
-            About NOVA-SYNC
-          </h2>
-          <p className="text-[13px] text-[var(--color-text-secondary)] leading-relaxed mb-4">
-            NOVA-SYNC is a 7-stage multi-modal AI pipeline for reconstructing
-            cloud-occluded ISRO LISS-IV satellite imagery using SAR fusion,
-            phenological priors, and latent diffusion models. Designed for
-            operational continuity in Earth observation.
-          </p>
-          <div className="flex flex-wrap gap-2 text-[11px]">
-            {["PyTorch", "FastAPI", "Next.js", "CLIP", "Diffusion Models", "ChromaDB"].map(
-              (tech) => (
-                <span
-                  key={tech}
-                  className="px-2 py-1 rounded-[var(--radius-full)] bg-[var(--color-surface-elevated)] text-[var(--color-text-tertiary)] border border-[var(--color-border)] font-medium"
-                >
-                  {tech}
-                </span>
-              )
-            )}
-          </div>
-        </div>
       </div>
     </div>
   );
