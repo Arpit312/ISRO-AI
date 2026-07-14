@@ -24,10 +24,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#454955] flex items-center justify-center p-4 sm:p-8 font-sans">
+    <div className="min-h-screen bg-[#1e2028] flex items-center justify-center font-sans overflow-hidden">
       
-      {/* --- MAIN CARD --- */}
-      <div className="relative w-full max-w-[1200px] h-[750px] bg-[#1e2028] rounded-[30px] shadow-2xl overflow-hidden flex flex-col">
+      {/* --- MAIN CARD (FULL SCREEN) --- */}
+      <div className="relative w-full min-h-screen bg-[#1e2028] flex flex-col">
         
         {/* --- SVG WAVE & RIGHT BACKGROUND IMAGE --- */}
         <div className="absolute inset-0 pointer-events-none">
