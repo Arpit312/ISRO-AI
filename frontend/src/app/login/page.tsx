@@ -8,17 +8,43 @@ import {
   User,
   KeyRound,
   ArrowRight,
-  Satellite,
-  Globe,
-  Lock,
   Fingerprint,
   Eye,
-  Radio,
+  Command,
   Zap,
-  Scan,
+  Lock,
 } from "lucide-react";
 import { useAppStore } from "@/store/appStore";
 import { cn } from "@/lib/utils";
+
+// Particle animation for the background
+const Particles = () => {
+  const particles = Array.from({ length: 40 });
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {particles.map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-1 h-1 bg-cyan-500/20 rounded-full"
+          initial={{
+            x: `${Math.random() * 100}vw`,
+            y: `${Math.random() * 100}vh`,
+            scale: Math.random() * 2,
+          }}
+          animate={{
+            y: [`${Math.random() * 100}vh`, `${Math.random() * -20}vh`],
+            opacity: [0, 0.8, 0],
+          }}
+          transition={{
+            duration: 10 + Math.random() * 10,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
 export default function LoginPage() {
   const router = useRouter();
@@ -38,370 +64,243 @@ export default function LoginPage() {
     const lines =
       loading === "admin"
         ? [
-            "> Authenticating admin credentials...",
-            "> Verifying biometric signature...",
-            "> Decrypting AES-256 access token...",
-            "> Granting ADMIN clearance...",
-            "> Connecting to SOS HQ live feed...",
-            "> Access GRANTED. Welcome, Commander.",
+            "INITIATING SECURE HANDSHAKE...",
+            "VERIFYING BIOMETRIC SIGNATURE [LEVEL 5]...",
+            "DECRYPTING AES-256 ACCESS TOKEN...",
+            "CONNECTING TO SOS COMMAND CENTER...",
+            "ACCESS GRANTED. WELCOME, COMMANDER.",
           ]
         : [
-            "> Authenticating user credentials...",
-            "> Verifying session token...",
-            "> Loading satellite data modules...",
-            "> Establishing encrypted channel...",
-            "> Access GRANTED. Welcome aboard.",
+            "INITIATING SECURE HANDSHAKE...",
+            "VERIFYING SESSION TOKEN [LEVEL 2]...",
+            "LOADING SATELLITE MODULES...",
+            "ESTABLISHING ENCRYPTED CHANNEL...",
+            "ACCESS GRANTED. WELCOME.",
           ];
+
     setShowTerminal(true);
     setTerminalLines([]);
     lines.forEach((line, i) => {
-      setTimeout(() => setTerminalLines((prev) => [...prev, line]), i * 350);
+      setTimeout(() => setTerminalLines((prev) => [...prev, line]), i * 400);
     });
     setTimeout(() => {
       login(loading);
       router.push("/dashboard");
-    }, lines.length * 350 + 300);
+    }, lines.length * 400 + 400);
   }, [loading, login, router]);
 
   return (
-    <div className="fixed inset-0 bg-black text-white flex flex-col lg:flex-row overflow-hidden">
-
-      {/* ==================== LEFT SIDE — Branding ==================== */}
-      <div className="relative flex-1 flex flex-col justify-center px-8 md:px-16 lg:px-20 py-12 lg:py-0 overflow-hidden">
-
-        {/* Background Image (only on left) */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="/login-bg.png"
-            alt=""
-            className="w-full h-full object-cover opacity-30"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/90" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/40" />
-        </div>
-
-        {/* Grid overlay */}
-        <div
-          className="absolute inset-0 z-[1] opacity-[0.03]"
+    <div className="min-h-screen bg-[#020617] text-white flex items-center justify-center p-4 md:p-8 relative overflow-hidden font-sans">
+      
+      {/* --- PREMIUM BACKGROUND --- */}
+      <div className="absolute inset-0 z-0">
+        {/* Animated gradient mesh */}
+        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-cyan-600/10 blur-[120px] animate-pulse" style={{ animationDuration: '8s' }} />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-blue-800/20 blur-[120px] animate-pulse" style={{ animationDuration: '10s' }} />
+        
+        {/* Subtle grid */}
+        <div 
+          className="absolute inset-0 opacity-[0.02] mix-blend-overlay"
           style={{
-            backgroundImage:
-              "linear-gradient(rgba(0,212,255,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,0.3) 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
+            backgroundImage: "linear-gradient(white 1px, transparent 1px), linear-gradient(90deg, white 1px, transparent 1px)",
+            backgroundSize: "40px 40px"
           }}
         />
-
-        {/* Content — Centered */}
-        <div className="relative z-10 w-full max-w-xl mx-auto flex flex-col items-center text-center lg:items-start lg:text-left">
-          {/* Logo */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="flex items-center gap-4 mb-12"
-          >
-            <div className="relative">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-400/30 flex items-center justify-center shadow-[0_0_40px_rgba(34,211,238,0.15)]">
-                <Satellite size={30} className="text-cyan-400" />
-              </div>
-              <div className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(52,211,153,0.5)]" />
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold tracking-tight">NOVA-SYNC</h2>
-              <p className="text-[11px] uppercase tracking-[0.3em] text-cyan-400/60">
-                Satellite Intelligence Platform
-              </p>
-            </div>
-          </motion.div>
-
-          {/* Heading */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-          >
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.05] mb-8">
-              Mission{" "}
-              <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-emerald-400 bg-clip-text text-transparent">
-                Control
-              </span>
-              <br />
-              <span className="text-white">Center</span>
-            </h1>
-          </motion.div>
-
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="text-slate-400 text-lg leading-relaxed mb-6 max-w-lg"
-          >
-            India&apos;s next-generation satellite imagery analysis platform.
-            Powered by advanced AI for real-time geospatial intelligence,
-            disaster monitoring, and emergency response.
-          </motion.p>
-
-          {/* Extra Details */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-            className="mb-10 space-y-3 text-sm text-slate-500 w-full max-w-lg"
-          >
-            <div className="flex items-start gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-2 flex-shrink-0" />
-              <span>Multi-spectral SAR image processing with ResNet-18 cloud classification and physics-based validation</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 flex-shrink-0" />
-              <span>Safe-Route rescue navigation with real-time risk scanning and SOS emergency broadcast</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2 flex-shrink-0" />
-              <span>Admin SOS HQ command center with live distress signal monitoring and geolocation tracking</span>
-            </div>
-          </motion.div>
-
-          {/* Feature Pills */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.5 }}
-            className="flex flex-wrap gap-3"
-          >
-            {[
-              { icon: <Globe size={14} />, text: "SAR Processing" },
-              { icon: <Radio size={14} />, text: "Live Monitoring" },
-              { icon: <Lock size={14} />, text: "AES-256 Encrypted" },
-              { icon: <Zap size={14} />, text: "AI-Powered" },
-            ].map((pill) => (
-              <div
-                key={pill.text}
-                className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 text-slate-300 text-sm backdrop-blur-sm"
-              >
-                <span className="text-cyan-400">{pill.icon}</span>
-                {pill.text}
-              </div>
-            ))}
-          </motion.div>
-
-          {/* Bottom Status */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2 }}
-            className="mt-14 flex items-center gap-4 text-[11px] text-slate-600 font-mono"
-          >
-            <span className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              SYSTEM ONLINE
-            </span>
-            <span>•</span>
-            <span>ENCRYPTION: ACTIVE</span>
-            <span>•</span>
-            <span>© 2025 ISRO × NOVA-SYNC</span>
-          </motion.div>
-        </div>
+        
+        <Particles />
       </div>
 
-      {/* ==================== RIGHT SIDE — Login Form (no box) ==================== */}
-      <motion.div
-        initial={{ opacity: 0, x: 60 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="w-full lg:w-[540px] xl:w-[580px] flex-shrink-0 relative"
+      {/* --- CENTRAL GLASS CARD --- */}
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-10 w-full max-w-6xl h-[700px] rounded-[2rem] border border-white/[0.08] bg-white/[0.01] backdrop-blur-3xl shadow-2xl shadow-black/50 overflow-hidden flex flex-col md:flex-row"
       >
-        <div className="h-full flex flex-col justify-center px-10 md:px-16 lg:px-20 py-12 relative overflow-hidden">
+        {/* Shine effect on card edge */}
+        <div className="absolute inset-0 border border-white/[0.05] rounded-[2rem] pointer-events-none mix-blend-overlay" />
 
-          {/* Icon */}
-          <div className="flex justify-center mb-8">
-            <div className="relative">
-              <div className="w-16 h-16 rounded-2xl bg-black/60 border border-white/10 flex items-center justify-center">
-                <Fingerprint size={30} className="text-cyan-400" />
-              </div>
-              <motion.div
-                className="absolute inset-0 rounded-2xl border-2 border-cyan-400/20"
-                animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0, 0.4] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              />
+        {/* LEFT PANEL: Cinematic Image */}
+        <div className="hidden md:block relative w-[45%] h-full bg-black">
+          <div className="absolute inset-0 z-10 bg-gradient-to-r from-transparent via-transparent to-[#020617]" />
+          <div className="absolute inset-0 z-10 bg-gradient-to-t from-[#020617] via-transparent to-transparent" />
+          <img 
+            src="/login-premium.png" 
+            alt="Satellite Orbit"
+            className="w-full h-full object-cover opacity-90 scale-105"
+          />
+          
+          {/* Overlay details on image */}
+          <div className="absolute bottom-12 left-12 z-20">
+            <div className="flex items-center gap-3 mb-4">
+              <Command className="text-cyan-400" size={24} />
+              <h2 className="text-2xl font-bold tracking-widest text-white">NOVA-SYNC</h2>
             </div>
-          </div>
-
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold tracking-tight mb-1">
-              Secure Access
-            </h2>
-            <p className="text-slate-500 text-sm">
-              Select your clearance level to proceed
+            <p className="text-slate-400 text-sm max-w-xs font-light leading-relaxed">
+              Global Satellite Intelligence & Emergency Command Protocol. Authorized personnel only.
             </p>
           </div>
+        </div>
 
-          {/* Tab Selector */}
-          <div className="flex gap-1 p-1 rounded-xl bg-white/[0.04] border border-white/[0.06] mb-6">
-            {(["user", "admin"] as const).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={cn(
-                  "flex-1 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 flex items-center justify-center gap-2",
-                  activeTab === tab
-                    ? "bg-white/10 text-white shadow-sm border border-white/10"
-                    : "text-slate-500 hover:text-slate-300"
-                )}
+        {/* RIGHT PANEL: Login Form */}
+        <div className="w-full md:w-[55%] h-full flex flex-col justify-center px-8 md:px-16 lg:px-24 relative bg-gradient-to-l from-white/[0.02] to-transparent">
+          
+          <div className="w-full max-w-sm mx-auto">
+            {/* Header */}
+            <div className="mb-10 text-center md:text-left">
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+                className="inline-flex items-center justify-center p-3 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 mb-6"
               >
-                {tab === "user" ? <User size={15} /> : <Shield size={15} />}
-                {tab === "user" ? "User" : "Admin"}
-              </button>
-            ))}
-          </div>
+                <Fingerprint size={28} className="text-cyan-400" />
+              </motion.div>
+              <h1 className="text-3xl font-bold tracking-tight mb-2 text-white">Welcome Back</h1>
+              <p className="text-slate-400 text-sm">Please verify your credentials to access the terminal.</p>
+            </div>
 
-          {/* Login Form */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className="space-y-5"
-            >
-              {/* Email */}
-              <div>
-                <label className="text-[11px] text-slate-500 uppercase tracking-wider mb-2 block font-medium">
-                  {activeTab === "admin" ? "Admin ID" : "Email"}
-                </label>
-                <div className="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06] focus-within:border-cyan-400/30 transition-colors">
-                  <User size={16} className="text-slate-500 flex-shrink-0" />
-                  <input
-                    type="text"
-                    placeholder={activeTab === "admin" ? "admin@nova-sync.isro" : "user@nova-sync.isro"}
-                    defaultValue={activeTab === "admin" ? "admin@nova-sync.isro" : "user@nova-sync.isro"}
-                    className="bg-transparent text-sm text-white placeholder:text-slate-600 outline-none w-full"
-                  />
-                </div>
-              </div>
-
-              {/* Password */}
-              <div>
-                <label className="text-[11px] text-slate-500 uppercase tracking-wider mb-2 block font-medium">
-                  Password
-                </label>
-                <div className="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-white/[0.03] border border-white/[0.06] focus-within:border-cyan-400/30 transition-colors">
-                  <Lock size={16} className="text-slate-500 flex-shrink-0" />
-                  <input
-                    type="password"
-                    defaultValue="novasync2025"
-                    className="bg-transparent text-sm text-white placeholder:text-slate-600 outline-none w-full"
-                  />
-                  <Eye size={16} className="text-slate-600 cursor-pointer hover:text-slate-400 transition-colors flex-shrink-0" />
-                </div>
-              </div>
-
-              {/* Role Info */}
-              <div
+            {/* Tab Selector */}
+            <div className="flex p-1 rounded-xl bg-white/[0.03] border border-white/[0.05] mb-8 relative">
+              {/* Animated active background */}
+              <div 
                 className={cn(
-                  "rounded-xl p-4 border text-xs",
-                  activeTab === "admin"
-                    ? "bg-emerald-500/5 border-emerald-500/10 text-emerald-400/80"
-                    : "bg-cyan-500/5 border-cyan-500/10 text-cyan-400/80"
+                  "absolute inset-y-1 w-[calc(50%-4px)] bg-white/10 rounded-lg shadow-sm transition-all duration-300 ease-out",
+                  activeTab === "admin" ? "translate-x-full left-0 ml-1" : "left-1"
                 )}
-              >
-                <div className="flex items-center gap-2 mb-1.5">
-                  <Scan size={12} />
-                  <span className="font-semibold uppercase tracking-wider text-[10px]">
-                    {activeTab === "admin" ? "Level-5 Clearance" : "Level-2 Clearance"}
-                  </span>
-                </div>
-                <span className="text-slate-500 text-[11px] leading-relaxed">
-                  {activeTab === "admin"
-                    ? "Full access to SOS HQ, live monitoring feed, and all satellite processing modules."
-                    : "Access to satellite imagery processing, analysis history, and safe-route navigation."}
-                </span>
-              </div>
+              />
+              
+              {(["user", "admin"] as const).map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={cn(
+                    "relative z-10 flex-1 py-2.5 text-sm font-medium transition-colors flex items-center justify-center gap-2",
+                    activeTab === tab ? "text-white" : "text-slate-500 hover:text-slate-300"
+                  )}
+                >
+                  {tab === "user" ? <User size={16} /> : <Shield size={16} />}
+                  <span className="capitalize">{tab}</span>
+                </button>
+              ))}
+            </div>
 
-              {/* Login Button */}
-              <button
-                onClick={() => handleLogin(activeTab)}
-                disabled={loading !== null}
-                className={cn(
-                  "w-full group flex items-center justify-center gap-3 py-4 rounded-xl font-semibold text-sm transition-all duration-300",
-                  activeTab === "admin"
-                    ? "bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-black shadow-[0_0_30px_rgba(52,211,153,0.15)]"
-                    : "bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black shadow-[0_0_30px_rgba(34,211,238,0.15)]",
-                  loading && "opacity-70 cursor-not-allowed"
-                )}
-              >
-                {loading === activeTab ? (
-                  <>
-                    <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-                    Authenticating...
-                  </>
-                ) : (
-                  <>
-                    <KeyRound size={16} />
-                    {activeTab === "admin" ? "Access as Administrator" : "Access as Standard User"}
-                    <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                  </>
-                )}
-              </button>
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Terminal Overlay */}
-          <AnimatePresence>
-            {showTerminal && (
+            {/* Form */}
+            <AnimatePresence mode="wait">
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="absolute inset-0 bg-black/95 backdrop-blur-lg z-20 flex flex-col p-8"
+                key={activeTab}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="space-y-5"
               >
-                <div className="flex items-center gap-2 mb-6">
-                  <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-green-500/80" />
-                  <span className="ml-3 text-xs text-slate-500 font-mono">
-                    nova-sync-auth v2.1
-                  </span>
+                {/* Email Input */}
+                <div className="group">
+                  <div className="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-[#09090b] border border-white/10 group-focus-within:border-cyan-500/50 group-focus-within:shadow-[0_0_20px_rgba(6,182,212,0.1)] transition-all">
+                    <User size={18} className="text-slate-500 group-focus-within:text-cyan-400 transition-colors" />
+                    <input
+                      type="text"
+                      placeholder={activeTab === "admin" ? "admin@nova-sync.gov" : "analyst@nova-sync.gov"}
+                      defaultValue={activeTab === "admin" ? "admin@nova-sync.gov" : "analyst@nova-sync.gov"}
+                      className="bg-transparent text-sm text-white placeholder:text-slate-600 outline-none w-full"
+                    />
+                  </div>
                 </div>
-                <div className="flex-1 flex flex-col justify-center font-mono text-sm space-y-3">
+
+                {/* Password Input */}
+                <div className="group">
+                  <div className="flex items-center gap-3 px-4 py-3.5 rounded-xl bg-[#09090b] border border-white/10 group-focus-within:border-cyan-500/50 group-focus-within:shadow-[0_0_20px_rgba(6,182,212,0.1)] transition-all">
+                    <Lock size={18} className="text-slate-500 group-focus-within:text-cyan-400 transition-colors" />
+                    <input
+                      type="password"
+                      defaultValue="••••••••••••"
+                      className="bg-transparent text-sm text-white placeholder:text-slate-600 outline-none w-full"
+                    />
+                    <Eye size={18} className="text-slate-600 cursor-pointer hover:text-slate-300 transition-colors" />
+                  </div>
+                </div>
+
+                {/* Login Button */}
+                <button
+                  onClick={() => handleLogin(activeTab)}
+                  disabled={loading !== null}
+                  className="relative w-full overflow-hidden rounded-xl group mt-4"
+                >
+                  <div className={cn(
+                    "absolute inset-0 transition-transform duration-500",
+                    activeTab === "admin" 
+                      ? "bg-gradient-to-r from-emerald-600 to-emerald-400 group-hover:scale-[1.02]"
+                      : "bg-gradient-to-r from-blue-600 to-cyan-400 group-hover:scale-[1.02]"
+                  )} />
+                  <div className="relative px-4 py-4 flex items-center justify-center gap-2 text-white font-semibold text-sm shadow-xl">
+                    {loading === activeTab ? (
+                      <div className="flex items-center gap-3">
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <span>Authenticating...</span>
+                      </div>
+                    ) : (
+                      <>
+                        <KeyRound size={18} />
+                        <span>Authenticate</span>
+                        <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                      </>
+                    )}
+                  </div>
+                </button>
+              </motion.div>
+            </AnimatePresence>
+
+          </div>
+        </div>
+
+        {/* --- TERMINAL OVERLAY --- */}
+        <AnimatePresence>
+          {showTerminal && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="absolute inset-0 bg-[#020617]/95 backdrop-blur-2xl z-50 flex flex-col p-10 md:p-20"
+            >
+              <div className="max-w-2xl w-full mx-auto flex flex-col h-full justify-center">
+                <div className="flex items-center gap-2 mb-10 opacity-50">
+                  <Zap size={20} className="text-cyan-400" />
+                  <span className="text-sm font-mono text-cyan-400 tracking-[0.2em]">NOVA-SYNC KERNEL</span>
+                </div>
+                
+                <div className="space-y-4 font-mono text-sm md:text-base">
                   {terminalLines.map((line, i) => (
                     <motion.div
                       key={i}
-                      initial={{ opacity: 0, x: -10 }}
+                      initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       className={cn(
-                        "text-emerald-400/80",
-                        i === terminalLines.length - 1 &&
-                          line.includes("GRANTED") &&
-                          "text-cyan-400 font-bold"
+                        "text-slate-400 tracking-wider",
+                        line.includes("GRANTED") && "text-emerald-400 font-bold"
                       )}
                     >
                       {line}
                       {i === terminalLines.length - 1 && (
                         <motion.span
-                          className="inline-block w-2 h-4 bg-cyan-400 ml-1 align-middle"
+                          className="inline-block w-2.5 h-5 bg-emerald-400 ml-2 align-middle"
                           animate={{ opacity: [1, 0] }}
-                          transition={{ duration: 0.6, repeat: Infinity }}
+                          transition={{ duration: 0.8, repeat: Infinity }}
                         />
                       )}
                     </motion.div>
                   ))}
                 </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Footer */}
-          <div className="mt-8 pt-6 border-t border-white/[0.04] text-center">
-            <p className="text-[10px] text-slate-600 uppercase tracking-[0.2em]">
-              NOVA-SYNC Authentication Protocol · AES-256 · v2.1
-            </p>
-            <p className="text-[10px] text-slate-700 mt-1">
-              © 2025 ISRO × NOVA-SYNC
-            </p>
-          </div>
-        </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
+
+      {/* Footer text outside the card */}
+      <div className="absolute bottom-6 w-full text-center text-slate-500 text-[10px] font-mono uppercase tracking-[0.3em] z-0">
+        ISRO Secure Network • Restricted Access
+      </div>
+
     </div>
   );
 }
