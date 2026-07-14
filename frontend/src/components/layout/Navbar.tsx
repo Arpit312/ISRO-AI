@@ -26,6 +26,7 @@ const routeLabels: Record<string, string> = {
   "/process": "Process Image",
   "/history": "History",
   "/settings": "Settings",
+  "/profile": "My Profile",
   "/about": "About",
 };
 
@@ -196,7 +197,7 @@ export default function Navbar({ sidebarCollapsed, onMobileMenuToggle }: NavbarP
                   <button 
                     onClick={() => {
                       setIsProfileOpen(false);
-                      router.push("/settings");
+                      router.push("/profile");
                     }}
                     className="w-full flex items-center gap-2 px-3 py-2 text-base text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-white/10 rounded-md transition-colors text-left"
                   >
