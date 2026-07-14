@@ -16,10 +16,9 @@ export default function AppShell({ children }: AppShellProps) {
 
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden">
-      {/* Premium Ambient Background */}
-      <div className="fixed inset-0 z-[-1] pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-[var(--color-primary)]/10 blur-[120px] mix-blend-screen animate-float opacity-50" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-blue-600/10 blur-[150px] mix-blend-screen animate-float opacity-40" style={{ animationDelay: '2s' }} />
+      <div className="fixed inset-0 z-[-1] pointer-events-none bg-black">
+        <div className="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-[var(--color-primary)]/5 blur-[120px] mix-blend-screen animate-float opacity-20" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-blue-600/5 blur-[150px] mix-blend-screen animate-float opacity-10" style={{ animationDelay: '2s' }} />
       </div>
 
         {}

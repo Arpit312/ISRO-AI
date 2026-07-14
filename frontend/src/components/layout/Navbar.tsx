@@ -84,7 +84,7 @@ export default function Navbar({ sidebarCollapsed, onMobileMenuToggle }: NavbarP
         <div className="flex items-center gap-2 md:gap-3 text-[13px]">
           <button
             onClick={onMobileMenuToggle}
-            className="md:hidden p-1.5 -ml-1.5 mr-1 rounded-md text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)]"
+            className="md:hidden p-1.5 -ml-1.5 mr-1 rounded-md text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-white/10"
           >
             <Menu size={18} />
           </button>
@@ -127,7 +127,7 @@ export default function Navbar({ sidebarCollapsed, onMobileMenuToggle }: NavbarP
               className={cn(
                 "relative flex items-center justify-center w-9 h-9 rounded-[var(--radius-md)]",
                 isNotifOpen ? "bg-[var(--color-surface-hover)] text-[var(--color-text-primary)]" : "text-[var(--color-text-secondary)]",
-                "hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text-primary)]",
+                "hover:bg-white/10 hover:text-[var(--color-text-primary)]",
                 "transition-all duration-200"
               )}
               aria-label="Notifications"
@@ -144,12 +144,12 @@ export default function Navbar({ sidebarCollapsed, onMobileMenuToggle }: NavbarP
                   <span className="text-[10px] bg-[var(--color-primary-subtle)] text-[var(--color-primary)] px-2 py-0.5 rounded-full">2 New</span>
                 </div>
                 <div className="max-h-[300px] overflow-y-auto">
-                  <div className="p-3 border-b border-[var(--color-border-subtle)] hover:bg-[var(--color-surface-hover)] transition-colors cursor-pointer">
+                  <div className="p-3 border-b border-[var(--color-border-subtle)] hover:bg-white/10 transition-colors cursor-pointer">
                     <p className="text-[12px] text-[var(--color-text-primary)] font-medium">LISS-IV Image Processed</p>
                     <p className="text-[11px] text-[var(--color-text-tertiary)] mt-1">Region: Bangalore_01 completed successfully.</p>
                     <p className="text-[10px] text-[var(--color-primary)] mt-2">Just now</p>
                   </div>
-                  <div className="p-3 hover:bg-[var(--color-surface-hover)] transition-colors cursor-pointer">
+                  <div className="p-3 hover:bg-white/10 transition-colors cursor-pointer">
                     <p className="text-[12px] text-[var(--color-text-primary)] font-medium">Model Weights Updated</p>
                     <p className="text-[11px] text-[var(--color-text-tertiary)] mt-1">Diffusion model V2 loaded in pipeline.</p>
                     <p className="text-[10px] text-[var(--color-text-muted)] mt-2">2 hours ago</p>
@@ -168,7 +168,7 @@ export default function Navbar({ sidebarCollapsed, onMobileMenuToggle }: NavbarP
               }}
               className={cn(
                 "flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-[var(--radius-md)]",
-                isProfileOpen ? "bg-[var(--color-surface-hover)]" : "hover:bg-[var(--color-surface-hover)]",
+                isProfileOpen ? "bg-[var(--color-surface-hover)]" : "hover:bg-white/10",
                 "transition-all duration-200"
               )}
             >
@@ -188,10 +188,10 @@ export default function Navbar({ sidebarCollapsed, onMobileMenuToggle }: NavbarP
                   <p className="text-[11px] text-[var(--color-text-tertiary)] mt-0.5 truncate">2005arpitpathak@gmai.com</p>
                 </div>
                 <div className="p-1">
-                  <button className="w-full flex items-center gap-2 px-3 py-2 text-[12px] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)] rounded-md transition-colors text-left">
+                  <button className="w-full flex items-center gap-2 px-3 py-2 text-[12px] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-white/10 rounded-md transition-colors text-left">
                     <User size={14} /> My Profile
                   </button>
-                  <button className="w-full flex items-center gap-2 px-3 py-2 text-[12px] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)] rounded-md transition-colors text-left">
+                  <button className="w-full flex items-center gap-2 px-3 py-2 text-[12px] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-white/10 rounded-md transition-colors text-left">
                     <Settings size={14} /> Preferences
                   </button>
                   <div className="h-px bg-[var(--color-border-subtle)] my-1" />

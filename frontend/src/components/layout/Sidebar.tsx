@@ -137,8 +137,8 @@ export default function Sidebar({ collapsed, onToggle, mobileOpen, onMobileClose
                 "group relative flex items-center gap-3 rounded-[var(--radius-md)] transition-all duration-300",
                 collapsed ? "justify-center px-0 py-3" : "px-3 py-2.5",
                 isActive
-                  ? "bg-gradient-to-r from-[var(--color-primary-subtle)] to-transparent text-[var(--color-primary-light)] shadow-[inset_2px_0_0_0_var(--color-primary)]"
-                  : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-hover)]"
+                  ? "bg-gradient-to-r from-[var(--color-primary)]/20 via-blue-500/10 to-transparent text-[var(--color-primary-light)] shadow-[inset_2px_0_0_0_var(--color-primary)]"
+                  : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-white/5"
               )}
             >
               {}
