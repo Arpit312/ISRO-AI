@@ -104,9 +104,21 @@ export default function LoginPage() {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black overflow-hidden">
+      {/* Cinematic Background Image */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src="/login-bg.png" 
+          alt="" 
+          className="w-full h-full object-cover opacity-40"
+        />
+        {/* Dark gradient overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/60 to-black/80" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
+      </div>
+
       {/* Animated Grid Background */}
       <div
-        className="absolute inset-0 opacity-[0.03]"
+        className="absolute inset-0 z-[1] opacity-[0.03]"
         style={{
           backgroundImage: `
             linear-gradient(rgba(0,212,255,0.3) 1px, transparent 1px),
