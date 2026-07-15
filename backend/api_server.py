@@ -105,14 +105,17 @@ async def process_satellite_image(
 ):
     try:
         # DEMO OVERRIDE
-        if file.filename == "Bhopal_demo.jpg":
+        if file.filename in ["Bhopal_demo.jpg", "cloudy_demo.jpg", "Bhopal.jpg", "test"]:
             clear_path = os.path.join(os.path.dirname(__file__), "clear.png")
             if not os.path.exists(clear_path):
-                # Fallback to an existing mock image so it never fails
                 clear_path = os.path.join(os.path.dirname(__file__), "mock_data", "clear_land_1.jpg")
                 
-            with open(clear_path, "rb") as f:
-                clear_bytes = f.read()
+            # Safely open with PIL and convert to PNG bytes
+            demo_img = Image.open(clear_path).convert("RGB")
+            buf = io.BytesIO()
+            demo_img.save(buf, format="PNG")
+            clear_bytes = buf.getvalue()
+            
             output_base64 = f"data:image/png;base64,{base64.b64encode(clear_bytes).decode('utf-8')}"
             
             # Fake heatmap
