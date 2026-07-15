@@ -107,8 +107,8 @@ async def process_satellite_image(
         contents = await file.read()
         image = Image.open(io.BytesIO(contents))
         
-        # AGGRESSIVE MEMORY FIX FOR RENDER 512MB LIMIT
-        image.thumbnail((256, 256))
+        # Max dimension 1024 for the overall image to preserve quality while avoiding massive tensor overhead
+        image.thumbnail((1024, 1024))
         image = image.convert("RGB")
         
         import gc
@@ -116,19 +116,21 @@ async def process_satellite_image(
         gc.collect()
 
         orig_w, orig_h = image.size
-        new_w = max(16, (orig_w // 16) * 16)
-        new_h = max(16, (orig_h // 16) * 16)
         
-        image = image.resize((new_w, new_h))
-        orig_w, orig_h = new_w, new_h
+        # Create a max 384x384 version for the AI to process (Safe from OOM)
+        scale = min(384 / orig_w, 384 / orig_h, 1.0)
+        ai_w = max(16, int((orig_w * scale) // 16) * 16)
+        ai_h = max(16, int((orig_h * scale) // 16) * 16)
+        
+        ai_image = image.resize((ai_w, ai_h), Image.Resampling.LANCZOS)
         
         high_res_tensor = T.Compose([
             T.ToTensor()
-        ])(image).unsqueeze(0)
+        ])(ai_image).unsqueeze(0)
         class_idx, class_name = router.route(high_res_tensor)
         pheno_embed, season = phenology(month)
         from mock_sar_database import get_mock_sar_data
-        sar_tensor_high = get_mock_sar_data(new_h, new_w, file.filename).to(device)
+        sar_tensor_high = get_mock_sar_data(ai_h, ai_w, file.filename).to(device)
         x_high = torch.cat([high_res_tensor, sar_tensor_high], dim=1)
         orig_tensor = T.ToTensor()(image).unsqueeze(0).to(device)
         brightness, _ = orig_tensor.max(dim=1, keepdim=True)
@@ -152,7 +154,7 @@ async def process_satellite_image(
             low_res_tensor = T.Compose([
                 T.Resize((128, 128)),
                 T.ToTensor()
-            ])(image).unsqueeze(0).to(device)
+            ])(ai_image).unsqueeze(0).to(device)
             sar_tensor_low = get_mock_sar_data(128, 128, file.filename).to(device)
             x_low = torch.cat([low_res_tensor, sar_tensor_low], dim=1)
             model.train()                                       
