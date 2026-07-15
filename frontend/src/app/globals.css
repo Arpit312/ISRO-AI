@@ -16,11 +16,11 @@
   --color-info: #3B82F6;
   --color-info-subtle: rgba(59, 130, 246, 0.12);
 
-    --color-bg: #1e2028;
-  --color-bg-elevated: #23252e;
-  --color-surface: #282a31;
+    --color-bg: #09090b;
+  --color-bg-elevated: #14151a;
+  --color-surface: #14151a;
   --color-surface-hover: #383a42;
-  --color-surface-elevated: #282a31;
+  --color-surface-elevated: #14151a;
   --color-surface-overlay: rgba(30, 32, 40, 0.85);
 
     --color-border: rgba(255, 255, 255, 0.08);

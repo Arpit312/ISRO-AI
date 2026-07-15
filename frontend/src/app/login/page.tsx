@@ -24,10 +24,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#1e2028] flex items-center justify-center font-sans overflow-hidden">
+    <div className="min-h-screen bg-[#09090b] flex items-center justify-center font-sans overflow-hidden">
       
       {/* --- MAIN CARD (FULL SCREEN) --- */}
-      <div className="relative w-full min-h-screen bg-[#1e2028] flex flex-col">
+      <div className="relative w-full min-h-screen bg-[#09090b] flex flex-col">
         
         {/* --- SVG WAVE & RIGHT BACKGROUND IMAGE --- */}
         <div className="absolute inset-0 pointer-events-none">
@@ -114,7 +114,7 @@ export default function LoginPage() {
 
 
             {/* Email Input */}
-            <div className="w-full bg-[#282a31] rounded-2xl px-6 py-4 border border-transparent focus-within:border-[#1da1f2] transition-colors group relative">
+            <div className="w-full bg-[#14151a] rounded-2xl px-6 py-4 border border-transparent focus-within:border-[#1da1f2] transition-colors group relative">
               <label className="block text-xs text-[#8a8d98] font-medium mb-1 uppercase tracking-wide">
                 Email
               </label>
@@ -128,7 +128,7 @@ export default function LoginPage() {
             </div>
 
             {/* Password Input */}
-            <div className="w-full bg-[#282a31] rounded-2xl px-6 py-4 border border-[#1da1f2] shadow-[0_0_0_1px_rgba(29,161,242,0.3)] transition-colors group relative mt-4">
+            <div className="w-full bg-[#14151a] rounded-2xl px-6 py-4 border border-[#1da1f2] shadow-[0_0_0_1px_rgba(29,161,242,0.3)] transition-colors group relative mt-4">
               <label className="block text-xs text-[#1da1f2] font-medium mb-1 uppercase tracking-wide">
                 Password
               </label>
