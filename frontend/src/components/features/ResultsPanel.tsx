@@ -104,20 +104,14 @@ export default function ResultsPanel({
           className="absolute inset-0 w-full h-full object-cover"
           draggable={false}
         />
-
-        {}
-        <div
-          className="absolute inset-0 overflow-hidden"
-          style={{ width: `${sliderPosition}%` }}
-        >
-          <img
-            src={inputImage}
-            alt="Original input"
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ width: `${containerRef.current?.offsetWidth || 600}px` }}
-            draggable={false}
-          />
-        </div>
+        {/* Original Image (Top Layer, Clipped) */}
+        <img
+          src={inputImage}
+          alt="Original input"
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ clipPath: `polygon(0 0, ${sliderPosition}% 0, ${sliderPosition}% 100%, 0 100%)` }}
+          draggable={false}
+        />
 
         {}
         <div

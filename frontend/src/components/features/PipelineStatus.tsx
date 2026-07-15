@@ -53,7 +53,9 @@ export default function PipelineStatus({
   useEffect(() => {
     if (!isProcessing) {
       if (isComplete) {
-        setStageStatuses(PIPELINE_STAGES.map(() => "completed"));
+        setTimeout(() => {
+          setStageStatuses(PIPELINE_STAGES.map(() => "completed"));
+        }, 0);
       }
       return;
     }
