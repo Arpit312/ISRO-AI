@@ -64,6 +64,7 @@ from core.nova_unet import NovaSyncModelImproved
 from sar_fetch import fetch_sentinel1_sar_async
 print("[INIT] Loading real AI Brain...")
 device = torch.device('cpu')                                                           
+torch.set_num_threads(2) # Limit threads to prevent Render disconnecting
 model = NovaSyncModelImproved().to(device)
 import os
 weights_path = os.path.join(os.path.dirname(__file__), "novasync_improved_weights.pth")
@@ -106,7 +107,7 @@ async def process_satellite_image(
         contents = await file.read()
         image = Image.open(io.BytesIO(contents)).convert("RGB")
         orig_w, orig_h = image.size
-        max_dim = 1024
+        max_dim = 256 # Reduced from 1024 to avoid Render timeouts/disconnects
         scale = min(max_dim / orig_w, max_dim / orig_h, 1.0)
         new_w = max(16, int((orig_w * scale) // 16) * 16)
         new_h = max(16, int((orig_h * scale) // 16) * 16)
@@ -139,15 +140,15 @@ async def process_satellite_image(
             final_cloud_pct = 0.0
         else:
             low_res_tensor = T.Compose([
-                T.Resize((256, 256)),
+                T.Resize((128, 128)),
                 T.ToTensor()
             ])(image).unsqueeze(0).to(device)
-            sar_tensor_low = get_mock_sar_data(256, 256, file.filename).to(device)
+            sar_tensor_low = get_mock_sar_data(128, 128, file.filename).to(device)
             x_low = torch.cat([low_res_tensor, sar_tensor_low], dim=1)
             model.train()                                       
             outputs = []
             with torch.no_grad():
-                for _ in range(4):                             
+                for _ in range(2):                             
                     out = model(x_low, pheno_embed)
                     outputs.append(out)
             stacked = torch.stack(outputs)          

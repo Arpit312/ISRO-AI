@@ -111,36 +111,7 @@ export default function LoginPage() {
 
           <form onSubmit={handleLogin} className="w-full max-w-[500px] space-y-6">
             
-            {/* Clearances (2 columns) */}
-            <div className="flex gap-5">
-              {/* ID Input */}
-              <div className="flex-1 bg-[#282a31] rounded-2xl px-6 py-4 border border-transparent focus-within:border-[#1da1f2] transition-colors group relative">
-                <label className="block text-xs text-[#8a8d98] font-medium mb-1 uppercase tracking-wide">
-                  Clearance Level
-                </label>
-                <input
-                  type="text"
-                  readOnly
-                  value={role === "admin" ? "Level-5" : "Level-2"}
-                  className="w-full bg-transparent text-white text-base outline-none cursor-default font-medium"
-                />
-                <Shield size={20} className="absolute right-5 top-1/2 -translate-y-1/2 text-[#8a8d98]" />
-              </div>
 
-              {/* Department Input */}
-              <div className="flex-1 bg-[#282a31] rounded-2xl px-6 py-4 border border-transparent focus-within:border-[#1da1f2] transition-colors group relative">
-                <label className="block text-xs text-[#8a8d98] font-medium mb-1 uppercase tracking-wide">
-                  Department
-                </label>
-                <input
-                  type="text"
-                  readOnly
-                  value={role === "admin" ? "SOS-Command" : "Analytics"}
-                  className="w-full bg-transparent text-white text-base outline-none cursor-default font-medium"
-                />
-                <Satellite size={20} className="absolute right-5 top-1/2 -translate-y-1/2 text-[#8a8d98]" />
-              </div>
-            </div>
 
             {/* Email Input */}
             <div className="w-full bg-[#282a31] rounded-2xl px-6 py-4 border border-transparent focus-within:border-[#1da1f2] transition-colors group relative">
@@ -174,12 +145,7 @@ export default function LoginPage() {
 
             {/* Buttons */}
             <div className="flex items-center gap-5 pt-8">
-              <button
-                type="button"
-                className="px-10 py-4 rounded-full bg-[#383a42] text-white text-base font-semibold hover:bg-[#40434c] transition-colors"
-              >
-                Request access
-              </button>
+
               <button
                 type="submit"
                 disabled={loading}
