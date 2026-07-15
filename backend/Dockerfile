@@ -21,5 +21,5 @@ COPY . .
 # Expose port
 EXPOSE 8000
 
-# Start server using gunicorn with uvicorn workers
-CMD ["gunicorn", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "api_server:app", "--timeout", "120"]
+# Start server using gunicorn with a single uvicorn worker to strictly limit memory
+CMD ["gunicorn", "-w", "1", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "api_server:app", "--timeout", "120"]

@@ -60,14 +60,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-from core.nova_unet import NovaSyncModelImproved
+from core.nova_unet import NovaSyncModelImproved, NovaSyncModelReal
 from sar_fetch import fetch_sentinel1_sar_async
 print("[INIT] Loading real AI Brain...")
 device = torch.device('cpu')                                                           
 torch.set_num_threads(2) # Limit threads to prevent Render disconnecting
-model = NovaSyncModelImproved().to(device)
+model = NovaSyncModelReal().to(device)
 import os
-weights_path = os.path.join(os.path.dirname(__file__), "novasync_improved_weights.pth")
+weights_path = os.path.join(os.path.dirname(__file__), "novasync_production_weights.pth")
 if os.path.exists(weights_path):
     try:
         model.load_state_dict(torch.load(weights_path, map_location=device))

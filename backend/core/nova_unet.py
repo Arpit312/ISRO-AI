@@ -52,3 +52,31 @@ class NovaSyncModelImproved(nn.Module):
         d2 = self.dec2(torch.cat([self.up2(d3), e2], dim=1))
         d1 = self.dec1(torch.cat([self.up1(d2), e1], dim=1))
         return torch.sigmoid(self.out(d1))
+
+class NovaSyncModelReal(nn.Module):
+    """Input: RGB(3) + SAR(1) = 4 channels. Phenology(5) is injected via FiLM."""
+    def __init__(self, in_ch=4, base=32, phenology_dim=8):
+        super().__init__()
+        self.enc1 = ConvBlock(in_ch, base)
+        self.film = FiLMPhenology(phenology_dim, base)
+        self.enc2 = ConvBlock(base, base*2)
+        self.enc3 = ConvBlock(base*2, base*4)
+        self.pool = nn.MaxPool2d(2)
+        self.bottleneck = ConvBlock(base*4, base*8)
+        self.up3 = nn.ConvTranspose2d(base*8, base*4, 2, stride=2)
+        self.dec3 = ConvBlock(base*8, base*4)
+        self.up2 = nn.ConvTranspose2d(base*4, base*2, 2, stride=2)
+        self.dec2 = ConvBlock(base*4, base*2)
+        self.up1 = nn.ConvTranspose2d(base*2, base, 2, stride=2)
+        self.dec1 = ConvBlock(base*2, base)
+        self.out = nn.Conv2d(base, 3, 1)
+    def forward(self, x, phenology_vec):
+        e1 = self.enc1(x)
+        e1 = self.film(e1, phenology_vec)
+        e2 = self.enc2(self.pool(e1))
+        e3 = self.enc3(self.pool(e2))
+        b = self.bottleneck(self.pool(e3))
+        d3 = self.dec3(torch.cat([self.up3(b), e3], dim=1))
+        d2 = self.dec2(torch.cat([self.up2(d3), e2], dim=1))
+        d1 = self.dec1(torch.cat([self.up1(d2), e1], dim=1))
+        return torch.sigmoid(self.out(d1))
