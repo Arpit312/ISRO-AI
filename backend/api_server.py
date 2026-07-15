@@ -107,10 +107,16 @@ async def process_satellite_image(
         contents = await file.read()
         image = Image.open(io.BytesIO(contents)).convert("RGB")
         orig_w, orig_h = image.size
-        max_dim = 256 # Reduced from 1024 to avoid Render timeouts/disconnects
+        max_dim = 384 # Safe limit to avoid Render OOM
         scale = min(max_dim / orig_w, max_dim / orig_h, 1.0)
         new_w = max(16, int((orig_w * scale) // 16) * 16)
         new_h = max(16, int((orig_h * scale) // 16) * 16)
+        
+        # CRITICAL FIX for Memory Limit Exceeded:
+        # Resize original image immediately so all full-res tensors are bounded
+        image = image.resize((new_w, new_h), Image.Resampling.LANCZOS)
+        orig_w, orig_h = new_w, new_h
+        
         high_res_tensor = T.Compose([
             T.Resize((new_h, new_w)),
             T.ToTensor()
