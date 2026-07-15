@@ -76,14 +76,39 @@ export default function ProcessPage() {
     reset();
   }, [reset]);
 
+  const handleTestDemo = useCallback(async () => {
+    try {
+      toast.success("Loading Demo Image...");
+      const response = await fetch('/cloudy_demo.jpg');
+      if (!response.ok) throw new Error("Demo image not found");
+      const blob = await response.blob();
+      const file = new File([blob], 'Bhopal_demo.jpg', { type: 'image/jpeg' });
+      handleSubmit(file, 7, '/cloudy_demo.jpg');
+    } catch (e) {
+      toast.error("Error", "Please save the cloudy image as cloudy_demo.jpg in frontend/public/");
+    }
+  }, [handleSubmit, toast]);
+
   return (
     <div className="max-w-[1400px] mx-auto">
       {}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--color-text-primary)] tracking-tight">
-            Process Satellite Image
-          </h1>
+          <div className="flex items-center gap-4">
+            <h1 className="text-2xl font-bold text-[var(--color-text-primary)] tracking-tight">
+              Process Satellite Image
+            </h1>
+            {phase === "upload" && (
+                <Button 
+                    variant="primary" 
+                    size="sm" 
+                    onClick={handleTestDemo}
+                    className="bg-green-600 hover:bg-green-700 text-white font-bold animate-pulse"
+                >
+                    🚀 One-Click Demo
+                </Button>
+            )}
+          </div>
           <p className="text-[14px] text-[var(--color-text-secondary)] mt-1">
             Upload LISS-IV imagery and run the 7-stage AI cloud removal pipeline.
           </p>
