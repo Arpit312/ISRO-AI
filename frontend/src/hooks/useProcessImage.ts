@@ -36,7 +36,11 @@ export function useProcessImage(options?: UseProcessImageOptions) {
           cloud_type_detected: "Cumulus/Stratus",
           season_prior_injected: "Kharif",
           physics_quality_score: 99.8,
-          spectral_report: ["High confidence in AI reconstruction. Reference match successful."],
+          spectral_report: {
+            NDVI: 0.85,
+            NDWI: 0.22,
+            SAVI: 0.54
+          },
           output_image: "/clear.png",
           uncertainty_heatmap: "/clear.png",
           initial_cloud_pct: 52.4,
