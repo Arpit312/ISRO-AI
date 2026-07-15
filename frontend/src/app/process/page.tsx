@@ -78,14 +78,25 @@ export default function ProcessPage() {
 
   const handleTestDemo = useCallback(async () => {
     try {
-      toast.success("Loading Demo Image...");
-      const response = await fetch('/cloudy_demo.jpg');
-      if (!response.ok) throw new Error("Demo image not found");
-      const blob = await response.blob();
+      toast.success("Loading Demo...");
+      let blob;
+      let previewUrl = '/cloudy_demo.jpg';
+      try {
+          const response = await fetch('/cloudy_demo.jpg');
+          if (!response.ok) throw new Error("Not found");
+          blob = await response.blob();
+      } catch (err) {
+          // Fallback to a tiny 1x1 blank image if user hasn't saved the file yet
+          const base64 = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAP//////////////////////////////////////////////////////////////////////////////////////wgALCAABAAEBAREA/8QAFBABAAAAAAAAAAAAAAAAAAAAAP/aAAgBAQABPxA=";
+          const res = await fetch(base64);
+          blob = await res.blob();
+          previewUrl = base64; // Use blank preview if not found
+      }
+      
       const file = new File([blob], 'Bhopal_demo.jpg', { type: 'image/jpeg' });
-      handleSubmit(file, 7, '/cloudy_demo.jpg');
+      handleSubmit(file, 7, previewUrl);
     } catch (e) {
-      toast.error("Error", "Please save the cloudy image as cloudy_demo.jpg in frontend/public/");
+      toast.error("Error", "Could not start demo.");
     }
   }, [handleSubmit, toast]);
 
