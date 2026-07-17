@@ -5,7 +5,7 @@ export interface ProcessingResponse {
   cloud_type_detected: string;
   season_prior_injected: string;
   physics_quality_score: number;
-  spectral_report: Record<string, number>;
+  spectral_report: Record<string, number | string>;
   output_image: string;
   uncertainty_heatmap: string;
   initial_cloud_pct?: number;
@@ -21,7 +21,7 @@ export interface ProcessingResult {
   cloudType: string;
   season: string;
   qualityScore: number;
-  spectralReport: Record<string, number>;
+  spectralReport: Record<string, number | string>;
   outputImage: string;
   uncertaintyHeatmap: string;
   inputPreview: string;

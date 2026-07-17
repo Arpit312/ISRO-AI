@@ -59,6 +59,13 @@ export function useAuth(): UseAuthReturn {
           firebaseUser.getIdToken().then((token) => {
             localStorage.setItem("nova_sync_token", token);
           });
+          
+          // Sync user to MongoDB
+          fetch("/api/auth/sync", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(mapFirebaseUser(firebaseUser)),
+          }).catch(err => console.error("Failed to sync user to MongoDB:", err));
         } else {
           setUser(null);
           localStorage.removeItem("nova_sync_token");
@@ -87,6 +94,13 @@ export function useAuth(): UseAuthReturn {
       const result = await signInWithPopup(auth, googleProvider);
       const token = await result.user.getIdToken();
       localStorage.setItem("nova_sync_token", token);
+
+      // Sync user to MongoDB
+      await fetch("/api/auth/sync", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(mapFirebaseUser(result.user)),
+      });
     } catch (err) {
       const message = err instanceof Error ? err.message : "Sign in failed";
       setError(message);

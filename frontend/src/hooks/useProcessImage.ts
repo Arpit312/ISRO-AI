@@ -23,31 +23,6 @@ export function useProcessImage(options?: UseProcessImageOptions) {
 
   const mutation = useMutation<ProcessingResponse, Error, ProcessImageInput>({
     mutationFn: async ({ file, month }: ProcessImageInput) => {
-      // FRONTEND BYPASS FOR DEMO IMAGES
-      const filename = file.name.toLowerCase();
-      if (filename.includes("bhopal") || filename.includes("cloudy") || filename.includes("test")) {
-        console.log("Demo image detected, bypassing backend!");
-        
-        // Simulate a short network delay
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        return {
-          status: "success",
-          cloud_type_detected: "Cumulus/Stratus",
-          season_prior_injected: "Kharif",
-          physics_quality_score: 99.8,
-          spectral_report: {
-            NDVI: 0.85,
-            NDWI: 0.22,
-            SAVI: 0.54
-          },
-          output_image: "/clear.png",
-          uncertainty_heatmap: "/clear.png",
-          initial_cloud_pct: 52.4,
-          final_cloud_pct: 0.0
-        } as ProcessingResponse;
-      }
-
       const data = await processImage(file, month);
       
       // Catch backend errors that return 200 OK with {"status": "error"}

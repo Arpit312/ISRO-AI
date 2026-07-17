@@ -10,7 +10,7 @@ interface QualityScoreProps {
   className?: string;
   size?: "sm" | "md" | "lg";
   showDetails?: boolean;
-  spectralReport?: Record<string, number | { violation_pct: number; mean_value: number }>;
+  spectralReport?: Record<string, number | string | { violation_pct: number; mean_value: number }>;
   initialCloudPct?: number;
   finalCloudPct?: number;
 }
@@ -127,6 +127,20 @@ export default function QualityScore({
               Spectral Indices
             </p>
             {Object.entries(spectralReport).map(([key, data]) => {
+              if (typeof data === 'string') {
+                return (
+                  <div key={key} className="space-y-1">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[12px] font-medium text-[var(--color-text-secondary)]">
+                        {key}
+                      </span>
+                      <span className="text-[11px] font-mono font-bold text-[var(--color-primary-light)] truncate max-w-[120px]" title={data}>
+                        {data}
+                      </span>
+                    </div>
+                  </div>
+                )
+              }
               const value = typeof data === 'number' ? data : (data as any)?.mean_value ?? 0;
               return (
               <div key={key} className="space-y-1">
