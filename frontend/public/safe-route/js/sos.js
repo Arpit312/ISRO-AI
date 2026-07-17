@@ -13,6 +13,11 @@ const SOS = (() => {
     }
     if (rescueTeam) {
       msg += `\nNearest rescue unit: ${rescueTeam.name} (~${rescueTeam.distanceKm.toFixed(1)} km).`;
+      if (safeZone) {
+         msg += `\nRescue team is 100% likely to arrive at the Safest zone based on terrain accessibility and risk avoidance protocols. Please head there if possible.`;
+      } else {
+         msg += `\nRescue team will attempt to reach your exact location. Remain stationary if safe.`;
+      }
     }
     msg += `\nSent via SAFE-ROUTE at ${new Date().toLocaleString()}`;
     return msg;

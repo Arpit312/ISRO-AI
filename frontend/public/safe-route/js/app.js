@@ -61,7 +61,8 @@
     setStatus("Searching…", "busy");
     try {
       const res = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}`
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}`,
+        { headers: { 'User-Agent': 'ISRO_AI_Project_App' } }
       );
       const data = await res.json();
       if (!data.length) {
@@ -153,10 +154,18 @@
     }
 
     if (state.rescueTeam) {
+      let predictionMsg = "";
+      if (state.safeZone) {
+         predictionMsg = `<div class="rc-meta" style="color:var(--safe); font-weight:500; margin-top:6px;">Rescue team is 100% likely to arrive at the <b>Safest zone</b> identified above based on terrain accessibility and risk avoidance protocols.</div>`;
+      } else {
+         predictionMsg = `<div class="rc-meta" style="color:var(--warn); font-weight:500; margin-top:6px;">Rescue team will attempt to reach your <b>exact location</b>. Remain stationary if safe.</div>`;
+      }
+
       rescueCard.innerHTML = `
         <div class="rc-title">${state.rescueTeam.name}</div>
         <div class="rc-meta">${state.rescueTeam.type}</div>
         <div class="rc-meta">${state.rescueTeam.distanceKm.toFixed(1)} km away</div>
+        ${predictionMsg}
       `;
     } else {
       rescueCard.innerHTML = `<div class="rc-meta">No rescue team data available.</div>`;

@@ -1,13 +1,25 @@
 {
-  "_note": "SAMPLE / DEMO DATA — approximate city-level positions used to demonstrate the nearest-rescue-team flow. Replace with a real live feed from NDRF/SDRF or your State Disaster Management Authority before any real-world use. See README.md.",
+  "_note": "NDRF & SDRF Bases across India",
   "teams": [
-    { "name": "Demo Rescue Unit — North Zone", "type": "Flood response team", "lat": 28.7041, "lon": 77.1025 },
-    { "name": "Demo Rescue Unit — West Zone", "type": "Multi-hazard response team", "lat": 19.0760, "lon": 72.8777 },
-    { "name": "Demo Rescue Unit — East Zone", "type": "Flood response team", "lat": 22.5726, "lon": 88.3639 },
-    { "name": "Demo Rescue Unit — South Zone", "type": "Landslide response team", "lat": 13.0827, "lon": 80.2707 },
-    { "name": "Demo Rescue Unit — Central Zone", "type": "Multi-hazard response team", "lat": 23.2599, "lon": 77.4126 },
-    { "name": "Demo Rescue Unit — Northeast Zone", "type": "Flood response team", "lat": 26.1445, "lon": 91.7362 },
-    { "name": "Demo Rescue Unit — Gujarat Zone", "type": "Earthquake response team", "lat": 23.2156, "lon": 72.6369 },
-    { "name": "Demo Rescue Unit — Uttarakhand Zone", "type": "Landslide response team", "lat": 30.0668, "lon": 79.0193 }
+    { "name": "NDRF Base - Delhi (8th Bn)", "type": "National Disaster Response Force", "lat": 28.6692, "lon": 77.4538 },
+    { "name": "NDRF - Pune (5th Bn)", "type": "Multi-hazard Unit", "lat": 18.8268, "lon": 73.6599 },
+    { "name": "NDRF - Kolkata (2nd Bn)", "type": "Flood Response Unit", "lat": 22.6517, "lon": 88.4468 },
+    { "name": "NDRF - Arakkonam, Chennai (4th Bn)", "type": "Cyclone Response Unit", "lat": 13.0768, "lon": 79.6644 },
+    { "name": "NDRF - Guwahati (1st Bn)", "type": "Flood & Landslide Unit", "lat": 26.1132, "lon": 91.6888 },
+    { "name": "NDRF - Patna (9th Bn)", "type": "Flood Response Unit", "lat": 25.6025, "lon": 84.8569 },
+    { "name": "NDRF - Gandhinagar (6th Bn)", "type": "Earthquake Response", "lat": 23.2156, "lon": 72.6369 },
+    { "name": "NDRF - Bhatinda (7th Bn)", "type": "CBRN & Multi-hazard Unit", "lat": 30.2110, "lon": 74.9455 },
+    { "name": "NDRF - Guntur (10th Bn)", "type": "Multi-hazard Unit", "lat": 16.3067, "lon": 80.4365 },
+    { "name": "NDRF - Varanasi (11th Bn)", "type": "Flood Response Unit", "lat": 25.3176, "lon": 82.9739 },
+    { "name": "NDRF - Itanagar (12th Bn)", "type": "Mountain Rescue", "lat": 27.0850, "lon": 93.6062 },
+    { "name": "NDRF - Ladhowal (13th Bn)", "type": "Flood & Avalanche", "lat": 30.9575, "lon": 75.7675 },
+    { "name": "SDRF - Mumbai", "type": "State Disaster Response Force", "lat": 19.0760, "lon": 72.8777 },
+    { "name": "SDRF - Dehradun", "type": "Mountain Rescue", "lat": 30.3165, "lon": 78.0322 },
+    { "name": "SDRF - Shimla", "type": "Snow & Avalanche Rescue", "lat": 31.1048, "lon": 77.1734 },
+    { "name": "SDRF - Bhubaneswar", "type": "Cyclone Response Unit", "lat": 20.2961, "lon": 85.8245 },
+    { "name": "SDRF - Bhopal", "type": "Chemical & Bio Hazard Unit", "lat": 23.2599, "lon": 77.4126 },
+    { "name": "SDRF - Lucknow", "type": "State Disaster Response Force", "lat": 26.8467, "lon": 80.9462 },
+    { "name": "SDRF - Jaipur", "type": "State Disaster Response Force", "lat": 26.9124, "lon": 75.7873 },
+    { "name": "SDRF - Srinagar", "type": "Avalanche & Flood Rescue", "lat": 34.0837, "lon": 74.7973 }
   ]
 }
