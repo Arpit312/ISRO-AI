@@ -154,7 +154,7 @@ export default function ProcessPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in-up">
           {}
           <div className="lg:col-span-2">
-            <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6">
+            <div className="rounded-[var(--radius-xl)] glass-panel p-6">
               <ImageUploader
                 onSubmit={handleSubmit}
                 isProcessing={isProcessing}
@@ -164,7 +164,7 @@ export default function ProcessPage() {
 
           {}
           <div className="space-y-4">
-            <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-5 space-y-4">
+            <div className="rounded-[var(--radius-xl)] glass-panel p-5 space-y-4">
               <h3 className="text-[14px] font-semibold text-[var(--color-text-primary)]">
                 How it works
               </h3>
@@ -193,7 +193,7 @@ export default function ProcessPage() {
             </div>
 
             {}
-            <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-5">
+            <div className="rounded-[var(--radius-xl)] glass-panel p-5">
               <h3 className="text-[13px] font-semibold text-[var(--color-text-primary)] mb-3">
                 Supported Sensors
               </h3>
@@ -214,8 +214,8 @@ export default function ProcessPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-in-up">
           {}
           <div className="space-y-5">
-            {}
-            <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 overflow-hidden">
+            {/* Input Preview */}
+            <div className="rounded-[var(--radius-xl)] glass-panel overflow-hidden">
               {inputPreview && (
                 <div className="relative">
                   <img
@@ -241,8 +241,8 @@ export default function ProcessPage() {
             </div>
           </div>
 
-          {}
-          <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6">
+          {/* Progress Section */}
+          <div className="rounded-[var(--radius-xl)] glass-panel p-6">
             <PipelineStatus
               isProcessing={isProcessing}
               isComplete={false}

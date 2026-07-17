@@ -73,7 +73,7 @@ export default function AdminDashboardPage() {
           <p className="text-slate-400 mt-1">Live Global Distress Signal Monitoring</p>
         </div>
         
-        <div className="glass px-4 py-2 rounded-xl flex items-center gap-3 border border-red-500/20">
+        <div className="glass-panel px-4 py-2 rounded-xl flex items-center gap-3 border border-red-500/20">
           <RefreshCw size={16} className={cn("text-red-400", loading ? "animate-spin" : "")} />
           <div className="text-xs">
             <div className="text-slate-400">Database Status</div>
@@ -82,7 +82,7 @@ export default function AdminDashboardPage() {
         </div>
       </div>
 
-      <div className="glass-elevated rounded-2xl border border-white/5 overflow-hidden">
+      <div className="glass-panel-heavy rounded-2xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>

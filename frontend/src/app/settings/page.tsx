@@ -73,7 +73,7 @@ export default function SettingsPage() {
 
       <div className="space-y-6">
         {}
-        <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6 animate-fade-in">
+        <div className="rounded-[var(--radius-xl)] glass-panel p-6 animate-fade-in">
           <h2 className="text-[14px] font-semibold text-[var(--color-text-primary)] mb-4 flex items-center gap-2">
             <User size={16} />
             Account
@@ -118,7 +118,7 @@ export default function SettingsPage() {
         </div>
 
         {/* User Preferences */}
-        <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6 animate-fade-in-up stagger-1">
+        <div className="rounded-[var(--radius-xl)] glass-panel p-6 animate-fade-in-up stagger-1">
           <h2 className="text-[14px] font-semibold text-[var(--color-text-primary)] mb-4 flex items-center gap-2">
             <Sliders size={16} />
             User Preferences
@@ -143,7 +143,7 @@ export default function SettingsPage() {
         </div>
 
         {}
-        <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-6 animate-fade-in-up stagger-2">
+        <div className="rounded-[var(--radius-xl)] glass-panel p-6 animate-fade-in-up stagger-2">
           <h2 className="text-[14px] font-semibold text-[var(--color-text-primary)] mb-4 flex items-center gap-2">
             <SettingsIcon size={16} />
             System Configuration

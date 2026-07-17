@@ -19,7 +19,7 @@ export default function ProfilePage() {
         </p>
       </div>
 
-      <div className="rounded-[var(--radius-xl)] glass bg-[var(--color-surface)]/20 p-8 animate-fade-in relative overflow-hidden">
+      <div className="rounded-[var(--radius-xl)] glass-panel p-8 animate-fade-in relative overflow-hidden">
         {/* Glow Effects */}
         <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[var(--color-primary)]/10 rounded-full blur-[100px] pointer-events-none mix-blend-screen" />
         
@@ -52,7 +52,7 @@ export default function ProfilePage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="rounded-[var(--radius-lg)] glass p-6 animate-fade-in stagger-1">
+        <div className="rounded-[var(--radius-lg)] glass-panel p-6 animate-fade-in stagger-1">
           <h3 className="text-xl font-semibold text-[var(--color-text-primary)] mb-4 flex items-center gap-2">
             <User size={18} />
             Personal Information
@@ -79,7 +79,7 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        <div className="rounded-[var(--radius-lg)] glass p-6 animate-fade-in stagger-2">
+        <div className="rounded-[var(--radius-lg)] glass-panel p-6 animate-fade-in stagger-2">
           <h3 className="text-xl font-semibold text-[var(--color-text-primary)] mb-4 flex items-center gap-2">
             <Clock size={18} />
             Account Status

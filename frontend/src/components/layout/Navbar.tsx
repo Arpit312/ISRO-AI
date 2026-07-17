@@ -77,7 +77,7 @@ export default function Navbar({ sidebarCollapsed, onMobileMenuToggle }: NavbarP
       <header
         className={cn(
           "fixed top-0 right-0 z-30 h-[var(--navbar-height)] flex items-center justify-between px-4 md:px-6",
-          "bg-[var(--color-bg)]/80 backdrop-blur-md border-b border-[var(--color-border)] shadow-sm",
+          "glass-panel border-0 border-b border-[var(--color-border)] shadow-sm",
           "transition-all duration-300 ease-[var(--ease-smooth)]",
           "left-0", 
           sidebarCollapsed

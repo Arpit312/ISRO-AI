@@ -113,13 +113,13 @@ const pipelineStages = [
 export default function DashboardPage() {
   return (
     <div className="max-w-[1400px] mx-auto space-y-8">
-      {}
-      <section className="relative overflow-hidden rounded-[var(--radius-xl)] bg-[var(--color-surface)]/80 backdrop-blur-xl border border-white/10 p-8 md:p-10 animate-fade-in shadow-2xl">
+      <section className="relative overflow-hidden rounded-[var(--radius-xl)] glass-panel-heavy p-8 md:p-10 animate-fade-in">
         {/* Glow Effects */}
         <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-primary)]/10 via-transparent to-[var(--color-primary)]/5 pointer-events-none" />
         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[var(--color-primary)]/20 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
 
-        {}
+        {/* Noise and dots */}
+        <div className="absolute inset-0 noise-overlay" />
         <div className="absolute inset-0 dot-grid opacity-20 pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -130,7 +130,7 @@ export default function DashboardPage() {
                 AI Engine Active
               </span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tight glow-text">
               Welcome to{" "}
               <span className="gradient-text">NOVA-SYNC</span>
             </h1>
@@ -144,33 +144,28 @@ export default function DashboardPage() {
           <Link
             href="/process"
             className={cn(
-              "group flex items-center gap-3 px-6 py-3.5 rounded-[var(--radius-lg)]",
-              "bg-[var(--color-primary)] text-white font-semibold text-[14px]",
-              "hover:bg-[var(--color-primary-light)] hover:shadow-[var(--shadow-glow-lg)]",
-              "transition-all duration-300",
+              "group flex items-center gap-3 px-6 py-3.5 rounded-[var(--radius-lg)] btn-premium text-white font-semibold text-[14px]",
               "shrink-0"
             )}
           >
-            <Satellite size={18} />
-            Process New Image
+            <Satellite size={18} className="relative z-10" />
+            <span className="relative z-10">Process New Image</span>
             <ArrowRight
               size={16}
-              className="group-hover:translate-x-1 transition-transform duration-200"
+              className="group-hover:translate-x-1 transition-transform duration-200 relative z-10"
             />
           </Link>
         </div>
       </section>
 
-      {}
+      {/* Metrics Row */}
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, idx) => (
           <div
             key={stat.label}
             className={cn(
-              "group relative rounded-[var(--radius-lg)] glass p-6",
-              "hover:border-[var(--color-border-focus)] glass-hover",
-              "transition-all duration-300 cursor-default",
-              "animate-fade-in-up",
+              "group relative rounded-[var(--radius-lg)] glass-panel premium-card-hover p-6",
+              "cursor-default animate-fade-in-up",
               `stagger-${idx + 1}`
             )}
           >

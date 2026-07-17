@@ -125,7 +125,7 @@ export default function HistoryPage() {
 
       {}
       {history.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 rounded-[var(--radius-xl)] border-2 border-dashed border-[var(--color-border-hover)] glass bg-[var(--color-surface)]/10 animate-fade-in">
+        <div className="flex flex-col items-center justify-center py-20 rounded-[var(--radius-xl)] border-2 border-dashed border-[var(--color-border-hover)] glass-panel animate-fade-in">
           <div className="flex items-center justify-center w-16 h-16 rounded-full bg-[var(--color-info-subtle)] mb-4 animate-float">
             <HistoryIcon size={28} className="text-[var(--color-info)]" />
           </div>
@@ -202,7 +202,7 @@ export default function HistoryPage() {
                 <div
                   key={result.id}
                   className={cn(
-                    "group rounded-[var(--radius-lg)] glass bg-[var(--color-surface)]/20",
+                    "group rounded-[var(--radius-lg)] glass-panel",
                     "hover:border-[var(--color-border-focus)] glass-hover",
                     "transition-all duration-200",
                     "animate-fade-in",
@@ -372,14 +372,14 @@ export default function HistoryPage() {
 
               {}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="rounded-[var(--radius-lg)] glass bg-[var(--color-surface)]/20 p-5">
+                <div className="rounded-[var(--radius-lg)] glass-panel p-5">
                   <QualityScore
                     score={selectedResult.qualityScore}
                     spectralReport={selectedResult.spectralReport}
                     size="sm"
                   />
                 </div>
-                <div className="rounded-[var(--radius-lg)] glass bg-[var(--color-surface)]/20 p-5">
+                <div className="rounded-[var(--radius-lg)] glass-panel p-5">
                   <HeatmapViewer
                     baseImage={selectedResult.outputImage}
                     heatmap={selectedResult.uncertaintyHeatmap}

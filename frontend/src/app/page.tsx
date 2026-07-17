@@ -87,7 +87,7 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="bg-[#000000] text-white min-h-[350vh]" ref={containerRef}>
+    <div className="bg-[var(--color-bg)] text-[var(--color-text-primary)] min-h-[350vh]" ref={containerRef}>
 
       {}
       <AnimatePresence>
