@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapContainer, TileLayer, ImageOverlay, useMap, useMapEvents, Marker, Popup, LayersControl, Rectangle } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -65,13 +65,33 @@ function MapInteractionHandler({ onRightClick }: { onRightClick: (lat: number, l
   return null;
 }
 
-function CoordinateTracker({ onUpdate }: { onUpdate: (lat: number, lng: number) => void }) {
+function CoordinateTracker() {
+  const [coords, setCoords] = useState<{lat: number, lng: number} | null>(null);
+  const lastUpdate = useRef<number>(0);
+
   useMapEvents({
     mousemove(e) {
-      onUpdate(e.latlng.lat, e.latlng.lng);
+      const now = Date.now();
+      if (now - lastUpdate.current > 50) {
+        setCoords({ lat: e.latlng.lat, lng: e.latlng.lng });
+        lastUpdate.current = now;
+      }
+    },
+    mouseout() {
+      setCoords(null);
     }
   });
-  return null;
+
+  if (!coords) return null;
+
+  return (
+    <div className="absolute bottom-6 right-6 z-[1000] bg-[var(--color-surface)]/80 backdrop-blur-md border border-[var(--color-border)] px-3 py-2 rounded-full shadow-[var(--shadow-sm)] flex items-center gap-2 pointer-events-none animate-fade-in-up">
+      <Crosshair size={14} className="text-[var(--color-primary)]" />
+      <span className="text-[12px] font-mono text-[var(--color-text-secondary)]">
+        {coords.lat.toFixed(5)}, {coords.lng.toFixed(5)}
+      </span>
+    </div>
+  );
 }
 
 function CustomMapControls({ onLocate }: { onLocate: () => void }) {
@@ -104,7 +124,6 @@ export default function MapExplorer() {
   const [overlay, setOverlay] = useState<OverlayData | null>(null);
   const [mapCenter, setMapCenter] = useState<L.LatLngTuple | null>(null);
   const [defaultCenter] = useState<L.LatLngTuple>([26.14, 91.73]); // Default: Guwahati
-  const [mouseCoords, setMouseCoords] = useState<{ lat: number, lng: number } | null>(null);
 
   const toast = useToast();
 
@@ -383,7 +402,7 @@ export default function MapExplorer() {
             </BaseLayer>
           </LayersControl>
 
-          <CoordinateTracker onUpdate={(lat, lng) => setMouseCoords({ lat, lng })} />
+          <CoordinateTracker />
           <CustomMapControls onLocate={handleLocateMe} />
 
           <MapInteractionHandler onRightClick={fetchClearImage} />
@@ -471,16 +490,6 @@ export default function MapExplorer() {
                 Enhance with AI
               </Button>
             )}
-          </div>
-        )}
-
-        {}
-        {mouseCoords && (
-          <div className="absolute bottom-6 right-6 z-[1000] bg-[var(--color-surface)]/80 backdrop-blur-md border border-[var(--color-border)] px-3 py-2 rounded-full shadow-[var(--shadow-sm)] flex items-center gap-2 pointer-events-none animate-fade-in-up">
-            <Crosshair size={14} className="text-[var(--color-primary)]" />
-            <span className="text-[12px] font-mono text-[var(--color-text-secondary)]">
-              {mouseCoords.lat.toFixed(5)}, {mouseCoords.lng.toFixed(5)}
-            </span>
           </div>
         )}
 
